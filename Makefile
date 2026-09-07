@@ -29,8 +29,8 @@ test: ## pytest for tools/ bench/ schemas/ (offline)
 	$(UV) run pytest -q
 
 lint: ## ruff check + format check
-	$(UV) run ruff check tools bench
-	$(UV) run ruff format --check tools bench
+	$(UV) run ruff check tools bench modal_jobs
+	$(UV) run ruff format --check tools bench modal_jobs
 
 status: ## show readiness checklist
 	@cat STATUS.md
