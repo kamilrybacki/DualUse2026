@@ -1,0 +1,55 @@
+# --- model / tile cache (mirrored to USB, never committed) ---
+cache/*
+!cache/.gitkeep
+!cache/MANIFEST.md
+!cache/models.yaml
+*.gguf
+*.ggml
+*.bin
+*.safetensors
+*.pmtiles
+*.mbtiles
+
+# --- large recordings: kept outside git, see README "Dane i prawo" ---
+data/recordings/**/*
+!data/recordings/**/
+!data/recordings/**/.gitkeep
+!data/recordings/**/README.md
+data/audio/**/*
+!data/audio/**/
+!data/audio/**/.gitkeep
+!data/audio/**/README.md
+!data/audio/**/*.jsonl
+data/martts/**/*
+!data/martts/**/
+!data/martts/README.md
+*.wav
+*.flac
+*.ogg
+*.mp3
+
+# --- python ---
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+uv.lock.bak
+
+# --- bench outputs (reports are committed explicitly) ---
+bench/runs/
+
+# --- secrets / local ---
+.env
+.env.*
+*.pem
+.modal.toml
+
+# --- editors / OS ---
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

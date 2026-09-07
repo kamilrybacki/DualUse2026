@@ -1,0 +1,39 @@
+[project]
+name = "falochron-prep"
+version = "0.1.0"
+description = "Pre-hackathon preparation tooling for FALOCHRON (data, benchmarks, configs). No runtime pipeline."
+readme = "README.md"
+# Target is 3.12 (CLAUDE.md §3); 3.11 accepted so the tools also run on the remote prep session.
+requires-python = ">=3.11"
+dependencies = [
+    "jsonschema>=4.23",
+    "pyyaml>=6.0",
+    "numpy>=1.26",
+    "requests>=2.32",
+]
+
+[project.optional-dependencies]
+# kiwirecorder (tools/vendor/kiwiclient) needs numpy only; samplerate optional.
+record = ["samplerate>=0.2"]
+# Hugging Face downloads for tools/download_models.py and tools/fetch_martts.py
+hf = ["huggingface_hub>=0.25"]
+modal = ["modal>=1.0"]
+audio = ["soundfile>=0.12", "scipy>=1.13"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.3",
+    "ruff>=0.6",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = ["tools/vendor", "src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "W"]
+
+[tool.pytest.ini_options]
+testpaths = ["tools", "bench", "schemas"]
+addopts = "-q"

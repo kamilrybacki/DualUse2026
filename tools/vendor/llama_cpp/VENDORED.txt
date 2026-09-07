@@ -1,0 +1,3 @@
+Vendored from https://github.com/ggml-org/llama.cpp
+commit e71b80510c848c00175924ecf3c40333ccae8eb5 (2026-09-07)
+files: examples/json_schema_to_grammar.py, LICENSE (MIT), grammars/README.md

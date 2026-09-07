@@ -1,0 +1,3 @@
+[submodule "tools/vendor/kiwiclient"]
+	path = tools/vendor/kiwiclient
+	url = https://github.com/jks-prv/kiwiclient
