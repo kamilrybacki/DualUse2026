@@ -8,7 +8,7 @@ Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 póź
 - [~] Zamrozić schema v0.1 + słowniki typów; JSON Schema i gramatyka GBNF.
   - [x] `schemas/event.schema.json` (pełny) i `schemas/extraction.schema.json` (wyjście modelu)
   - [x] `schemas/extraction.gbnf` wygenerowany zwendorowanym konwerterem llama.cpp (`make gbnf`)
-  - [x] 8 fixture'ów (NAVTEX EN ×3 w tym `*`, BHMW PL ×2, VHF PL/EN, gale warning) walidują się
+  - [x] 10 fixture'ów (NAVTEX EN ×3 w tym `*`, prawdziwe zniekształcenie fldigi, BHMW PL ×3 w tym prompt injection, VHF PL/EN, gale warning) walidują się
   - [x] gramatyka zweryfikowana w prawdziwym llama.cpp (zbudowany ze źródeł w sesji): 9 fixture'ów przyjętych, 3 negatywy odrzucone, kolejność kluczy wymuszona (`make gbnf-check`)
 - [~] Gold set 200+ przykładów z etykietami.
   - [x] format seedów + helper kuracji (`tools/curate_seed.py`), scalanie i przegląd CSV (`tools/gold_merge.py`)
@@ -36,12 +36,13 @@ Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 póź
   - [x] `tools/fldigi/` — rig headless **uruchomiony i sprawdzony w sesji** (`rig_up.sh`: PulseAudio null sink + Xvfb + fldigi 4.2.03): syntetyczny sygnał zdekodowany dosłownie, ramka `ZCZC IA47…NNNN`
   - [x] odkrycie: fldigi nie drukuje `*`, podstawia lub gubi znaki i traci rejestr LTRS/FIGS → `docs/research_fldigi_navtex_errors.md`, fixture 09, tryb `garble` w W1, tolerancja 1 znaku w nagłówku w metryce
   - [x] `tools/gen_sitorb.py` — generator CCIR 476 z FEC, tryby błędów burst/random; **round-trip przez prawdziwy fldigi potwierdzony** (odbiór P1.7)
+  - [x] `gen_sitorb.py --iq` → plik w układzie Kiwi (bloki `kiwi`+`data`) → `iq_to_audio.py` → fldigi: pełna ramka `HB13`; ścieżka odtwarzania nagrań IQ sprawdzona bez prawdziwego nagrania
   - [ ] **pierwsze nagranie** — z tej sesji niemożliwe (KiwiSDR nieosiągalny). Opcje: `make record` na dowolnej maszynie z siecią, albo `make modal-record STATION=HIJ` z chmury (`modal_jobs/record.py`, auto-dobór Kiwi przez `tools/fetch_kiwis.py`)
   - [ ] ≥6 czystych transmisji z ≥2 stacji + wpisy w `data/recordings/518khz/README.md`
   - [x] wygenerowany sygnał zdekodowany przez rig fldigi (odbiór P0.6 / P1.7); próbka z Wikipedii — host zablokowany w sesji, do sprawdzenia przy okazji
 - [~] Cache offline: modele GGUF, obrazy, kafle, dokumentacja; pendrive.
-  - [x] `tools/download_models.py` + `cache/models.yaml` (12 wpisów, wszystkie `verified: false`)
-  - [ ] `--verify` na Twojej maszynie, poprawienie identyfikatorów, `--all`, `cache/MANIFEST.md` z hashami
+  - [x] `tools/download_models.py` + `cache/models.yaml` — identyfikatory repo potwierdzone wyszukiwarką (oficjalne GGUF: Granite 350M/1B, LFM2.5 350M/1.2B, Ministral 3 3B, Qwen3 1.7B/4B; Qwen3.5-0.8B i Phi-4-mini tylko jako kwantyzacje bartowski)
+  - [ ] `--all` z maszyny z dostępem do HF → `cache/MANIFEST.md` z hashami (HF zablokowane w sesji)
   - [ ] kafle mapy Bałtyku (P2.12)
 - [~] Gazeter bałtycki (nazwy → współrzędne) (P2.11).
   - [x] `tools/download_gazetteer.py` (Overpass: latarnie, pławy, porty, miejscowości, zatoki) + `data/gazetteer_seed.csv` (20 akwenów, stacje NAVTEX) + testy offline
