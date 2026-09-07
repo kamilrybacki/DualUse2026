@@ -4,6 +4,21 @@ Technology test only (PRD §10.3): play a wav into fldigi through a virtual audi
 capture the decoded text via XML-RPC. **This is not the F3 adapter** — it is a one-shot CLI
 that writes a `.txt`, listed as pre-work in the README. The adapter is written at the event.
 
+## 0. Fast path (proven 2026-09-07 in a bare Ubuntu 24.04 container, no sound card)
+
+```
+sudo apt install fldigi pulseaudio pulseaudio-utils xvfb
+tools/fldigi/rig_up.sh                      # PulseAudio null sink "cable" + fldigi headless + XML-RPC
+uv run python tools/gen_sitorb.py --fixture 01_navtex_en_nav_warning --out /tmp/fx01.wav
+uv run python tools/fldigi/decode_test.py /tmp/fx01.wav --player "paplay --device=cable"
+```
+
+Result on the synthetic fixture: `chars=135 star_rate=0.000% frames=IA47`, text decoded
+verbatim. With `--error-rate 0.1` fldigi prints wrong characters and wrong-shift runs, never
+`*` — see `docs/research_fldigi_navtex_errors.md`. `rig_up.sh stop` tears it down.
+`tools/fldigi/fldigi_def.minimal.xml` is the whole configuration (PulseAudio backend,
+XML-RPC on, RSID off); it also suppresses the first-run wizard that otherwise blocks XML-RPC.
+
 ## 1. Install
 
 - Linux: `sudo apt install fldigi alsa-utils` (or `pipewire-audio` for `pw-play`/`pw-loopback`)

@@ -1,0 +1,19 @@
+{
+  "id": "09_navtex_en_fldigi_garbled",
+  "channel": "SDR",
+  "lang": "en",
+  "source_text": "ZCWC JA05\n120840 UTC SEP\nSWEDISH NAV WARNING 0842\nSOUTHERN BALTIC.\nFRQNG  EXERS  127SEP QPP UTC TO 600 U: 8, -43- 973# 9! 75(800\", ?97,$3' 6\n55-55.0N 01 -40.0E\n55-55.08, 01&-10.0E\n55-35.0N 01610.0E\n55-350 015-40.0U.\n(3''3)' -43 4373')3$ 59 (330 :)3-4.\nBNNNA",
+  "expected": {
+    "event_type": "EXERCISE",
+    "warning_id": "JA05",
+    "issued_at": "2026-09-12T08:40:00Z",
+    "valid_from": null,
+    "valid_to": null,
+    "geometry": null,
+    "location_name": "SOUTHERN BALTIC",
+    "agency": "NAVTEX/518/J",
+    "entities": []
+  },
+  "notes": "Real fldigi 4.2.03 output for fixture 02 after 10 % burst FEC failures (tools/gen_sitorb.py --error-rate 0.1 --seed 2), captured through the headless rig. fldigi substitutes characters and loses the LTRS/FIGS shift instead of printing '*'. Header letter damaged (ZCWC) but B1B2B3B4 intact → warning_id JA05 and agency J. Time group intact → issued_at. 'FRQNG EXERS' still identifies an exercise. Validity times and all four corners are damaged → nulls; the model must not repair '01 -40.0E' into a coordinate. Only the intact sea-area line survives as location_name.",
+  "attribution": "synthetic (fixture 02) decoded by fldigi; no real broadcast content"
+}

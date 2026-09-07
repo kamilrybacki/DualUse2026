@@ -109,6 +109,18 @@ def spoken_numbers(text: str) -> set[int]:
     return out
 
 
+HEADER_LINE_RE = re.compile(r"(?<![A-Z])([A-Z]{4})\s+([A-Z])[A-Z0-9*]{1,3}(?![A-Z0-9])")
+
+
+def header_station(text: str) -> str | None:
+    """B1 letter of the NAVTEX header, tolerating one damaged character in 'ZCZC'
+    (decoders substitute characters on FEC failure — docs/research_fldigi_navtex_errors.md)."""
+    for m in HEADER_LINE_RE.finditer(text):
+        if sum(a != b for a, b in zip(m.group(1), "ZCZC", strict=True)) <= 1:
+            return m.group(2)
+    return None
+
+
 def haversine_nm(a: tuple[float, float], b: tuple[float, float]) -> float:
     lon1, lat1 = map(math.radians, a)
     lon2, lat2 = map(math.radians, b)
@@ -198,8 +210,7 @@ def value_supported(name: str, value: Any, source: str, tol_nm: float) -> bool:
         v = str(value).upper()
         if v.startswith("NAVTEX/518/"):
             letter = v.rsplit("/", 1)[-1]
-            m = re.search(r"ZCZC\s+([A-Z])", source)
-            return bool(m and m.group(1) == letter)
+            return header_station(source) == letter
         return v in ("BHMW", "VHF") or normalize(v) in src_norm
     if name in ("issued_at", "valid_from", "valid_to"):
         # day, hour and minute digits must appear somewhere in the source

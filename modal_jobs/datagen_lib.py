@@ -198,6 +198,104 @@ def corrupt_stars(item: dict, rate: float, seed: int) -> dict:
     }
 
 
+CCIR_FIGS_FOR_LETTER = {
+    "A": "-",
+    "B": "?",
+    "C": ":",
+    "D": "$",
+    "E": "3",
+    "F": "!",
+    "G": "&",
+    "H": "#",
+    "I": "8",
+    "J": "'",
+    "K": "(",
+    "L": ")",
+    "M": ".",
+    "N": ",",
+    "O": "9",
+    "P": "0",
+    "Q": "1",
+    "R": "4",
+    "S": "'",
+    "T": "5",
+    "U": "7",
+    "V": ";",
+    "W": "2",
+    "X": "/",
+    "Y": "6",
+    "Z": '"',
+}
+CCIR_LETTER_FOR_FIGS = {v: k for k, v in CCIR_FIGS_FOR_LETTER.items()}
+
+
+def garble(item: dict, rate: float, seed: int, run_len: tuple[int, int] = (3, 12)) -> dict:
+    """fldigi-style damage (docs/research_fldigi_navtex_errors.md): no '*'. Each event
+    either substitutes one character with a random valid one or flips the LTRS/FIGS shift
+    for a run of characters (letters ↔ the CCIR 476 figure on the same code). Labels are
+    adjusted with the same span rules as corrupt_stars, plus: any span that was touched by a
+    substitution can no longer support the label → nulls, not guesses."""
+    rng = random.Random(seed)
+    text = item["source_text"]
+    chars = list(text)
+    hit: set[int] = set()
+    i = 0
+    while i < len(chars):
+        if chars[i] not in " \n" and rng.random() < rate:
+            if rng.random() < 0.6:
+                pool = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-./"
+                chars[i] = rng.choice(pool.replace(chars[i], "") or pool)
+                hit.add(i)
+                i += 1
+            else:
+                n = rng.randint(*run_len)
+                for j in range(i, min(len(chars), i + n)):
+                    c = chars[j]
+                    if c in CCIR_FIGS_FOR_LETTER:
+                        chars[j] = CCIR_FIGS_FOR_LETTER[c]
+                        hit.add(j)
+                    elif c in CCIR_LETTER_FOR_FIGS:
+                        chars[j] = CCIR_LETTER_FOR_FIGS[c]
+                        hit.add(j)
+                i += n
+        else:
+            i += 1
+    garbled = "".join(chars)
+    exp = dict(item["expected"])
+
+    def span_hit(regex: re.Pattern) -> bool:
+        return any(any(m.start() <= k < m.end() for k in hit) for m in regex.finditer(text))
+
+    if span_hit(HEADER_RE):
+        exp["warning_id"] = None
+    if span_hit(TIME_GROUP_RE):
+        exp["issued_at"] = None
+        exp["valid_from"] = None
+        exp["valid_to"] = None
+    if span_hit(COORD_RE):
+        exp["geometry"] = None
+    if exp.get("location_name"):
+        j = text.upper().find(exp["location_name"].upper())
+        if j >= 0 and any(j <= k < j + len(exp["location_name"]) for k in hit):
+            exp["location_name"] = None  # damaged name: abstain rather than copy garbage
+    kept = []
+    for e in exp.get("entities", []):
+        j = text.upper().find(e["text"].upper())
+        if j < 0 or not any(j <= k < j + len(e["text"]) for k in hit):
+            kept.append(e)
+    exp["entities"] = kept
+    return {
+        **item,
+        "id": item["id"] + "_garbled",
+        "channel": "SDR",
+        "source_text": garbled,
+        "expected": exp,
+        "noisy": True,
+        "garble_rate": round(len(hit) / max(1, len(text)), 4),
+        "derived_from": item["id"],
+    }
+
+
 def _apply_stars(value: str, clean: str, corrupted: str) -> str:
     """If ``value`` occurs verbatim in the clean text, return the same span from the
     corrupted text (so labels stay verbatim copies of what the model sees)."""

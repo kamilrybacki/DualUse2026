@@ -74,9 +74,10 @@ def generate(
         for it in got:
             it["generator"] = model_id
         items += got
-        # SDR variants of NAVTEX items
+        # SDR variants of NAVTEX items: '*' style (YaND / own decoder) and fldigi style
         if spec.kind == "navtex_en":
             items += [lib.corrupt_stars(it, star_rate, seed=i) for i, it in enumerate(got)]
+            items += [lib.garble(it, star_rate, seed=i) for i, it in enumerate(got)]
     print(f"generated {len(items)} items in {time.time() - t0:.0f}s")
 
     # deterministic grounding first (cheap, no model), then the LLM judge

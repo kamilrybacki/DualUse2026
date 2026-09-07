@@ -118,6 +118,48 @@ def test_corrupt_stars_zero_rate_is_identity_except_channel() -> None:
     assert c["source_text"] == item["source_text"] and c["expected"] == item["expected"]
 
 
+def test_garble_is_fldigi_style_and_labels_abstain() -> None:
+    item = {
+        "id": "x",
+        "kind": "navtex_en",
+        "lang": "en",
+        "channel": "TEXT",
+        "source_text": FIXTURES[1]["source_text"],  # exercise polygon, 4 corners
+        "expected": FIXTURES[1]["expected"],
+    }
+    g = lib.garble(item, rate=0.08, seed=5)
+    assert g == lib.garble(item, rate=0.08, seed=5)
+    assert "*" not in g["source_text"] and g["source_text"] != item["source_text"]
+    assert g["channel"] == "SDR" and g["noisy"] and g["id"].endswith("_garbled")
+    assert VALIDATOR.is_valid(g["expected"])
+    assert len(g["source_text"]) == len(item["source_text"])  # substitutions only, no drops
+    # any damaged coordinate → no geometry; untouched fields keep their values
+    coord_hit = any(
+        a != b
+        for m in lib.COORD_RE.finditer(item["source_text"])
+        for a, b in zip(
+            item["source_text"][m.start() : m.end()],
+            g["source_text"][m.start() : m.end()],
+            strict=True,
+        )
+    )
+    assert (g["expected"]["geometry"] is None) == coord_hit
+    assert g["expected"]["event_type"] == "EXERCISE"
+
+
+def test_garble_zero_rate_is_identity() -> None:
+    item = {
+        "id": "x",
+        "kind": "navtex_en",
+        "lang": "en",
+        "channel": "TEXT",
+        "source_text": FIXTURES[0]["source_text"],
+        "expected": FIXTURES[0]["expected"],
+    }
+    g = lib.garble(item, 0.0, 0)
+    assert g["source_text"] == item["source_text"] and g["expected"] == item["expected"]
+
+
 def test_judge_parse() -> None:
     assert lib.parse_judge('{"verdict":"ACCEPT","issues":[]}')["verdict"] == "accept"
     assert lib.parse_judge("no json")["verdict"] == "reject"
