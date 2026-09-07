@@ -15,8 +15,9 @@ ERROR_RATE ?= 0.0
 
 .DEFAULT_GOAL := help
 
-.PHONY: help setup test lint status cache gbnf record decode gen-sitorb bench \
-        modal-datagen modal-tts modal-bench modal-finetune-dry fetch-martts gold-merge
+.PHONY: help setup test lint status cache gbnf gbnf-check record decode gen-sitorb bench \
+        bench-fake rig-up rig-down synth-vhf-local gazetteer kiwis \
+        modal-datagen modal-tts modal-bench modal-finetune-dry modal-record fetch-martts gold-merge
 
 help: ## list targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  %-20s %s\n", $$1, $$2}'
@@ -40,6 +41,27 @@ cache: ## download shortlisted models into cache/ (network)
 
 gbnf: ## regenerate schemas/extraction.gbnf from extraction.schema.json
 	$(PY) tools/gen_gbnf.py
+
+gbnf-check: ## validate the grammar with llama.cpp's test-gbnf-validator (LLAMA_CPP_DIR=...)
+	tools/check_gbnf.sh
+
+rig-up: ## start headless fldigi rig (PulseAudio null sink + Xvfb + XML-RPC)
+	tools/fldigi/rig_up.sh
+
+rig-down: ## stop the fldigi rig
+	tools/fldigi/rig_up.sh stop
+
+synth-vhf-local: ## espeak-ng VOICE items -> augmented 8 kHz wavs in data/audio/vhf_synth/local
+	$(PY) tools/synth_vhf_local.py --gold $(GOLD)
+
+gazetteer: ## build data/gazetteer.sqlite from Overpass + curated sea areas (network)
+	$(PY) tools/download_gazetteer.py
+
+kiwis: ## rank public KiwiSDRs for a station: make kiwis STATION=J (network)
+	$(PY) tools/fetch_kiwis.py --station $(STATION)
+
+modal-record: ## record a slot from the cloud: make modal-record STATION=HIJ KIWI=a,b (Modal)
+	$(UV) run modal run modal_jobs/record.py --station $(STATION) $(if $(KIWI),--kiwi $(KIWI),)
 
 record: ## record a NAVTEX slot: make record STATION=HIJ KIWI=host1,host2 (network)
 	$(PY) tools/record_navtex.py --station $(STATION) $(if $(KIWI),--kiwi $(KIWI),)

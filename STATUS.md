@@ -1,7 +1,7 @@
 # STATUS — gotowość na 11.09.2026
 
 Lustro PRD §14.1. Legenda: `[ ]` do zrobienia · `[~]` w toku · `[x]` zrobione · `[!]` zablokowane.
-Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 (sesja 1, zdalna)**.
+Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 późny wieczór (sesja 1, zdalna, kontynuacja)**.
 
 ## PRD §14.1 — przed 11.09
 
@@ -9,7 +9,7 @@ Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 (sesj
   - [x] `schemas/event.schema.json` (pełny) i `schemas/extraction.schema.json` (wyjście modelu)
   - [x] `schemas/extraction.gbnf` wygenerowany zwendorowanym konwerterem llama.cpp (`make gbnf`)
   - [x] 8 fixture'ów (NAVTEX EN ×3 w tym `*`, BHMW PL ×2, VHF PL/EN, gale warning) walidują się
-  - [ ] gramatyka załadowana w prawdziwym llama.cpp **na Twojej maszynie** (`llama-cli --grammar-file schemas/extraction.gbnf`)
+  - [x] gramatyka zweryfikowana w prawdziwym llama.cpp (zbudowany ze źródeł w sesji): 9 fixture'ów przyjętych, 3 negatywy odrzucone, kolejność kluczy wymuszona (`make gbnf-check`)
 - [~] Gold set 200+ przykładów z etykietami.
   - [x] format seedów + helper kuracji (`tools/curate_seed.py`), scalanie i przegląd CSV (`tools/gold_merge.py`)
   - [ ] ~50 realnych seedów NAVTEX/BHMW wklejonych (frisnit.com/navtex, BHMW, własne dekody) — praca ręczna
@@ -27,22 +27,29 @@ Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 (sesj
 - [~] Modal: dry-run W4 (QLoRA ≤200 próbek).
   - [x] `modal_jobs/finetune.py` z `--full` zablokowanym bez `FALOCHRON_EVENT=1`
   - [ ] dry-run wykonany, GGUF w `cache/models/`
-- [ ] whisper.cpp vs sherpa-onnx na ~20 nagraniach z szumem; wybór rozmiaru.
+- [~] whisper.cpp vs sherpa-onnx na ~20 nagraniach z szumem; wybór rozmiaru.
+  - [x] lokalny korpus testowy: `tools/synth_vhf_local.py` (espeak-ng pl/en × 3 presety kanału) → `data/audio/vhf_synth/local/` (12 plików)
+  - [ ] wagi Whispera (HF i CDN OpenAI zablokowane w sesji) i sam benchmark ASR
 - [~] fldigi (SITOR-B/NAVTEX, XML-RPC) + nagrania 518 kHz wg Aneksu A.
   - [x] `tools/record_navtex.py` — tabela slotów H/I/J/U z testami, tryb blokowy (HIJ = jedno nagranie 33 min), wiele Kiwi, IQ/USB
   - [x] `tools/check_kiwi_snr.md` — dobór odbiorników i weryfikacja nagrań
-  - [x] `tools/fldigi/` — instrukcja headless, `decode_test.py` (XML-RPC → txt), `iq_to_audio.py` (Kiwi IQ → audio)
-  - [x] `tools/gen_sitorb.py` — generator CCIR 476 z FEC, tryby błędów burst/random, round-trip w testach
-  - [ ] **pierwsze nagranie**: najbliższe sloty U 21:20 CEST (19:20Z) i blok H/I/J 23:08–23:41 CEST (`make record STATION=HIJ KIWI=host1,host2`)
+  - [x] `tools/fldigi/` — rig headless **uruchomiony i sprawdzony w sesji** (`rig_up.sh`: PulseAudio null sink + Xvfb + fldigi 4.2.03): syntetyczny sygnał zdekodowany dosłownie, ramka `ZCZC IA47…NNNN`
+  - [x] odkrycie: fldigi nie drukuje `*`, podstawia lub gubi znaki i traci rejestr LTRS/FIGS → `docs/research_fldigi_navtex_errors.md`, fixture 09, tryb `garble` w W1, tolerancja 1 znaku w nagłówku w metryce
+  - [x] `tools/gen_sitorb.py` — generator CCIR 476 z FEC, tryby błędów burst/random; **round-trip przez prawdziwy fldigi potwierdzony** (odbiór P1.7)
+  - [ ] **pierwsze nagranie** — z tej sesji niemożliwe (KiwiSDR nieosiągalny). Opcje: `make record` na dowolnej maszynie z siecią, albo `make modal-record STATION=HIJ` z chmury (`modal_jobs/record.py`, auto-dobór Kiwi przez `tools/fetch_kiwis.py`)
   - [ ] ≥6 czystych transmisji z ≥2 stacji + wpisy w `data/recordings/518khz/README.md`
-  - [ ] próbka z Wikipedii i wygenerowany sygnał zdekodowane przez rig fldigi (odbiór P0.6 / P1.7)
+  - [x] wygenerowany sygnał zdekodowany przez rig fldigi (odbiór P0.6 / P1.7); próbka z Wikipedii — host zablokowany w sesji, do sprawdzenia przy okazji
 - [~] Cache offline: modele GGUF, obrazy, kafle, dokumentacja; pendrive.
   - [x] `tools/download_models.py` + `cache/models.yaml` (12 wpisów, wszystkie `verified: false`)
   - [ ] `--verify` na Twojej maszynie, poprawienie identyfikatorów, `--all`, `cache/MANIFEST.md` z hashami
   - [ ] kafle mapy Bałtyku (P2.12)
-- [ ] Gazeter bałtycki (nazwy → współrzędne) (P2.11).
+- [~] Gazeter bałtycki (nazwy → współrzędne) (P2.11).
+  - [x] `tools/download_gazetteer.py` (Overpass: latarnie, pławy, porty, miejscowości, zatoki) + `data/gazetteer_seed.csv` (20 akwenów, stacje NAVTEX) + testy offline
+  - [ ] zapytanie Overpass wykonane (overpass-api.de zablokowany w sesji) → `data/gazetteer.sqlite`
 - [x] Szkielet pitchu 3 min (EN) — `docs/pitch_skeleton.md`; pytania do mentorów — `docs/mentor_questions.md`.
-- [ ] Skrypt resetu demo + checklista fault-injection (po evencie startuje implementacja; checklista może powstać wcześniej).
+- [~] Skrypt resetu demo + checklista fault-injection.
+  - [x] `docs/demo_checklist.md` (T-60, T-10, 8 scenariuszy awarii z odzyskaniem)
+  - [ ] skrypt resetu — po `event-start`
 - [ ] `tools/fetch_martts.py` uruchomiony (`make fetch-martts`), notatka licencyjna w `data/martts/README.md`.
 
 ## Decyzje podjęte 2026-09-07
@@ -56,8 +63,17 @@ Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 (sesj
 - kiwiclient jako submoduł (brak pliku licencji w upstream), konwerter GBNF z llama.cpp zwendorowany (MIT), tablica CCIR 476 przepisana jako dane z fldigi.
 - Stara gałąź z gotowym pipeline'em usunięta; `main` zaczyna się od dokumentów (commit `fca9e71`).
 
-## Blokery / do zrobienia po Twojej stronie
+## Blokery / co możesz zrobić z telefonu
 
-- [!] Sesja zdalna nie ma dostępu do huggingface.co, KiwiSDR (port 8073), audio, llama.cpp ani Modala — odbiory P0.4/P0.5/P0.6, P1.7/P1.8 i bench na modelu uruchamiasz lokalnie.
+Z tej sesji osiągalne są tylko: github.com (git + raw), PyPI i apt Ubuntu. Zablokowane (sprawdzone, kod 000/403):
+huggingface.co, api.modal.com, kiwisdr.com i porty 8073, overpass-api.de, nominatim, upload.wikimedia.org,
+frisnit.com, bhmw.gov.pl, build.protomaps.com, CDN wag Whispera. Dlatego:
+
+- [!] modele (P0.4), nagrania Kiwi (P0.5), Modal (P1.8), gazeter (P2.11), kafle (P2.12), seedy z archiwów — wymagają sieci.
+- [ ] **Odblokowanie z telefonu (claude.ai → Code → środowisko tej sesji → Network access):** ustaw „Full access” albo dodaj do allowlisty
+  `huggingface.co`, `cdn-lfs.huggingface.co`, `cas-bridge.xethub.hf.co`, `api.modal.com`, `modal.com`, `overpass-api.de`, `kiwisdr.com`, `frisnit.com`, `bhmw.gov.pl`.
+  Do Modala dodaj w tym samym miejscu zmienne środowiskowe `MODAL_TOKEN_ID` i `MODAL_TOKEN_SECRET` (z modal.com → Settings → API tokens).
+  Potem napisz w sesji „odblokowane” — dalej pójdzie: `--verify` i pobranie modeli, bench na prawdziwym modelu (llama.cpp jest już zbudowany), `modal-record` na najbliższy slot, W1/W2/W3, gazeter.
+- [ ] Nagrania Kiwi używają WebSocket na porcie 8073 — jeśli proxy sesji nie przepuszcza portów innych niż 443, zostaje wyłącznie wariant chmurowy `make modal-record`.
 - [ ] Po sklonowaniu: `make setup` (uv sync + `git submodule update --init`).
-- [ ] Python: docelowo 3.12, `pyproject` dopuszcza 3.11 (sesja zdalna). Testy: `make test` (76 testów), lint: `make lint`.
+- [ ] Python: docelowo 3.12, `pyproject` dopuszcza 3.11 (sesja zdalna). Testy: `make test` (87 testów), lint: `make lint`.

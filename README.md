@@ -31,12 +31,14 @@ nic z tego nie jest częścią ścieżki krytycznej demo.
 | Dokumentacja | PRD, brief dla asystenta AI, checklista gotowości | `PRD_FALOCHRON_BDUH2026.md`, `CLAUDE.md`, `STATUS.md` |
 | Schemat zdarzenia | JSON Schema v0.1 (pełny + podzbiór dla ekstrakcji), gramatyka GBNF, fixture'y | `schemas/` |
 | Benchmark | harness porównujący modele SLM na gold secie (schema validity, F1, unsupported-fact rate, latencja, RSS) | `bench/` |
-| Nagrania NAVTEX | wrapper `kiwirecorder.py` z harmonogramem stacji bałtyckich 518 kHz | `tools/record_navtex.py` |
-| Dekoder SITOR-B | konfiguracja headless fldigi + skrypt testowy dekodowania wav → tekst | `tools/fldigi/` |
+| Nagrania NAVTEX | wrapper `kiwirecorder.py` z harmonogramem stacji bałtyckich 518 kHz, ranking publicznych KiwiSDR, wariant chmurowy | `tools/record_navtex.py`, `tools/fetch_kiwis.py`, `modal_jobs/record.py` |
+| Dekoder SITOR-B | headless fldigi (PulseAudio + Xvfb) + skrypt testowy wav → tekst przez XML-RPC; notatka o zachowaniu fldigi przy błędach FEC | `tools/fldigi/`, `docs/research_fldigi_navtex_errors.md` |
 | Generator SITOR-B | syntetyczny sygnał CCIR 476 z FEC i fazowaniem do testów dekodera | `tools/gen_sitorb.py` |
 | Cache modeli | skrypt pobierania GGUF/ggml z manifestem sha256 | `tools/download_models.py`, `cache/` |
 | Gold set | kuracja realnych tekstów NAVTEX/BHMW z atrybucją, scalanie z danymi syntetycznymi | `tools/curate_seed.py`, `tools/gold_merge.py`, `data/gold/` |
-| Dane syntetyczne | joby Modal: generacja tekstów, TTS+augmentacja, sweep benchmarku, dry-run QLoRA | `modal_jobs/` |
+| Dane syntetyczne | joby Modal: generacja tekstów, TTS+augmentacja, sweep benchmarku, dry-run QLoRA; lokalny korpus VHF z espeak-ng | `modal_jobs/`, `tools/synth_vhf_local.py` |
+| Gazeter | skrypt budujący `data/gazetteer.sqlite` z OSM (Overpass) + kuratorowane akweny | `tools/download_gazetteer.py`, `data/gazetteer_seed.csv` |
+| Demo | checklista resetu i fault-injection (procedura, bez skryptu) | `docs/demo_checklist.md` |
 | Prompty | wersjonowane prompty ekstrakcji i LLM-as-judge | `prompts/` |
 
 Szczegółowy stan każdego elementu: [`STATUS.md`](STATUS.md).

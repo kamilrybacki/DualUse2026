@@ -1,0 +1,27 @@
+name,alt_names,kind,lat,lon,source
+Kattegat,KATTEGAT|Kattegatt,sea_area,56.8,11.6,curated:approximate centroid
+Skagerrak,SKAGERRAK,sea_area,58.0,9.5,curated:approximate centroid
+The Sound,ØRESUND|ÖRESUND|SUND,sea_area,55.8,12.7,curated:approximate centroid
+Great Belt,STOREBÆLT|STORA BÄLT,sea_area,55.4,11.0,curated:approximate centroid
+Fehmarn Belt,FEHMARNBELT|FEHMARN BÆLT,sea_area,54.6,11.2,curated:approximate centroid
+Arkona Basin,ARKONA,sea_area,54.9,13.9,curated:approximate centroid
+Bornholm Basin,BORNHOLMSGATTET,sea_area,55.3,15.8,curated:approximate centroid
+Southern Baltic,SOUTHERN BALTIC|BAŁTYK POŁUDNIOWY|POŁUDNIOWY BAŁTYK,sea_area,55.2,16.5,curated:approximate centroid
+Pomeranian Bay,ZATOKA POMORSKA|POMMERSCHE BUCHT,sea_area,54.1,14.3,curated:approximate centroid
+Gulf of Gdańsk,ZATOKA GDAŃSKA|GDANSK BAY,sea_area,54.5,19.0,curated:approximate centroid
+Bay of Puck,ZATOKA PUCKA,sea_area,54.65,18.55,curated:approximate centroid
+Vistula Lagoon,ZALEW WIŚLANY,sea_area,54.4,19.7,curated:approximate centroid
+Central Baltic,CENTRAL BALTIC|BAŁTYK ŚRODKOWY,sea_area,56.5,19.0,curated:approximate centroid
+Gulf of Riga,RIGA BAY|RĪGAS LĪCIS,sea_area,57.5,23.6,curated:approximate centroid
+Gulf of Finland,SUOMENLAHTI|SOOME LAHT,sea_area,59.8,25.5,curated:approximate centroid
+Åland Sea,ALAND SEA|ÅLANDS HAV,sea_area,60.0,19.3,curated:approximate centroid
+Sea of Åland,ARCHIPELAGO SEA|SAARISTOMERI,sea_area,60.2,21.3,curated:approximate centroid
+Bothnian Sea,BOTHNIAN SEA|SELKÄMERI|BOTTENHAVET,sea_area,61.7,19.8,curated:approximate centroid
+Bothnian Bay,BOTTENVIKEN|PERÄMERI,sea_area,64.5,22.8,curated:approximate centroid
+Northern Baltic,NORTHERN BALTIC|BAŁTYK PÓŁNOCNY,sea_area,58.5,20.5,curated:approximate centroid
+Utklippan,UTKLIPPAN,light_major,55.955,15.7,curated:approximate position of the lighthouse
+Nidingen,NIDINGEN,light_major,57.303,11.905,curated:approximate position of the lighthouse
+Bjuröklubb NAVTEX,BJUROKLUBB,navtex_station,64.46,21.58,curated:NAVTEX station H approx
+Grimeton NAVTEX,GRIMETON,navtex_station,57.10,12.72,curated:NAVTEX station I approx
+Gislövshammar NAVTEX,GISLOVSHAMMAR,navtex_station,55.48,14.32,curated:NAVTEX station J approx
+Tallinn NAVTEX,TALLINN RADIO,navtex_station,59.44,24.75,curated:NAVTEX station U approx
