@@ -238,13 +238,14 @@ def write_report(path: Path, rows: list[dict], run_id: str, args) -> None:
         "",
         "## Clips",
         "",
-        "| model | clip | preset | WER | entity recall | RTF | hypothesis |",
-        "|---|---|---|---|---|---|---|",
+        "| model | clip | voice | preset | WER | entity recall | RTF | hypothesis |",
+        "|---|---|---|---|---|---|---|---|",
     ]
     for r in rows:
         cells = [
             r["model"],
             r["id"],
+            str(r.get("voice", "")).replace("espeak-ng:", ""),
             r["preset"],
             f"{r['wer']:.2f}",
             f"{r['entity_recall']:.2f}",

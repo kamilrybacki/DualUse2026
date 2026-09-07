@@ -29,7 +29,9 @@ Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 póź
   - [ ] dry-run wykonany, GGUF w `cache/models/`
 - [~] whisper.cpp vs sherpa-onnx na ~20 nagraniach z szumem; wybór rozmiaru.
   - [x] lokalny korpus testowy: `tools/synth_vhf_local.py` (espeak-ng pl/en × 3 presety kanału) → `data/audio/vhf_synth/local/` (12 plików)
-  - [ ] wagi Whispera (HF i CDN OpenAI zablokowane w sesji) i sam benchmark ASR
+  - [x] Whisper tiny/small/large-v3-turbo (ONNX int8 z GitHub Releases sherpa-onnx) w `cache/asr/`; `bench/asr_bench.py` (WER, recall encji, RTF)
+  - [x] **wynik** (`bench/reports/20260907-205336_asr`, `docs/research_asr_espeak.md`): tylko turbo jest kandydatem (WER 0.37 clean / 0.49 typical, recall encji 0.47 / 0.29); tiny i small nieużyteczne; preset harsh łamie wszystko; espeak to pesymistyczny proxy, powtórzyć na korpusie Piper/własnym głosie
+  - [ ] whisper.cpp z wagami ggml (HF zablokowane) — latencja/RSS na docelowym węźle
 - [~] fldigi (SITOR-B/NAVTEX, XML-RPC) + nagrania 518 kHz wg Aneksu A.
   - [x] `tools/record_navtex.py` — tabela slotów H/I/J/U z testami, tryb blokowy (HIJ = jedno nagranie 33 min), wiele Kiwi, IQ/USB
   - [x] `tools/check_kiwi_snr.md` — dobór odbiorników i weryfikacja nagrań
