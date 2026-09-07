@@ -1,0 +1,57 @@
+# PASS thresholds for the SLM cascade benchmark — PRD §13.
+#
+# FROZEN 2026-09-07 BEFORE ANY MODEL WAS RUN. Do not edit after looking at results; if a
+# threshold must change, add a dated note below and a new key, keep the old one.
+#
+# Metric definitions live in bench/metrics.py. Latency and RSS are only meaningful when
+# measured on the target node (PRD §12.5) — the runner records the hostname with every run.
+
+pass:
+  schema_validity: 1.0          # fraction of outputs valid against extraction.schema.json
+  field_f1: 0.85                # mean per-field score over the scored fields below
+  unsupported_fact_rate: 0.02   # ≤ — main safety metric
+  geo_resolution: 0.90          # geometry within tolerance OR location_name match
+  latency_p95_s: 2.0            # ≤, tier-2 on the field hub (informational elsewhere)
+
+report_only:
+  - omission_rate
+  - latency_p50_s
+  - peak_rss_mb
+  - escalation_rate
+
+scored_fields:
+  - event_type
+  - warning_id
+  - issued_at
+  - valid_from
+  - valid_to
+  - geometry
+  - location_name
+  - agency
+  - entities
+
+tolerances:
+  geometry_nm: 0.5              # point / centroid distance counted as a match
+  string_normalize: true        # case-insensitive, punctuation-insensitive, whitespace-collapsed
+
+# Escalation triggers (PRD F12). Declarative only — the benchmark counts how often each rule
+# fires on a model's output. No routing code exists in this repo; the router is written at the
+# event and may read this file.
+escalation_rules:
+  - id: schema_invalid
+    when: output does not validate
+  - id: type_unknown
+    when: event_type == UNKNOWN
+  - id: no_location
+    when: geometry is null and location_name is null
+  - id: geometry_outside_baltic
+    when: geometry outside bbox
+    bbox: [9.0, 53.0, 31.0, 66.5]   # lon_min, lat_min, lon_max, lat_max
+  - id: time_inconsistent
+    when: valid_to < valid_from
+  - id: unsupported_fact
+    when: any value not grounded in the source
+
+# Notes
+# - 2026-09-07: initial freeze. Gold at this point = 8 synthetic fixtures; the real gold set
+#   (200–300 items, human-reviewed) replaces it without changing thresholds.

@@ -1,0 +1,149 @@
+# Model shortlist for tools/download_models.py — PRD §10.1 / §10.2.
+#
+# `verified: false` means the Hugging Face repo id / filename has NOT been checked against
+# HF yet (CLAUDE.md P0.4: "verify ids on HF, do not guess"). The remote prep session has no
+# access to huggingface.co, so verification happens on your machine:
+#
+#     uv run python tools/download_models.py --verify        # lists real files per repo
+#     uv run python tools/download_models.py --all           # downloads + writes MANIFEST.md
+#
+# After --verify, fix `repo` / `file` here, flip `verified: true`, commit. Only entries with
+# verified: true are downloaded by --all (use --force-unverified to override).
+#
+# Fields: name (local id), tier, role, repo, file (glob over repo files), revision (commit or
+# "main"), license, lang_pl (model card claims Polish), verified, notes.
+
+models:
+  # ---- SLM cascade (GGUF Q4, llama.cpp) --------------------------------------------------
+  - name: qwen3.5-0.8b-q4
+    tier: 2
+    role: main PL/EN extraction candidate
+    repo: Qwen/Qwen3.5-0.8B-GGUF
+    file: "*Q4_K_M*.gguf"
+    revision: main
+    license: Apache-2.0
+    lang_pl: true
+    verified: false
+    notes: PRD names Qwen/Qwen3.5-0.8B (+ qualcomm exports). Check whether Qwen publishes an official GGUF repo; otherwise convert with llama.cpp convert_hf_to_gguf.py + llama-quantize Q4_K_M (steps in cache/MANIFEST.md).
+
+  - name: granite-4.0-350m-q4
+    tier: 1
+    role: type classification, simple fields
+    repo: ibm-granite/granite-4.0-350m-GGUF
+    file: "*Q4_K_M*.gguf"
+    revision: main
+    license: Apache-2.0
+    lang_pl: false
+    verified: false
+    notes: IBM usually ships GGUF under ibm-granite/<model>-GGUF; confirm exact name (may be granite-4.0-h-350m).
+
+  - name: granite-4.0-1b-q4
+    tier: 2
+    role: tier-2 alternative
+    repo: ibm-granite/granite-4.0-1b-GGUF
+    file: "*Q4_K_M*.gguf"
+    revision: main
+    license: Apache-2.0
+    lang_pl: false
+    verified: false
+    notes: see granite-4.0-350m.
+
+  - name: lfm2.5-350m-q4
+    tier: 1
+    role: ultra-light experiment (EN track)
+    repo: LiquidAI/LFM2.5-350M-GGUF
+    file: "*Q4_K_M*.gguf"
+    revision: main
+    license: LFM Open License v1.0
+    lang_pl: false
+    verified: false
+    notes: Liquid ships official GGUF repos (LFM2 did). PRD says no PL on the card → EN only.
+
+  - name: lfm2.5-1.2b-q4
+    tier: 2
+    role: EN track comparison
+    repo: LiquidAI/LFM2.5-1.2B-Instruct-GGUF
+    file: "*Q4_K_M*.gguf"
+    revision: main
+    license: LFM Open License v1.0
+    lang_pl: false
+    verified: false
+    notes: PRD source lists LiquidAI/LFM2.5-1.2B-Instruct (safetensors); GGUF twin expected.
+
+  - name: ministral-3-3b-q4
+    tier: 3
+    role: fallback for hard cases, structured outputs
+    repo: mistralai/Ministral-3-3B-Instruct-GGUF
+    file: "*Q4_K_M*.gguf"
+    revision: main
+    license: Apache-2.0
+    lang_pl: true
+    verified: false
+    notes: Name per PRD ("Ministral 3 3B"); Mistral may not publish GGUF — fall back to a bartowski/unsloth quant and record that in the manifest.
+
+  - name: phi-4-mini-q4
+    tier: 3
+    role: fallback alternative (card lists PL)
+    repo: microsoft/Phi-4-mini-instruct-gguf
+    file: "*Q4_K_M*.gguf"
+    revision: main
+    license: MIT
+    lang_pl: true
+    verified: false
+    notes: Microsoft published Phi-4-mini-instruct; check whether the -gguf repo exists or use a community quant.
+
+  - name: qwen3-1.7b-q4
+    tier: 3
+    role: plan B (known, tested)
+    repo: Qwen/Qwen3-1.7B-GGUF
+    file: "*Q4_K_M*.gguf"
+    revision: main
+    license: Apache-2.0
+    lang_pl: true
+    verified: false
+    notes: Official Qwen3 GGUF repos existed in 2025; still verify the file name.
+
+  - name: qwen3-4b-q4
+    tier: 3
+    role: plan B (known, tested)
+    repo: Qwen/Qwen3-4B-GGUF
+    file: "*Q4_K_M*.gguf"
+    revision: main
+    license: Apache-2.0
+    lang_pl: true
+    verified: false
+    notes: optional; ~2.5 GB.
+
+  # ---- ASR (whisper.cpp ggml) --------------------------------------------------------------
+  - name: whisper-small
+    tier: asr
+    role: VHF ASR PL/EN, pocket node
+    repo: ggerganov/whisper.cpp
+    file: ggml-small.bin
+    revision: main
+    license: MIT
+    lang_pl: true
+    verified: false
+    notes: whisper.cpp's own HF repo hosts ggml-*.bin; also ggml-small-q5_1.bin if RAM is tight.
+
+  - name: whisper-medium
+    tier: asr
+    role: VHF ASR PL/EN, field hub
+    repo: ggerganov/whisper.cpp
+    file: ggml-medium.bin
+    revision: main
+    license: MIT
+    lang_pl: true
+    verified: false
+    notes: ~1.5 GB.
+
+  - name: whisper-large-v3-turbo
+    tier: asr
+    role: VHF ASR PL/EN, field hub (best)
+    repo: ggerganov/whisper.cpp
+    file: ggml-large-v3-turbo.bin
+    revision: main
+    license: MIT
+    lang_pl: true
+    verified: false
+    notes: ~1.6 GB; q5_0 variant available.
