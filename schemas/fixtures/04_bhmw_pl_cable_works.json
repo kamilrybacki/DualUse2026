@@ -1,0 +1,22 @@
+{
+  "id": "04_bhmw_pl_cable_works",
+  "channel": "TEXT",
+  "lang": "pl",
+  "source_text": "OSTRZEŻENIE NAWIGACYJNE NR 214/26\nZATOKA GDAŃSKA.\nW DNIACH 10.09.2026 GODZ. 06:00 UTC DO 15.09.2026 GODZ. 18:00 UTC W REJONIE POZYCJI 54-30.0N 018-50.0E PROWADZONE BĘDĄ PRACE PRZY KABLU PODMORSKIM Z UDZIAŁEM STATKU KABLOWEGO \"NEPTUN\". ZALECA SIĘ OMIJANIE REJONU PRAC W ODLEGŁOŚCI 1 MM.\nBHMW GDYNIA 07.09.2026",
+  "expected": {
+    "event_type": "NAV_WARNING",
+    "warning_id": "214/26",
+    "issued_at": null,
+    "valid_from": "2026-09-10T06:00:00Z",
+    "valid_to": "2026-09-15T18:00:00Z",
+    "geometry": { "type": "Point", "coordinates": [18.8333, 54.5] },
+    "location_name": "ZATOKA GDAŃSKA, REJON POZYCJI 54-30.0N 018-50.0E",
+    "agency": "BHMW",
+    "entities": [
+      { "type": "VESSEL", "text": "NEPTUN" },
+      { "type": "INFRA", "text": "KABLU PODMORSKIM" }
+    ]
+  },
+  "notes": "Polish BHMW navigational warning (the demo's 'cable works' message). No NAVTEX header → national number as warning_id. Issue date has no time → issued_at null rather than an invented midnight (the date survives in the source hash / raw text). Cable works are a NAV_WARNING, not INFRA_DAMAGE (nothing is damaged).",
+  "attribution": "synthetic, written for this repo in the style of BHMW warnings"
+}

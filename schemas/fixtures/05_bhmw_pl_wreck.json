@@ -1,0 +1,21 @@
+{
+  "id": "05_bhmw_pl_wreck",
+  "channel": "TEXT",
+  "lang": "pl",
+  "source_text": "OSTRZEŻENIE NAWIGACYJNE NR 219/26\nZATOKA POMORSKA.\nNA POZYCJI 54-05.7N 014-22.3E ZNAJDUJE SIĘ WRAK KUTRA RYBACKIEGO. WRAK NIEBEZPIECZNY DLA ŻEGLUGI, NIEOZNAKOWANY. ZALECA SIĘ ZACHOWANIE SZCZEGÓLNEJ OSTROŻNOŚCI.\nANULUJE OSTRZEŻENIE NR 211/26.\nBHMW GDYNIA 07.09.2026",
+  "expected": {
+    "event_type": "WRECK",
+    "warning_id": "219/26",
+    "issued_at": null,
+    "valid_from": null,
+    "valid_to": null,
+    "geometry": { "type": "Point", "coordinates": [14.3717, 54.095] },
+    "location_name": "ZATOKA POMORSKA, POZYCJA 54-05.7N 014-22.3E",
+    "agency": "BHMW",
+    "entities": [
+      { "type": "OTHER", "text": "WRAK KUTRA RYBACKIEGO" }
+    ]
+  },
+  "notes": "WRECK type; 'anuluje ostrzeżenie 211/26' is a cancellation reference that the schema v0.1 has no field for — it must NOT be smuggled into warning_id. Candidate for a schema v0.2 field (cancels).",
+  "attribution": "synthetic, written for this repo in the style of BHMW warnings"
+}

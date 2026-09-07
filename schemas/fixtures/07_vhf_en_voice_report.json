@@ -1,0 +1,23 @@
+{
+  "id": "07_vhf_en_voice_report",
+  "channel": "VOICE",
+  "lang": "en",
+  "source_text": "tallinn radio tallinn radio this is motor vessel nordlys nordlys call sign lima alpha romeo zulu on channel one six over\nnordlys this is tallinn radio go ahead over\ntallinn radio this is nordlys securite securite we have a container adrift in position five nine degrees two five decimal three minutes north zero two four degrees four zero decimal one minutes east container is partly submerged danger to navigation over",
+  "expected": {
+    "event_type": "VOICE_REPORT",
+    "warning_id": null,
+    "issued_at": null,
+    "valid_from": null,
+    "valid_to": null,
+    "geometry": { "type": "Point", "coordinates": [24.6683, 59.4217] },
+    "location_name": null,
+    "agency": "VHF",
+    "entities": [
+      { "type": "VESSEL", "text": "NORDLYS" },
+      { "type": "CALLSIGN", "text": "LARZ" },
+      { "type": "OTHER", "text": "TALLINN RADIO" }
+    ]
+  },
+  "notes": "SMCP-style securité report in English. Call sign spelled in NATO alphabet → LARZ. Position 59°25.3'N 024°40.1'E → 59.4217, 24.6683. No place name given → location_name null (the position is enough). Type stays VOICE_REPORT (source channel), not OBSTRUCTION — the deterministic layer may re-classify later; the model reports what was said.",
+  "attribution": "synthetic, written for this repo; no real VHF traffic"
+}

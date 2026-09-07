@@ -1,0 +1,21 @@
+{
+  "id": "03_navtex_en_corrupted_stars",
+  "channel": "SDR",
+  "lang": "en",
+  "source_text": "ZCZC IA4*\n0712*0 UTC SEP\nSWEDISH NAV W*RNING 312\nKATTEGAT.\nLIGHT BUOY NIDIN*EN E 57-1*.2N 011-5*.5E UNLIT.\nMARINERS ARE ADVIS*D TO NAVIGATE WITH CAUTION.\nNNNN",
+  "expected": {
+    "event_type": "NAV_WARNING",
+    "warning_id": null,
+    "issued_at": null,
+    "valid_from": null,
+    "valid_to": null,
+    "geometry": null,
+    "location_name": "KATTEGAT, LIGHT BUOY NIDIN*EN E",
+    "agency": "NAVTEX/518/I",
+    "entities": [
+      { "type": "AID_TO_NAV", "text": "LIGHT BUOY NIDIN*EN E" }
+    ]
+  },
+  "notes": "Same message as 01 after SITOR-B FEC failures ('*'). The correct behaviour is to abstain: header digit lost → warning_id null; time group has a '*' → issued_at null; both coordinates have a lost digit → geometry null. Type is still recoverable from context. The '*' stays in location_name/entities verbatim (never repaired silently — that is the F13 experiment with restored_chars). Agency from the B1 letter I, which survived.",
+  "attribution": "synthetic corruption of fixture 01"
+}

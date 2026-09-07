@@ -36,4 +36,5 @@ select = ["E", "F", "I", "UP", "B", "W"]
 
 [tool.pytest.ini_options]
 testpaths = ["tools", "bench", "schemas"]
-addopts = "-q"
+addopts = "-q --ignore=tools/vendor"
+norecursedirs = ["tools/vendor", ".venv", "cache", "data"]

@@ -1,0 +1,187 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://falochron.local/schemas/event.schema.json",
+  "title": "FALOCHRON event v0.1",
+  "description": "Full event record as stored by the (future) event store. Mirrors PRD §9: S-124 core fields plus project extensions. Every value may be null / UNKNOWN. The extraction model never emits this whole object — see extraction.schema.json for the subset it produces; the remaining fields are filled deterministically.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_type",
+    "warning_id",
+    "issued_at",
+    "valid_from",
+    "valid_to",
+    "geometry",
+    "location_name",
+    "agency",
+    "entities",
+    "source",
+    "provenance",
+    "correlation",
+    "needs_human_review"
+  ],
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "event_type": { "$ref": "#/definitions/event_type" },
+    "warning_id": { "$ref": "#/definitions/nullable_string" },
+    "issued_at": { "$ref": "#/definitions/nullable_utc" },
+    "valid_from": { "$ref": "#/definitions/nullable_utc" },
+    "valid_to": { "$ref": "#/definitions/nullable_utc" },
+    "geometry": { "$ref": "#/definitions/geometry" },
+    "location_name": { "$ref": "#/definitions/nullable_string" },
+    "agency": { "$ref": "#/definitions/nullable_string" },
+    "entities": { "$ref": "#/definitions/entities" },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channel", "id", "raw_hash"],
+      "properties": {
+        "channel": { "type": "string", "enum": ["TEXT", "SDR", "VOICE", "UNKNOWN"] },
+        "id": { "$ref": "#/definitions/nullable_string" },
+        "raw_hash": {
+          "description": "sha256 of the raw input (text, decoded text or audio bytes), prefixed 'sha256:'",
+          "type": ["string", "null"],
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model_id", "prompt_version", "schema_version", "restored_chars"],
+      "properties": {
+        "model_id": { "$ref": "#/definitions/nullable_string" },
+        "prompt_version": { "$ref": "#/definitions/nullable_string" },
+        "schema_version": { "const": "0.1" },
+        "restored_chars": {
+          "description": "F13 experiment: positions in the decoded text where a '*' was restored by the model. Empty unless restoration ran.",
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["pos", "char"],
+            "properties": {
+              "pos": { "type": "integer", "minimum": 0 },
+              "char": { "type": "string", "minLength": 1, "maxLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "correlation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["candidate_of", "basis"],
+      "properties": {
+        "candidate_of": {
+          "description": "UUIDs of events this one is a correlation *candidate* of (never auto-merged, PRD G3).",
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "basis": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["distance_nm", "time_overlap", "entities"],
+              "properties": {
+                "distance_nm": { "type": ["number", "null"], "minimum": 0 },
+                "time_overlap": { "type": ["boolean", "null"] },
+                "entities": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "needs_human_review": {
+      "description": "Set by deterministic validator rules only (PRD F5), never by model confidence.",
+      "type": "boolean"
+    }
+  },
+  "definitions": {
+    "event_type": {
+      "description": "S-124 warningType. UNKNOWN when the source does not allow classification.",
+      "type": "string",
+      "enum": [
+        "NAV_WARNING",
+        "MET_WARNING",
+        "EXERCISE",
+        "INFRA_DAMAGE",
+        "WRECK",
+        "OBSTRUCTION",
+        "VOICE_REPORT",
+        "OTHER",
+        "UNKNOWN"
+      ]
+    },
+    "nullable_string": { "type": ["string", "null"] },
+    "nullable_utc": {
+      "description": "UTC timestamp, ISO 8601 with Z; null when not stated in the source. Written as a pattern (not format) so llama.cpp's grammar converter can enforce it.",
+      "type": ["string", "null"],
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "position": {
+      "description": "GeoJSON position [longitude, latitude] in decimal degrees (WGS84).",
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": [
+        { "type": "number", "minimum": -180, "maximum": 180 },
+        { "type": "number", "minimum": -90, "maximum": 90 }
+      ]
+    },
+    "geometry": {
+      "description": "GeoJSON geometry (S-124 Point/Curve/Surface). null when only a place name is given.",
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "coordinates"],
+          "properties": {
+            "type": { "const": "Point" },
+            "coordinates": { "$ref": "#/definitions/position" }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "coordinates"],
+          "properties": {
+            "type": { "const": "LineString" },
+            "coordinates": { "type": "array", "minItems": 2, "items": { "$ref": "#/definitions/position" } }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["type", "coordinates"],
+          "properties": {
+            "type": { "const": "Polygon" },
+            "coordinates": {
+              "type": "array",
+              "minItems": 1,
+              "items": { "type": "array", "minItems": 4, "items": { "$ref": "#/definitions/position" } }
+            }
+          }
+        }
+      ]
+    },
+    "entities": {
+      "description": "Named things mentioned in the source, used by the correlator's 'common entities' rule (PRD F7). Text is copied verbatim from the source.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["type", "text"],
+        "properties": {
+          "type": { "type": "string", "enum": ["VESSEL", "MMSI", "CALLSIGN", "INFRA", "AID_TO_NAV", "OTHER"] },
+          "text": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

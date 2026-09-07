@@ -53,3 +53,6 @@ bench/runs/
 .vscode/
 .DS_Store
 Thumbs.db
+tools/fldigi/config/*
+!tools/fldigi/config/NOTES.md
+tools/fldigi/samples/

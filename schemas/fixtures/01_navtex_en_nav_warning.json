@@ -1,0 +1,21 @@
+{
+  "id": "01_navtex_en_nav_warning",
+  "channel": "TEXT",
+  "lang": "en",
+  "source_text": "ZCZC IA47\n071230 UTC SEP\nSWEDISH NAV WARNING 312\nKATTEGAT.\nLIGHT BUOY NIDINGEN E 57-18.2N 011-56.5E UNLIT.\nMARINERS ARE ADVISED TO NAVIGATE WITH CAUTION.\nNNNN",
+  "expected": {
+    "event_type": "NAV_WARNING",
+    "warning_id": "IA47",
+    "issued_at": "2026-09-07T12:30:00Z",
+    "valid_from": null,
+    "valid_to": null,
+    "geometry": { "type": "Point", "coordinates": [11.9417, 57.3033] },
+    "location_name": "KATTEGAT, LIGHT BUOY NIDINGEN E",
+    "agency": "NAVTEX/518/I",
+    "entities": [
+      { "type": "AID_TO_NAV", "text": "LIGHT BUOY NIDINGEN E" }
+    ]
+  },
+  "notes": "Standard NAVAREA I style. Day-time group 071230 UTC SEP; year is not in the text — the benchmark's date resolver assumes the current year (documented assumption). 57-18.2N 011-56.5E → 57.3033, 11.9417. No validity window stated → nulls, not guesses.",
+  "attribution": "synthetic, written for this repo in the style of Grimeton (I) broadcasts"
+}

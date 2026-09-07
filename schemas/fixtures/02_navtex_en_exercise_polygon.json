@@ -1,0 +1,22 @@
+{
+  "id": "02_navtex_en_exercise_polygon",
+  "channel": "SDR",
+  "lang": "en",
+  "source_text": "ZCZC JA05\n120840 UTC SEP\nSWEDISH NAV WARNING 0842\nSOUTHERN BALTIC.\nFIRING EXERCISE 12 SEP 1000 UTC TO 1600 UTC IN AREA SOUTH OF UTKLIPPAN BOUNDED BY\n55-55.0N 015-40.0E\n55-55.0N 016-10.0E\n55-35.0N 016-10.0E\n55-35.0N 015-40.0E.\nVESSELS ARE REQUESTED TO KEEP CLEAR.\nNNNN",
+  "expected": {
+    "event_type": "EXERCISE",
+    "warning_id": "JA05",
+    "issued_at": "2026-09-12T08:40:00Z",
+    "valid_from": "2026-09-12T10:00:00Z",
+    "valid_to": "2026-09-12T16:00:00Z",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [[[15.6667, 55.9167], [16.1667, 55.9167], [16.1667, 55.5833], [15.6667, 55.5833], [15.6667, 55.9167]]]
+    },
+    "location_name": "SOUTHERN BALTIC, AREA SOUTH OF UTKLIPPAN",
+    "agency": "NAVTEX/518/J",
+    "entities": []
+  },
+  "notes": "Mirrors the PRD §9 example (EXERCISE south of Utklippan). Four corners → closed GeoJSON ring (first == last). Times given as a same-day window.",
+  "attribution": "synthetic, written for this repo in the style of Gislövshammar (J) broadcasts"
+}

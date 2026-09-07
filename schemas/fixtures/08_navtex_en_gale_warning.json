@@ -1,0 +1,19 @@
+{
+  "id": "08_navtex_en_gale_warning",
+  "channel": "TEXT",
+  "lang": "en",
+  "source_text": "ZCZC HB13\n071800 UTC SEP\nGALE WARNING 118\nBOTHNIAN SEA, ALAND SEA.\nSOUTHWEST 8, INCREASING 9 DURING THE NIGHT. ROUGH OR VERY ROUGH SEA. VISIBILITY MODERATE IN RAIN.\nVALID UNTIL 081200 UTC SEP.\nNNNN",
+  "expected": {
+    "event_type": "MET_WARNING",
+    "warning_id": "HB13",
+    "issued_at": "2026-09-07T18:00:00Z",
+    "valid_from": null,
+    "valid_to": "2026-09-08T12:00:00Z",
+    "geometry": null,
+    "location_name": "BOTHNIAN SEA, ALAND SEA",
+    "agency": "NAVTEX/518/H",
+    "entities": []
+  },
+  "notes": "Subject indicator B2 = B (meteorological warning) → MET_WARNING. Only sea-area names → geometry null, location_name carries the names for the gazetteer. 'Valid until' gives valid_to only; valid_from is not stated (the issue time is not silently copied into it).",
+  "attribution": "synthetic, written for this repo in the style of Bjuröklubb (H) broadcasts"
+}
