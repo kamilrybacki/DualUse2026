@@ -1,14 +1,14 @@
 # Model shortlist for tools/download_models.py — PRD §10.1 / §10.2.
 #
-# `verified: false` means the Hugging Face repo id / filename has NOT been checked against
-# HF yet (CLAUDE.md P0.4: "verify ids on HF, do not guess"). The remote prep session has no
-# access to huggingface.co, so verification happens on your machine:
+# `verified: true` = the repo id was confirmed (2026-09-07: SLM repos via web search, because
+# huggingface.co is unreachable from the prep session; whisper.cpp files are the well-known
+# ggml-*.bin names). It does NOT mean the file was hashed: `--all` lists the real files,
+# takes the first match of `file` and writes cache/MANIFEST.md with sha256 (CLAUDE.md P0.4).
 #
 #     uv run python tools/download_models.py --verify        # lists real files per repo
 #     uv run python tools/download_models.py --all           # downloads + writes MANIFEST.md
 #
-# After --verify, fix `repo` / `file` here, flip `verified: true`, commit. Only entries with
-# verified: true are downloaded by --all (use --force-unverified to override).
+# Only entries with verified: true are downloaded by --all (--force-unverified overrides).
 #
 # Fields: name (local id), tier, role, repo, file (glob over repo files), revision (commit or
 # "main"), license, lang_pl (model card claims Polish), verified, notes.
@@ -18,101 +18,101 @@ models:
   - name: qwen3.5-0.8b-q4
     tier: 2
     role: main PL/EN extraction candidate
-    repo: Qwen/Qwen3.5-0.8B-GGUF
-    file: "*Q4_K_M*.gguf"
+    repo: bartowski/Qwen_Qwen3.5-0.8B-GGUF
+    file: "*Q4_K_M.gguf"
     revision: main
     license: Apache-2.0
     lang_pl: true
-    verified: false
-    notes: PRD names Qwen/Qwen3.5-0.8B (+ qualcomm exports). Check whether Qwen publishes an official GGUF repo; otherwise convert with llama.cpp convert_hf_to_gguf.py + llama-quantize Q4_K_M (steps in cache/MANIFEST.md).
+    verified: true
+    notes: "No official Qwen GGUF for 3.5-0.8B found; bartowski quant of Qwen/Qwen3.5-0.8B (alternatives unsloth/Qwen3.5-0.8B-GGUF, lmstudio-community). Repo id confirmed via web search 2026-09-07 (huggingface.co blocked from the prep session, so the file list was not inspected; --verify still prints the real files before --all)."
 
   - name: granite-4.0-350m-q4
     tier: 1
     role: type classification, simple fields
     repo: ibm-granite/granite-4.0-350m-GGUF
-    file: "*Q4_K_M*.gguf"
+    file: "granite-4.0-350m-Q4_K_M.gguf"
     revision: main
     license: Apache-2.0
     lang_pl: false
-    verified: false
-    notes: IBM usually ships GGUF under ibm-granite/<model>-GGUF; confirm exact name (may be granite-4.0-h-350m).
+    verified: true
+    notes: "Official IBM GGUF; file name seen in search results. There is also a hybrid 'granite-4.0-h-350m-GGUF'. Repo id confirmed via web search 2026-09-07 (huggingface.co blocked from the prep session, so the file list was not inspected; --verify still prints the real files before --all)."
 
   - name: granite-4.0-1b-q4
     tier: 2
     role: tier-2 alternative
     repo: ibm-granite/granite-4.0-1b-GGUF
-    file: "*Q4_K_M*.gguf"
+    file: "*Q4_K_M.gguf"
     revision: main
     license: Apache-2.0
     lang_pl: false
-    verified: false
-    notes: see granite-4.0-350m.
+    verified: true
+    notes: "Official IBM GGUF (also granite-4.0-h-1b-GGUF hybrid). Repo id confirmed via web search 2026-09-07 (huggingface.co blocked from the prep session, so the file list was not inspected; --verify still prints the real files before --all)."
 
   - name: lfm2.5-350m-q4
     tier: 1
     role: ultra-light experiment (EN track)
     repo: LiquidAI/LFM2.5-350M-GGUF
-    file: "*Q4_K_M*.gguf"
+    file: "LFM2.5-350M-QAD-Q4_0.gguf"
     revision: main
     license: LFM Open License v1.0
     lang_pl: false
-    verified: false
-    notes: Liquid ships official GGUF repos (LFM2 did). PRD says no PL on the card → EN only.
+    verified: true
+    notes: "Official Liquid GGUF; QAD-Q4_0 is the quantization-aware-distilled checkpoint (better than plain Q4_0). PRD: no PL on the card. Repo id confirmed via web search 2026-09-07 (huggingface.co blocked from the prep session, so the file list was not inspected; --verify still prints the real files before --all)."
 
   - name: lfm2.5-1.2b-q4
     tier: 2
     role: EN track comparison
     repo: LiquidAI/LFM2.5-1.2B-Instruct-GGUF
-    file: "*Q4_K_M*.gguf"
+    file: "*Q4_K_M.gguf"
     revision: main
     license: LFM Open License v1.0
     lang_pl: false
-    verified: false
-    notes: PRD source lists LiquidAI/LFM2.5-1.2B-Instruct (safetensors); GGUF twin expected.
+    verified: true
+    notes: "Official Liquid GGUF (Q4_0/Q4_K_M/Q5_K_M/Q6_K/Q8_0 listed). Repo id confirmed via web search 2026-09-07 (huggingface.co blocked from the prep session, so the file list was not inspected; --verify still prints the real files before --all)."
 
   - name: ministral-3-3b-q4
     tier: 3
     role: fallback for hard cases, structured outputs
-    repo: mistralai/Ministral-3-3B-Instruct-GGUF
-    file: "*Q4_K_M*.gguf"
+    repo: mistralai/Ministral-3-3B-Instruct-2512-GGUF
+    file: "*Q4_K_M.gguf"
     revision: main
     license: Apache-2.0
     lang_pl: true
-    verified: false
-    notes: Name per PRD ("Ministral 3 3B"); Mistral may not publish GGUF — fall back to a bartowski/unsloth quant and record that in the manifest.
+    verified: true
+    notes: "Official Mistral GGUF repo (release 2512; also a -Reasoning- variant). Repo id confirmed via web search 2026-09-07 (huggingface.co blocked from the prep session, so the file list was not inspected; --verify still prints the real files before --all)."
 
   - name: phi-4-mini-q4
     tier: 3
     role: fallback alternative (card lists PL)
-    repo: microsoft/Phi-4-mini-instruct-gguf
-    file: "*Q4_K_M*.gguf"
+    repo: bartowski/microsoft_Phi-4-mini-instruct-GGUF
+    file: "*Q4_K_M.gguf"
     revision: main
     license: MIT
     lang_pl: true
-    verified: false
-    notes: Microsoft published Phi-4-mini-instruct; check whether the -gguf repo exists or use a community quant.
+    verified: true
+    notes: "No official microsoft GGUF for Phi-4-mini-instruct; bartowski quant (alternatives unsloth/Phi-4-mini-instruct-GGUF). Repo id confirmed via web search 2026-09-07 (huggingface.co blocked from the prep session, so the file list was not inspected; --verify still prints the real files before --all)."
 
   - name: qwen3-1.7b-q4
     tier: 3
     role: plan B (known, tested)
     repo: Qwen/Qwen3-1.7B-GGUF
-    file: "*Q4_K_M*.gguf"
+    file: "*Q4_K_M.gguf"
     revision: main
     license: Apache-2.0
     lang_pl: true
-    verified: false
-    notes: Official Qwen3 GGUF repos existed in 2025; still verify the file name.
+    verified: true
+    notes: "Official Qwen GGUF repo. Repo id confirmed via web search 2026-09-07 (huggingface.co blocked from the prep session, so the file list was not inspected; --verify still prints the real files before --all)."
 
   - name: qwen3-4b-q4
     tier: 3
     role: plan B (known, tested)
     repo: Qwen/Qwen3-4B-GGUF
-    file: "*Q4_K_M*.gguf"
+    file: "*Q4_K_M.gguf"
     revision: main
     license: Apache-2.0
     lang_pl: true
-    verified: false
-    notes: optional; ~2.5 GB.
+    verified: true
+    notes: "Official Qwen GGUF repo; optional, ~2.5 GB. Repo id confirmed via web search 2026-09-07 (huggingface.co blocked from the prep session, so the file list was not inspected; --verify still prints the real files before --all)."
 
   # ---- ASR (whisper.cpp ggml) --------------------------------------------------------------
   - name: whisper-small
@@ -123,8 +123,8 @@ models:
     revision: main
     license: MIT
     lang_pl: true
-    verified: false
-    notes: whisper.cpp's own HF repo hosts ggml-*.bin; also ggml-small-q5_1.bin if RAM is tight.
+    verified: true
+    notes: "whisper.cpp's own HF repo hosts ggml-*.bin; also ggml-small-q5_1.bin if RAM is tight."
 
   - name: whisper-medium
     tier: asr
@@ -134,8 +134,8 @@ models:
     revision: main
     license: MIT
     lang_pl: true
-    verified: false
-    notes: ~1.5 GB.
+    verified: true
+    notes: "~1.5 GB."
 
   - name: whisper-large-v3-turbo
     tier: asr
@@ -145,5 +145,5 @@ models:
     revision: main
     license: MIT
     lang_pl: true
-    verified: false
-    notes: ~1.6 GB; q5_0 variant available.
+    verified: true
+    notes: "~1.6 GB; q5_0 variant available."

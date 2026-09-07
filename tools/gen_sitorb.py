@@ -24,7 +24,7 @@ REPO_ROOT = Path(__file__).resolve().parents[1]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from tools.sitorb import FskParams, generate  # noqa: E402
+from tools.sitorb import FskParams, generate, write_kiwi_iq_wav  # noqa: E402
 
 DEFAULT_OUT_DIR = REPO_ROOT / "data" / "audio" / "sitorb"
 
@@ -55,6 +55,12 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--snr", type=float, default=None, help="add white noise at this SNR (dB)")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--phasing", type=int, default=14, help="phasing pairs before the text")
+    ap.add_argument(
+        "--iq",
+        action="store_true",
+        help="write a KiwiSDR-layout IQ wav (12 kHz complex baseband) instead of audio — "
+        "exercises tools/fldigi/iq_to_audio.py exactly like a real recording",
+    )
     args = ap.parse_args(argv)
 
     if args.fixture:
@@ -75,13 +81,25 @@ def main(argv: list[str] | None = None) -> int:
         text = "ZCZC IA00\nSITOR-B TEST SIGNAL 100 BD 170 HZ\nNNNN"
         name = "sitorb_test"
 
-    params = FskParams(sample_rate=args.rate, center_hz=args.center)
+    rate = 12000 if args.iq and args.rate == 8000 else args.rate
+    params = FskParams(sample_rate=rate, center_hz=args.center)
     audio, meta = generate(
-        text, params, args.error_rate, args.error_mode, args.snr, args.seed, args.phasing
+        text,
+        params,
+        args.error_rate,
+        args.error_mode,
+        args.snr,
+        args.seed,
+        args.phasing,
+        iq=args.iq,
     )
     suffix = f"_err{args.error_rate:g}" if args.error_rate else ""
+    suffix += ".iq" if args.iq else ""
     out = args.out or DEFAULT_OUT_DIR / f"{name}{suffix}.wav"
-    write_wav(out, args.rate, audio)
+    if args.iq:
+        write_kiwi_iq_wav(out, rate, audio)
+    else:
+        write_wav(out, rate, audio)
     out.with_suffix(".json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
     print(
         f"wrote {out} ({meta['duration_s']} s, {meta['chars']} chars, "

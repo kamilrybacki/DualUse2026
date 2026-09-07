@@ -30,14 +30,18 @@ def test_shortlist_loads_and_covers_prd() -> None:
         assert e.license, e.name
 
 
-def test_unverified_entries_are_not_downloaded_by_all(capsys) -> None:
-    rc = dm.main(["--all"]) if any(e.verified for e in dm.load_entries()) else None
-    # With every entry unverified, --all must refuse rather than guess.
-    if rc is None:
-        import pytest
+def test_all_refuses_when_nothing_is_verified(tmp_path: Path, monkeypatch) -> None:
+    import pytest
 
-        with pytest.raises(SystemExit):
-            dm.main(["--all"])
+    yml = tmp_path / "models.yaml"
+    yml.write_text(
+        "models:\n  - {name: x, tier: 1, role: r, repo: org/x, file: '*.gguf', revision: main, "
+        "license: MIT, lang_pl: false, verified: false}\n",
+        encoding="utf-8",
+    )
+    monkeypatch.setattr(dm, "MODELS_YAML", yml)
+    with pytest.raises(SystemExit):  # refuses rather than guessing a download
+        dm.main(["--all"])
 
 
 def test_sha256_and_manifest_render(tmp_path: Path) -> None:
@@ -59,7 +63,7 @@ def test_sha256_and_manifest_render(tmp_path: Path) -> None:
     assert "convert_hf_to_gguf.py" in md
 
 
-def test_list_prints_unverified_flag(capsys) -> None:
+def test_list_prints_verification_flag(capsys) -> None:
     assert dm.main(["--list"]) == 0
     out = capsys.readouterr().out
-    assert "qwen3.5-0.8b-q4" in out and "UNVERIFIED" in out
+    assert "qwen3.5-0.8b-q4" in out and ("verified" in out or "UNVERIFIED" in out)

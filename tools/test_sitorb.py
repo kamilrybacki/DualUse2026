@@ -137,6 +137,30 @@ def test_cli_writes_wav_and_meta(tmp_path: Path) -> None:
         assert w.getframerate() == 8000 and w.getnchannels() == 1
 
 
+def test_kiwi_iq_path_round_trips_through_iq_to_audio(tmp_path: Path) -> None:
+    """Synthetic KiwiSDR IQ wav (kiwi chunks interleaved) → iq_to_audio → test demod → text."""
+    from tools.fldigi import iq_to_audio as i2a
+
+    text = "ZCZC UA11\nTALLINN RADIO NAV WARNING 44\nGULF OF FINLAND. BUOY UNLIT.\nNNNN"
+    p = sitorb.FskParams(sample_rate=12000)
+    iq, meta = sitorb.generate(text, p, phasing_pairs=4, iq=True)
+    assert iq.dtype == np.complex64
+    wav = tmp_path / "navtex_U_20260907_1920.wav"
+    sitorb.write_kiwi_iq_wav(wav, 12000, iq)
+    rate, iq_back = i2a.read_iq_wav(wav)
+    assert rate == 12000 and abs(len(iq_back) - len(iq)) < 4
+    audio = i2a.iq_to_audio(iq_back, rate, audio_center=1000.0)
+    pa = sitorb.FskParams(sample_rate=12000, center_hz=1000.0)
+    bits = demod_bits(audio, pa, meta["slots"] * 7)
+    decoded = sitorb.codes_to_text(fec_decode(bits_to_codes(bits), 4))
+    assert decoded == text
+    # the stdlib wave module sees only the first 'data' chunk (that is why iq_to_audio exists)
+    import wave
+
+    with wave.open(str(wav), "rb") as w:
+        assert w.getnframes() < len(iq) / 4
+
+
 @pytest.mark.parametrize("mode", ["burst", "random"])
 def test_corrupt_is_deterministic(mode: str) -> None:
     slots = sitorb.frame(sitorb.text_to_codes("HELLO WORLD"), phasing_pairs=2)

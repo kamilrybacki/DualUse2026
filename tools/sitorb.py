@@ -232,6 +232,44 @@ def add_noise(sig: np.ndarray, snr_db: float | None, seed: int = 0) -> np.ndarra
     return (noisy / max(peak, 1.0)).astype(np.float32)
 
 
+def modulate_iq(
+    bits: list[int], p: FskParams, lead_s: float = 0.5, tail_s: float = 0.5
+) -> np.ndarray:
+    """Complex baseband FSK as a KiwiSDR IQ recording centred on the carrier would show it:
+    mark at +shift/2, space at −shift/2 around 0 Hz (``p.center_hz`` is ignored)."""
+    spb = p.samples_per_bit
+    total = int(round(len(bits) * spb))
+    freqs = np.empty(total, dtype=np.float64)
+    for i, bit in enumerate(bits):
+        a, b = int(round(i * spb)), int(round((i + 1) * spb))
+        freqs[a:b] = p.shift_hz / 2 if bit else -p.shift_hz / 2
+    phase = 2 * math.pi * np.cumsum(freqs) / p.sample_rate
+    sig = p.amplitude * np.exp(1j * phase)
+    lead = np.zeros(int(lead_s * p.sample_rate), dtype=np.complex64)
+    tail = np.zeros(int(tail_s * p.sample_rate), dtype=np.complex64)
+    return np.concatenate([lead, sig.astype(np.complex64), tail])
+
+
+def write_kiwi_iq_wav(path, rate: int, iq: np.ndarray, block: int = 512, gps_sec: int = 0) -> None:
+    """Write a wav in KiwiSDR's IQ layout: 'fmt ' then repeated ('kiwi' GNSS stamp, 'data')
+    chunk pairs — the layout kiwirecorder --kiwi-wav produces and plain readers choke on."""
+    import struct
+
+    pcm = np.empty(2 * len(iq), dtype="<i2")
+    pcm[0::2] = np.clip(np.real(iq) * 32767, -32768, 32767)
+    pcm[1::2] = np.clip(np.imag(iq) * 32767, -32768, 32767)
+    body = bytearray()
+    body += b"WAVE"
+    body += b"fmt " + struct.pack("<I", 16) + struct.pack("<HHIIHH", 1, 2, rate, rate * 4, 4, 16)
+    for i in range(0, len(iq), block):
+        chunk = pcm[2 * i : 2 * (i + block)].tobytes()
+        stamp = struct.pack("<BBII", 3, 0, gps_sec + i // rate, int((i % rate) / rate * 1e9))
+        body += b"kiwi" + struct.pack("<I", len(stamp)) + stamp
+        body += b"data" + struct.pack("<I", len(chunk)) + chunk
+    with open(path, "wb") as f:
+        f.write(b"RIFF" + struct.pack("<I", len(body)) + bytes(body))
+
+
 def generate(
     text: str,
     params: FskParams | None = None,
@@ -240,8 +278,10 @@ def generate(
     snr_db: float | None = None,
     seed: int = 0,
     phasing_pairs: int = 14,
+    iq: bool = False,
 ) -> tuple[np.ndarray, dict]:
-    """Text → audio samples (float32, mono) + metadata (killed char indices, expected text)."""
+    """Text → audio samples (float32 mono, or complex64 baseband with ``iq=True``) +
+    metadata (killed char indices, expected text)."""
     params = params or FskParams()
     codes = text_to_codes(text)
     slots = frame(codes, phasing_pairs=phasing_pairs)
@@ -249,7 +289,15 @@ def generate(
     if error_rate > 0:
         slots, killed = corrupt(slots, error_rate, seed, error_mode, phasing_pairs)
     bits = slots_to_bits(slots)
-    audio = add_noise(modulate(bits, params), snr_db, seed)
+    if iq:
+        audio = modulate_iq(bits, params)
+        if snr_db is not None:
+            rng = np.random.default_rng(seed)
+            p_noise = float(np.mean(np.abs(audio) ** 2)) / (10 ** (snr_db / 10))
+            noise = rng.normal(0, math.sqrt(p_noise / 2), (len(audio), 2)).astype(np.float32)
+            audio = (audio + noise[:, 0] + 1j * noise[:, 1]).astype(np.complex64)
+    else:
+        audio = add_noise(modulate(bits, params), snr_db, seed)
     expected = codes_to_text(codes)
     meta = {
         "chars": len(codes),

@@ -203,7 +203,7 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--list", action="store_true", help="print the shortlist and exit")
     args = ap.parse_args(argv)
 
-    entries = load_entries()
+    entries = load_entries(MODELS_YAML)
     if args.list or not any((args.verify, args.name, args.all, args.manifest)):
         for e in entries:
             flag = "verified" if e.verified else "UNVERIFIED"
