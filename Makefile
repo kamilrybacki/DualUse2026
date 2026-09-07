@@ -12,11 +12,12 @@ MODEL ?=
 PROMPT ?= prompts/extract_v0.1.md
 GOLD ?= schemas/fixtures
 ERROR_RATE ?= 0.0
+ASR_MODELS ?= tiny,small,turbo
 
 .DEFAULT_GOAL := help
 
 .PHONY: help setup test lint status cache gbnf gbnf-check record decode gen-sitorb bench \
-        bench-fake rig-up rig-down synth-vhf-local gazetteer kiwis \
+        bench-fake asr-bench rig-up rig-down synth-vhf-local gazetteer kiwis \
         modal-datagen modal-tts modal-bench modal-finetune-dry modal-record fetch-martts gold-merge
 
 help: ## list targets
@@ -41,6 +42,9 @@ cache: ## download shortlisted models into cache/ (network)
 
 gbnf: ## regenerate schemas/extraction.gbnf from extraction.schema.json
 	$(PY) tools/gen_gbnf.py
+
+asr-bench: ## Whisper via sherpa-onnx on data/audio/vhf_synth/local: make asr-bench ASR_MODELS=tiny,small,turbo
+	$(PY) bench/asr_bench.py --models $(ASR_MODELS)
 
 gbnf-check: ## validate the grammar with llama.cpp's test-gbnf-validator (LLAMA_CPP_DIR=...)
 	tools/check_gbnf.sh

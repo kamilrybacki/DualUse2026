@@ -33,3 +33,16 @@ carries the grammar), `fake` (gold / null / noisy — for testing the harness it
 
 The harness is not the product's validator or router: it *counts* rule hits, it does not
 route anything.
+
+## ASR (`asr_bench.py`)
+
+Whisper through sherpa-onnx (int8 ONNX exports from the k2-fsa release assets, the same
+weights whisper.cpp uses) on `data/audio/vhf_synth/<set>/transcripts.jsonl`. Reports WER,
+**maritime entity recall** (entity words + the number words of the spoken position) and
+real-time factor per model × preset × language. `make asr-bench ASR_MODELS=tiny,small,turbo`.
+Models live in `cache/asr/sherpa-onnx-whisper-<name>/` (git-ignored); download with
+
+```
+curl -L -o m.tar.bz2 https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models/sherpa-onnx-whisper-turbo.tar.bz2
+tar xjf m.tar.bz2 -C cache/asr/
+```

@@ -78,7 +78,9 @@ and prints length, `*` rate and whether `ZCZC … NNNN` frames were seen.
 | Wikipedia sample / synthetic generator | whatever the file uses (`gen_sitorb.py` default 1000 Hz) | `1000` |
 
 Kiwi IQ files carry `kiwi` GPS-timestamp chunks between data chunks; `iq_to_audio.py`
-understands them, standard wav readers do not.
+understands them, standard wav readers do not. Without a real recording the whole path can
+be rehearsed with a synthetic one: `gen_sitorb.py --fixture 08_navtex_en_gale_warning --iq`
+→ `iq_to_audio.py` → `decode_test.py` (verified 2026-09-07: full frame decoded by fldigi).
 
 ## 6. Smoke test sample
 
