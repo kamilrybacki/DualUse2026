@@ -35,6 +35,6 @@ extend-exclude = ["tools/vendor", "src"]
 select = ["E", "F", "I", "UP", "B", "W"]
 
 [tool.pytest.ini_options]
-testpaths = ["tools", "bench", "schemas"]
+testpaths = ["tools", "bench", "schemas", "modal_jobs"]
 addopts = "-q --ignore=tools/vendor"
 norecursedirs = ["tools/vendor", ".venv", "cache", "data"]
