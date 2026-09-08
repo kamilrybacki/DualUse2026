@@ -1,0 +1,41 @@
+{
+  "id": "038_X_20260903",
+  "source": "bhmw",
+  "url": "https://www.bhmw.gov.pl/ (Ostrzeżenia nawigacyjne, PDF PL 208/2026, pl part)",
+  "station": "X",
+  "received_at": "2026-09-03T00:00Z",
+  "lang": "pl",
+  "channel": "TEXT",
+  "navtex_header": null,
+  "text": "OSTRZEŻENIE NAWIGACYJNE NR PL 208/2026 (NAVTEX)\nKATEGORIA: WYMAGANIA W ZAKRESIE BEZPIECZEŃSTWA\nOBSZAR: BAŁTYK POŁUDNIOWY. LOKALIZACJA: WYBRZEŻE POLSKIE. MAPA INT1219.\nZ POWODU ĆWICZEŃ WOJSKOWYCH ZAMYKA SIĘ DLA ŻEGLUGI I RYBOŁÓWSTWA NASTĘPUJĄCĄ STREFĘ: S-6 Z CENTRUM O WSPÓŁRZĘDNYCH 54-39.27N 016-36.59E DNIA 2026-09-07 OD 08:00 DO 16:00 DNIA 2026-09-08 OD 06:00 DO 23:59 DNIA 2026-09-09 OD 06:00 DO 23:59 DNIA 2026-09-10 OD 06:00 DO 23:59 DNIA 2026-09-11 OD 06:00 DO 23:59\nTERMIN OBOWIĄZYWANIA: OD 07 WRZ 2026, 08:00 (CET) DO 11 WRZ 2026, 23:59 (CET)\nUWAGI: STREFA ZAMKNIĘTA\nROZPOWSZECHNIONO 03 WRZ 2026. BHMW, KRAJOWY KOORDYNATOR OSTRZEŻEŃ NAWIGACYJNYCH.\n",
+  "sha256": "ea63e391020290754933dba770ff55c7a6307a9461490b5c34087a382d385d84",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:31:25+00:00",
+  "curator": "kamil",
+  "note": "Przepisane z PDF BHMW (pdftotext); układ formularza spłaszczony. PL czasy CET == CEST (UTC+2), EN w UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": {
+    "event_type": "EXERCISE",
+    "warning_id": "PL 208/2026",
+    "issued_at": null,
+    "valid_from": "2026-09-07T06:00:00Z",
+    "valid_to": "2026-09-11T21:59:00Z",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        16.6098,
+        54.6545
+      ]
+    },
+    "location_name": "BAŁTYK POŁUDNIOWY, WYBRZEŻE POLSKIE, STREFA S-6",
+    "agency": "BHMW",
+    "entities": [
+      {
+        "type": "OTHER",
+        "text": "S-6"
+      }
+    ]
+  },
+  "label_status": "draft",
+  "label_note": "draft 2026-09-08: closed zone given as centre point + zone name (S-x) — a Point is the honest geometry (radius unknown); several daily windows collapsed to the overall term of validity; times from the EN half (UTC)."
+}

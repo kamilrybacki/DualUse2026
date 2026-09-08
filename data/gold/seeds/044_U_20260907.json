@@ -1,0 +1,23 @@
+{
+  "id": "044_U_20260907",
+  "source": "other",
+  "url": "https://navtex.lv (NAVTEX LIVE 518 KHz, PDF export)",
+  "station": "U",
+  "received_at": "2026-09-07T23:21Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "U",
+    "b2_subject": "A",
+    "b3b4_number": "93"
+  },
+  "text": "ZCZC UA93\n0723__.____.*0M\nU_O_G_ZWZS_ZMYWFZONON_ZJHSM_YF_M\nY__U_EP 06\nSOUTHERN ADRIATIC SEA - BARI.\nTHE BARI VTS CENTER IS IN NON-OPERATIONAL PHASE FROM 19.00LT\nON 06 SE_MH_M_CB_GSHMZM_SEP 26, THEREFORE, VTS SERVJ\nN_J_ZHZHMLPM_YZ\nFW_W_\nNNNN\n",
+  "sha256": "dd4bccf3053077d6c0482296e6e1f57cbfda3d52b779fe75b94eaf3c5c6ffabc",
+  "star_rate": 0.0043,
+  "curated_at": "2026-09-08T08:31:25+00:00",
+  "curator": "kamil",
+  "note": "Live off-air decode by navtex.lv, pasted from the site's PDF export on 2026-09-08; '_' = unrecoverable characters, garbage runs = decoder substitutions. AREA U here is Mondolfo Radio (Italy, NAVAREA III, station U), not Tallinn — night skywave into Latvia. Timestamp LV (UTC+3) → UTC. HA86 is a NAVWARN about an UNAUTHORIZED station broadcasting NAVTEX — a real spoofing case for the dual-use story.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

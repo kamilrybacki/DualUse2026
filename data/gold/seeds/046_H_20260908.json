@@ -1,0 +1,23 @@
+{
+  "id": "046_H_20260908",
+  "source": "other",
+  "url": "https://navtex.lv (NAVTEX LIVE 518 KHz, PDF export)",
+  "station": "H",
+  "received_at": "2026-09-08T01:10Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "H",
+    "b2_subject": "A",
+    "b3b4_number": "86"
+  },
+  "text": "ZCZC HA86\n312050 UTC AUG 26\nIRAKLEIO STATION RADIO NAVWARN 1036/26\n1. UNAUTHORIZED STATION HAS BROADCAST NAVTEX MESSAGE\n\n                                  59 ':83,58!8: 43'3-\n4:$_.9,__6_.+.__!/$.___/_.$$_31UBKQB___QBD_N__1$_=_(_UB_SFPJMZ_PY_N_YPPVM_ZHFPHSMJDPS_M\nOREOVER, THISM_Z_ON FALLS WITHIN TDPMDPSSPF_ON__HPTMJ_Y\nF_PMYP_MG_DPYPMHDPMFY_SPFZM_HPTMJHHFZMDJMHDPMP_AUTHORITY TO BROADCAST NAVTEX MESSAGES.\n3. CANCEL THIS MESSAGE ON _QTWPTOXAMJPM\nU_GONNIII_ZCZC\n",
+  "sha256": "3e6e741b1c138ef3657f59e1ba83d4974d27a7f9e361cea3b49f60eba1e0c57f",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:31:25+00:00",
+  "curator": "kamil",
+  "note": "Live off-air decode by navtex.lv, pasted from the site's PDF export on 2026-09-08; '_' = unrecoverable characters, garbage runs = decoder substitutions. AREA H here is Irakleio (Greece, NAVAREA III, station H), not Bjuröklubb — night skywave into Latvia. Timestamp LV (UTC+3) → UTC. HA86 is a NAVWARN about an UNAUTHORIZED station broadcasting NAVTEX — a real spoofing case for the dual-use story.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

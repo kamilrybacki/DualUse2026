@@ -1,0 +1,41 @@
+{
+  "id": "037_X_20260903",
+  "source": "bhmw",
+  "url": "https://www.bhmw.gov.pl/ (Ostrzeżenia nawigacyjne, PDF PL 211/2026, en part)",
+  "station": "X",
+  "received_at": "2026-09-03T00:00Z",
+  "lang": "en",
+  "channel": "TEXT",
+  "navtex_header": null,
+  "text": "NAVIGATIONAL WARNING NO. PL 211/2026 (COASTAL)\nCATEGORY: SECURITY-RELATED REQUIREMENTS\nAREA: SOUTHERN BALTIC. LOCALISATION: POLISH COAST, POMERANIAN BAY. CHART INT1295.\nDUE TO MILITARY EXERCISES ZONE IS CLOSED FOR SHIPPING AND FISHERY: S-13 CENTERED 54-03.39N 014-32.21E FROM 2026-09-07 06:00 TO 2026-09-08 14:00 ON 2026-09-10 FROM 02:00 TO 04:00 ON 2026-09-11 FROM 02:00 TO 04:00 TIME IN UTC\nTERM OF VALIDITY: FROM 07 SEP 2026, 06:00 (UTC) TO 11 SEP 2026, 04:00 (UTC)\nREMARKS: ZONE IS CLOSED\nPROMULGATED 03 SEP 2026. HYDROGRAPHIC OFFICE OF THE POLISH NAVY, POLISH COORDINATOR OF RADIO NAVIGATIONAL WARNINGS.\n",
+  "sha256": "61c43141e8ad337f4bc4bbe81962dadf2a6748eb99b1803d4ec04a80ecd42262",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:31:25+00:00",
+  "curator": "kamil",
+  "note": "Przepisane z PDF BHMW (pdftotext); układ formularza spłaszczony. PL czasy CET == CEST (UTC+2), EN w UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": {
+    "event_type": "EXERCISE",
+    "warning_id": "PL 211/2026",
+    "issued_at": null,
+    "valid_from": "2026-09-07T06:00:00Z",
+    "valid_to": "2026-09-11T04:00:00Z",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        14.5368,
+        54.0565
+      ]
+    },
+    "location_name": "SOUTHERN BALTIC, POLISH COAST, POMERANIAN BAY, ZONE S-13",
+    "agency": "BHMW",
+    "entities": [
+      {
+        "type": "OTHER",
+        "text": "S-13"
+      }
+    ]
+  },
+  "label_status": "draft",
+  "label_note": "draft 2026-09-08: closed zone given as centre point + zone name (S-x) — a Point is the honest geometry (radius unknown); several daily windows collapsed to the overall term of validity; times from the EN half (UTC)."
+}

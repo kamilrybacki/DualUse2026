@@ -1,0 +1,23 @@
+{
+  "id": "042_U_20260908",
+  "source": "other",
+  "url": "https://navtex.lv (NAVTEX LIVE 518 KHz, PDF export)",
+  "station": "U",
+  "received_at": "2026-09-08T03:20Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "U",
+    "b2_subject": "A",
+    "b3b4_number": "92"
+  },
+  "text": "ZCZC UA92\n080320 UTC SEP 26\nMONDOLFO RADIO\n\nNAVAREA III\nNORTHERN ADRIA\nF_MJPON_D_H_HHI(SPLIT) 300-31 VENEZIA-ZADAR, INT 204 RAMKBB_ENEZIA\n22 SEPTEMBER 2026 AND 26._*0__0_)0_._7UE_G_YZBB_ UTC TO 1900 UTC, SLOVENIAN NAVY WILL\nEXECUTE GUNNERY EXEY_FJPJMZM_SZHPWMHY_PHMFMYPMLZCWPWMLE\n\nA. 45 17.0 N 012 _ E\nB. 45 17.0 N 012 57._._09,_45 03_MB99___9_,_+7_8_0_)__8)$8+)__.5 E\nE. 45 07.0 N 012 52_3.\nSLOVENIAN PATRO_ SHIPS WILL CONDUCT SAFETY MESSAGE ON VHF 16 PRIOR GUNNERY\nEXERCIS_MWFSE_\nNNNN\n",
+  "sha256": "805acf9bb0fb8be0973b9fdf32e5905fcf0cb50652755747555ae8a74da94efc",
+  "star_rate": 0.0021,
+  "curated_at": "2026-09-08T08:31:25+00:00",
+  "curator": "kamil",
+  "note": "Live off-air decode by navtex.lv, pasted from the site's PDF export on 2026-09-08; '_' = unrecoverable characters, garbage runs = decoder substitutions. AREA U here is Mondolfo Radio (Italy, NAVAREA III, station U), not Tallinn — night skywave into Latvia. Timestamp LV (UTC+3) → UTC. HA86 is a NAVWARN about an UNAUTHORIZED station broadcasting NAVTEX — a real spoofing case for the dual-use story.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

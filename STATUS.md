@@ -12,7 +12,7 @@ Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 póź
   - [x] gramatyka zweryfikowana w prawdziwym llama.cpp (zbudowany ze źródeł w sesji): 9 fixture'ów przyjętych, 3 negatywy odrzucone, kolejność kluczy wymuszona (`make gbnf-check`)
 - [~] Gold set 200+ przykładów z etykietami.
   - [x] format seedów + helper kuracji (`tools/curate_seed.py`), scalanie i przegląd CSV (`tools/gold_merge.py`)
-  - [~] realne seedy: **33** (BHMW 213/215/216 PL+EN z PDF, 9 własnych dekodów NL Coastguard 2018, 18 dekodów live navtex.lv I/J z 2026-09-08) — cel ~50, brakuje H/U i typu B; `data/gold/review/pending.csv` czeka na Twój przegląd
+  - [~] realne seedy: **46** (BHMW 208/211/212/213/215/216 PL+EN z PDF z roboczymi etykietami, 9 własnych dekodów NL Coastguard 2018, 25 dekodów live navtex.lv: J/I bałtyckie oraz Mondolfo U i Irakleio H falą jonosferyczną) — cel ~50 osiągalny; `data/gold/review/pending.csv` czeka na Twój przegląd
   - [ ] W1 (`make modal-datagen`) uruchomiony, wynik zmirrorowany do `data/gold/generated/`
   - [ ] przegląd ludzki (`--export-review` / `--import-review`) i `make gold-merge`
 - [~] Harness benchmarku (model × prompt × gold → metryki).

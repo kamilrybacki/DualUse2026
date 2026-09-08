@@ -1,0 +1,41 @@
+{
+  "id": "039_X_20260903",
+  "source": "bhmw",
+  "url": "https://www.bhmw.gov.pl/ (Ostrzeżenia nawigacyjne, PDF PL 208/2026, en part)",
+  "station": "X",
+  "received_at": "2026-09-03T00:00Z",
+  "lang": "en",
+  "channel": "TEXT",
+  "navtex_header": null,
+  "text": "NAVIGATIONAL WARNING NO. PL 208/2026 (NAVTEX)\nCATEGORY: SECURITY-RELATED REQUIREMENTS\nAREA: SOUTHERN BALTIC. LOCALISATION: POLISH COAST. CHART INT1219.\nDUE TO MILITARY EXERCISES ZONE IS CLOSED FOR SHIPPING AND FISHERY: S-6 CENTERED 54-39.27N 016-36.59E ON 2026-09-07 FROM 06:00 TO 14:00 ON 2026-09-08 FROM 04:00 TO 21:59 ON 2026-09-09 FROM 04:00 TO 21:59 ON 2026-09-10 FROM 04:00 TO 21:59 ON 2026-09-11 FROM 04:00 TO 21:59 TIME IN UTC.\nTERM OF VALIDITY: FROM 07 SEP 2026, 06:00 (UTC) TO 11 SEP 2026, 21:59 (UTC)\nREMARKS: ZONE IS CLOSED\nPROMULGATED 03 SEP 2026. HYDROGRAPHIC OFFICE OF THE POLISH NAVY, POLISH COORDINATOR OF RADIO NAVIGATIONAL WARNINGS.\n",
+  "sha256": "83abd56b64265e67f8e83b4792567ce9e67c495d91f29a22128a52a17d900c21",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:31:25+00:00",
+  "curator": "kamil",
+  "note": "Przepisane z PDF BHMW (pdftotext); układ formularza spłaszczony. PL czasy CET == CEST (UTC+2), EN w UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": {
+    "event_type": "EXERCISE",
+    "warning_id": "PL 208/2026",
+    "issued_at": null,
+    "valid_from": "2026-09-07T06:00:00Z",
+    "valid_to": "2026-09-11T21:59:00Z",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        16.6098,
+        54.6545
+      ]
+    },
+    "location_name": "SOUTHERN BALTIC, POLISH COAST, ZONE S-6",
+    "agency": "BHMW",
+    "entities": [
+      {
+        "type": "OTHER",
+        "text": "S-6"
+      }
+    ]
+  },
+  "label_status": "draft",
+  "label_note": "draft 2026-09-08: closed zone given as centre point + zone name (S-x) — a Point is the honest geometry (radius unknown); several daily windows collapsed to the overall term of validity; times from the EN half (UTC)."
+}
