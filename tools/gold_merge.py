@@ -61,7 +61,9 @@ def item_from_seed(seed: dict) -> dict:
             "sha256": seed.get("sha256"),
         },
         "noisy": (seed.get("star_rate") or 0) > 0.0,
-        "label_origin": "human" if seed.get("label_status") == "reviewed" else "none",
+        "label_origin": {"reviewed": "human", "draft": "draft"}.get(
+            seed.get("label_status"), "none"
+        ),
     }
 
 

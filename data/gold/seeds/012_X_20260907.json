@@ -14,6 +14,46 @@
   "curator": "kamil",
   "note": "Typ BHMW: Brzegowe/Coastal. Przepisane z PDF (telefon); układ formularza spłaszczony. PL czasy CET == CEST (UTC+2), EN w UTC.",
   "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
-  "label": null,
-  "label_status": "unlabeled"
+  "label": {
+    "event_type": "NAV_WARNING",
+    "warning_id": "PL 216/2026",
+    "issued_at": null,
+    "valid_from": "2026-09-07T22:00:00Z",
+    "valid_to": "2026-09-09T21:59:00Z",
+    "geometry": {
+      "type": "LineString",
+      "coordinates": [
+        [
+          17.9397,
+          55.1038
+        ],
+        [
+          17.9482,
+          55.1013
+        ]
+      ]
+    },
+    "location_name": "BAŁTYK POŁUDNIOWO-WSCHODNI, N OD STILO",
+    "agency": "BHMW",
+    "entities": [
+      {
+        "type": "AID_TO_NAV",
+        "text": "PŁAWA SM2 DB1 AIS"
+      },
+      {
+        "type": "AID_TO_NAV",
+        "text": "PŁAWA SM4 DB2 AIS"
+      },
+      {
+        "type": "VESSEL",
+        "text": "FAIRPLAY 37"
+      },
+      {
+        "type": "MMSI",
+        "text": "261002431"
+      }
+    ]
+  },
+  "label_status": "draft",
+  "label_note": "draft 2026-09-08: two separate AIS buoys; schema v0.1 has no MultiPoint so they are stored as a 2-point LineString — decide in review (candidate v0.2 change). Coordinates use comma decimals and 2-digit longitude ('55-06,23'N 17-56,38'E') — a real format variant the extractor must handle. Times from the EN half (UTC)."
 }
