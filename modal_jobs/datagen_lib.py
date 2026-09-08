@@ -118,18 +118,33 @@ def output_schema(extraction_schema: dict) -> dict:
     }
 
 
+def _load_json_payload(raw: str) -> dict | list | None:
+    """Accept ``{"items": [...]}``, a bare JSON list, or either wrapped in chatter/fences."""
+    for candidate in (raw, re.sub(r"^```(?:json)?\s*|\s*```$", "", raw, flags=re.S)):
+        try:
+            return json.loads(candidate)
+        except json.JSONDecodeError:
+            pass
+    m = re.search(r"\{.*\}", raw, re.S) or re.search(r"\[.*\]", raw, re.S)
+    if not m:
+        return None
+    try:
+        return json.loads(m.group(0))
+    except json.JSONDecodeError:
+        return None
+
+
 def parse_items(raw: str, spec: Spec, validator: Draft7Validator, run_id: str) -> list[dict]:
     """Model text → validated items with ids and provenance. Invalid ones are dropped."""
     raw = raw.strip()
-    m = re.search(r"\{.*\}", raw, re.S)
-    if not m:
+    obj = _load_json_payload(raw)
+    if obj is None:
         return []
-    try:
-        obj = json.loads(m.group(0))
-    except json.JSONDecodeError:
-        return []
+    raw_items = obj if isinstance(obj, list) else obj.get("items", [])
     out = []
-    for it in obj.get("items", []):
+    for it in raw_items:
+        if not isinstance(it, dict):
+            continue
         text, exp = it.get("source_text"), it.get("expected")
         if not isinstance(text, str) or not validator.is_valid(exp):
             continue

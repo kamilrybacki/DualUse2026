@@ -181,3 +181,12 @@ def test_augment_presets_produce_8k_audio(preset: str) -> None:
     spec = np.abs(np.fft.rfft(y[:out_rate]))
     freqs = np.fft.rfftfreq(out_rate, 1 / out_rate)
     assert spec[(freqs > 400) & (freqs < 480)].max() > 5 * spec[(freqs > 3600)].max()
+
+
+def test_parse_items_accepts_bare_list_and_fences() -> None:
+    spec = lib.build_specs(fake_seeds(), 1, kinds=["navtex_en"])[0]
+    good = FIXTURES[0]["expected"]
+    bare = json.dumps([{"source_text": "ZCZC IA49 BARE LIST LONG ENOUGH NNNN", "expected": good}])
+    assert len(lib.parse_items(bare, spec, VALIDATOR, "run1")) == 1
+    fenced = "```json\n" + json.dumps({"items": json.loads(bare)}) + "\n```"
+    assert len(lib.parse_items(fenced, spec, VALIDATOR, "run1")) == 1

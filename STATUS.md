@@ -23,6 +23,7 @@ Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 póź
   - [ ] bieg na prawdziwym modelu (`make bench MODEL=cache/models/...`) — wymaga llama.cpp lokalnie
 - [~] Modal: workspace + Volume + Secrets; joby W1–W3 wykonane.
   - [x] `modal_jobs/common.py`, `datagen.py` (W1 + judge + grounding), `tts.py` (W2, Piper + augmentacja), `bench.py` (W3), README z kosztami i sekretami
+  - [x] przegląd kodu 2026-09-08 (bez możliwości uruchomienia): naprawiono kolejność warstw obrazu (`with_repo` jako ostatnia), import pakietu w kontenerze (`modal run -m modal_jobs.<job>`), H100 przez `with_options`, porcjowanie promptów ≤5 pozycji, 72B jako AWQ, gotowe koła CPU dla llama-cpp-python, jeden model na kontener (`@app.cls`), prefetch GGUF/głosów do Volume, merge adaptera do bf16 przed konwersją GGUF, `--detach` dla nagrywania; wszystkie moduły importują się lokalnie z `modal 1.5.5`
   - [ ] `modal setup`, sekret `huggingface`, pierwszy dry-run każdego joba (API vLLM/TRL do potwierdzenia na żywo)
 - [~] Modal: dry-run W4 (QLoRA ≤200 próbek).
   - [x] `modal_jobs/finetune.py` z `--full` zablokowanym bez `FALOCHRON_EVENT=1`
@@ -36,6 +37,7 @@ Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 póź
   - [x] `tools/record_navtex.py` — tabela slotów H/I/J/U z testami, tryb blokowy (HIJ = jedno nagranie 33 min), wiele Kiwi, IQ/USB
   - [x] `tools/check_kiwi_snr.md` — dobór odbiorników i weryfikacja nagrań
   - [x] `tools/fldigi/` — rig headless **uruchomiony i sprawdzony w sesji** (`rig_up.sh`: PulseAudio null sink + Xvfb + fldigi 4.2.03): syntetyczny sygnał zdekodowany dosłownie, ramka `ZCZC IA47…NNNN`
+  - [x] `rig_up.sh` po restarcie kontenera: cykl stop/start w 4 s (sonda portu przez `/dev/tcp` zamiast `curl` GET, który na `/RPC2` fldigi wisi bez końca; `timeout` na `pactl`), dekodowanie demo 01 po restarcie potwierdzone
   - [x] odkrycie: fldigi nie drukuje `*`, podstawia lub gubi znaki i traci rejestr LTRS/FIGS → `docs/research_fldigi_navtex_errors.md`, fixture 09, tryb `garble` w W1, tolerancja 1 znaku w nagłówku w metryce
   - [x] `tools/gen_sitorb.py` — generator CCIR 476 z FEC, tryby błędów burst/random; **round-trip przez prawdziwy fldigi potwierdzony** (odbiór P1.7)
   - [x] `gen_sitorb.py --iq` → plik w układzie Kiwi (bloki `kiwi`+`data`) → `iq_to_audio.py` → fldigi: pełna ramka `HB13`; ścieżka odtwarzania nagrań IQ sprawdzona bez prawdziwego nagrania

@@ -2,13 +2,14 @@
 open network is at hand. Same slot table and file naming as tools/record_navtex.py; the wav
 lands in the volume under ``recordings/518khz/`` and is mirrored with ``modal volume get``.
 
-    modal run modal_jobs/record.py --station HIJ --kiwi host1,host2:8073   # waits for the slot
-    modal run modal_jobs/record.py --station U --auto 2                      # picks 2 Kiwis by SNR
-    modal run modal_jobs/record.py --station J --kiwi host1 --now            # start immediately
+    uv run modal run --detach -m modal_jobs.record --station HIJ --kiwi host1,host2:8073
+    uv run modal run --detach -m modal_jobs.record --station U --auto 2     # picks 2 Kiwis by SNR
+    uv run modal run -m modal_jobs.record --station J --kiwi host1 --now --wait
     modal volume get falochron-artifacts recordings/518khz data/recordings/518khz/
 
-The function is spawned detached, so the local ``modal run`` returns at once; watch it in the
-Modal dashboard or with ``modal app logs falochron``.
+``--detach`` matters: without it Modal stops the ephemeral app when the local command
+returns, killing the function that is waiting for the slot. Waiting inside the container
+costs CPU time (cheap, but up to 4 h); ``--now`` starts immediately.
 """
 
 from __future__ import annotations
@@ -19,12 +20,14 @@ import time
 from datetime import UTC, datetime
 from pathlib import Path
 
-from modal_jobs.common import REPO_ROOT, app, base_image, mirror_hint, vol_path, volume
+from modal_jobs.common import REPO_ROOT, app, base_image, mirror_hint, vol_path, volume, with_repo
 
 rec_image = (
-    base_image.run_commands(
-        "git clone --depth 1 https://github.com/jks-prv/kiwiclient /opt/kiwiclient "
-        "&& cd /opt/kiwiclient && git checkout -q 4eb733e6b6147f7fbeb97ced64cdac029b202d18"
+    with_repo(
+        base_image.run_commands(
+            "git clone --depth 1 https://github.com/jks-prv/kiwiclient /opt/kiwiclient "
+            "&& cd /opt/kiwiclient && git checkout -q 4eb733e6b6147f7fbeb97ced64cdac029b202d18"
+        )
     )
     .add_local_file(str(REPO_ROOT / "tools" / "__init__.py"), remote_path="/repo/tools/__init__.py")
     .add_local_file(
@@ -75,7 +78,6 @@ def record(station: str, kiwis: list[str] | None, auto: int, mode: str, now: boo
             time.sleep(wait)
     rc = subprocess.call(cmd)
     files = sorted(p.name for p in out_dir.glob(rn.filename(window) + "*"))
-    volume.commit()
     log = out_dir / "recordings.log"
     with log.open("a", encoding="utf-8") as f:
         f.write(
@@ -98,8 +100,11 @@ def main(
     kiwis = [k for k in kiwi.split(",") if k] or None
     if not kiwis and not auto:
         auto = 2
-    call = record.spawn(station, kiwis, auto, mode, now)
-    print(f"spawned {call.object_id}; logs: modal app logs falochron")
     if wait:
-        print(call.get())
+        print(record.remote(station, kiwis, auto, mode, now))
+    else:
+        call = record.spawn(station, kiwis, auto, mode, now)
+        print(
+            f"spawned {call.object_id}; needs `modal run --detach`; logs: modal app logs falochron"
+        )
     print("mirror: " + mirror_hint("recordings/518khz", "data/recordings/518khz/"))

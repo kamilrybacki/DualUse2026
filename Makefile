@@ -72,13 +72,17 @@ kiwis: ## rank public KiwiSDRs for a station: make kiwis STATION=J (network)
 	$(PY) tools/fetch_kiwis.py --station $(STATION)
 
 modal-record: ## record a slot from the cloud: make modal-record STATION=HIJ KIWI=a,b (Modal)
-	$(UV) run modal run modal_jobs/record.py --station $(STATION) $(if $(KIWI),--kiwi $(KIWI),)
+	$(UV) run modal run --detach -m modal_jobs.record --station $(STATION) $(if $(KIWI),--kiwi $(KIWI),)
 
 record: ## record a NAVTEX slot: make record STATION=HIJ KIWI=host1,host2 (network)
 	$(PY) tools/record_navtex.py --station $(STATION) $(if $(KIWI),--kiwi $(KIWI),)
 
-decode: ## decode a wav through fldigi (XML-RPC): make decode FILE=path.wav
-	$(PY) tools/fldigi/decode_test.py $(FILE)
+PLAYER ?= paplay --device=cable
+XDG_RUNTIME_DIR ?= /tmp/xdg-$(shell id -u)
+export XDG_RUNTIME_DIR
+
+decode: ## decode a wav through the fldigi rig: make decode FILE=path.wav [PLAYER="paplay --device=cable"]
+	$(PY) tools/fldigi/decode_test.py $(FILE) --player "$(PLAYER)"
 
 gen-sitorb: ## synthesize SITOR-B audio: make gen-sitorb TEXT="..." ERROR_RATE=0.02
 	$(PY) tools/gen_sitorb.py --text "$(TEXT)" --error-rate $(ERROR_RATE)
@@ -90,16 +94,16 @@ bench-fake: ## smoke-run the benchmark harness with the fake backend (no model)
 	$(PY) bench/run_bench.py --backend fake --prompt $(PROMPT) --gold $(GOLD)
 
 modal-datagen: ## W1 synthetic text generation (Modal, network)
-	$(UV) run modal run modal_jobs/datagen.py
+	$(UV) run modal run -m modal_jobs.datagen
 
 modal-tts: ## W2 TTS + channel augmentation (Modal, network)
-	$(UV) run modal run modal_jobs/tts.py
+	$(UV) run modal run -m modal_jobs.tts
 
 modal-bench: ## W3 parallel benchmark sweep (Modal, network)
-	$(UV) run modal run modal_jobs/bench.py
+	$(UV) run modal run -m modal_jobs.bench
 
 modal-finetune-dry: ## W4 QLoRA dry-run, <=200 samples (Modal, network)
-	$(UV) run modal run modal_jobs/finetune.py
+	$(UV) run modal run -m modal_jobs.finetune
 
 fetch-martts: ## pull MARTTS eval set from HF into data/martts (network)
 	$(PY) tools/fetch_martts.py

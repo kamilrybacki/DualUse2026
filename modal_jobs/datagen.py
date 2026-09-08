@@ -1,11 +1,11 @@
 """W1 — synthetic text generation + LLM-as-judge on Modal (PRD §12.5).
 
-Generates NAVTEX (EN, plus '*'-corrupted SDR variants), BHMW (PL) and VHF-style (PL/EN)
-messages with extraction labels, few-shot from data/gold/seeds/. A second pass judges
-every label; deterministic grounding (bench/metrics.py) runs before the judge.
+Generates NAVTEX (EN, plus '*'-corrupted and fldigi-style garbled SDR variants), BHMW (PL)
+and VHF-style (PL/EN) messages with extraction labels, few-shot from data/gold/seeds/.
+A second pass judges every label; deterministic grounding (bench/metrics.py) runs first.
 
-    modal run modal_jobs/datagen.py                     # dry run: small model, ~40 items, L4
-    modal run modal_jobs/datagen.py --full              # H100, big open model, per-type=25
+    uv run modal run -m modal_jobs.datagen                    # dry run: 7B model, L4, ~40 items
+    uv run modal run -m modal_jobs.datagen --full             # H100, 72B AWQ, per-type=25
     modal volume get falochron-artifacts datagen/<run_id> data/gold/generated/
 
 Labels produced here are *candidates*; only human-accepted ones become gold
@@ -15,28 +15,29 @@ Labels produced here are *candidates*; only human-accepted ones become gold
 from __future__ import annotations
 
 import json
-import sys
+import math
 import time
 from datetime import UTC, datetime
 from pathlib import Path
 
-from modal_jobs.common import app, base_image, hf_secret, mirror_hint, vol_path, volume
-
-DRY_MODEL = "Qwen/Qwen2.5-7B-Instruct"
-FULL_MODEL = "Qwen/Qwen2.5-72B-Instruct"  # or openai/gpt-oss-120b; both fit 1×H100 in fp8/awq
-JUDGE_MODEL = None  # None → same model as generator (cheaper); set to a different id to cross-judge
-
-gpu_image = base_image.pip_install("vllm>=0.6.0", "torch").add_local_dir(
-    str(Path(__file__).resolve().parent), remote_path="/repo/modal_jobs"
+from modal_jobs.common import (
+    app,
+    base_image,
+    hf_secret,
+    mirror_hint,
+    strip_front_matter,
+    vol_path,
+    volume,
+    with_repo,
 )
 
+DRY_MODEL = "Qwen/Qwen2.5-7B-Instruct"
+# The bf16 72B checkpoint (~145 GB) does not fit one H100; use the AWQ export.
+FULL_MODEL = "Qwen/Qwen2.5-72B-Instruct-AWQ"
+ITEMS_PER_PROMPT = 5  # keep each generation well under max_tokens (see review 2026-09-08)
 
-def _load_repo():
-    sys.path.insert(0, "/repo")
-    from bench import metrics  # noqa: WPS433
-    from modal_jobs import datagen_lib as lib
-
-    return metrics, lib
+# pin after the first successful dry run (vllm brings its own torch — do not add torch here)
+gpu_image = with_repo(base_image.pip_install("vllm>=0.6.3"))
 
 
 @app.function(
@@ -49,19 +50,31 @@ def _load_repo():
 def generate(
     run_id: str, model_id: str, per_type: int, kinds: list[str] | None, star_rate: float
 ) -> str:
-    metrics, lib = _load_repo()
     from jsonschema import Draft7Validator
     from vllm import LLM, SamplingParams
 
+    from bench import metrics
+    from modal_jobs import datagen_lib as lib
+
     schema = json.loads(Path("/repo/schemas/extraction.schema.json").read_text(encoding="utf-8"))
     validator = Draft7Validator(schema)
-    gen_tpl = Path("/repo/prompts/datagen_v0.1.md").read_text(encoding="utf-8")
-    judge_tpl = Path("/repo/prompts/judge_v0.1.md").read_text(encoding="utf-8")
+    gen_tpl = strip_front_matter(Path("/repo/prompts/datagen_v0.1.md").read_text(encoding="utf-8"))
+    judge_tpl = strip_front_matter(Path("/repo/prompts/judge_v0.1.md").read_text(encoding="utf-8"))
     seeds = lib.load_seeds(Path("/repo/data/gold/seeds"))
-    specs = lib.build_specs(seeds, per_type, kinds)
-    print(f"{len(seeds)} seeds, {len(specs)} specs, model {model_id}")
+    n_prompts = max(1, math.ceil(per_type / ITEMS_PER_PROMPT))
+    specs = []
+    for k in range(n_prompts):
+        for s in lib.build_specs(seeds, min(ITEMS_PER_PROMPT, per_type), kinds, rng_seed=k):
+            specs.append(s)
+    print(f"{len(seeds)} seeds, {len(specs)} prompts × ≤{ITEMS_PER_PROMPT} items, model {model_id}")
 
-    llm = LLM(model=model_id, max_model_len=8192, trust_remote_code=True)
+    llm_kwargs: dict = {"model": model_id, "trust_remote_code": True}
+    if "AWQ" in model_id.upper():
+        llm_kwargs["quantization"] = "awq"
+        llm_kwargs["max_model_len"] = 16384
+    else:
+        llm_kwargs["max_model_len"] = 8192
+    llm = LLM(**llm_kwargs)
     gen_params = SamplingParams(temperature=0.9, top_p=0.95, max_tokens=3000)
     judge_params = SamplingParams(temperature=0.0, max_tokens=800)
 
@@ -69,8 +82,15 @@ def generate(
     t0 = time.time()
     outs = llm.chat([[{"role": "user", "content": p}] for p in prompts], gen_params)
     items: list[dict] = []
+    truncated = 0
     for spec, out in zip(specs, outs, strict=True):
-        got = lib.parse_items(out.outputs[0].text, spec, validator, run_id)
+        o = out.outputs[0]
+        got = lib.parse_items(o.text, spec, validator, run_id)
+        if getattr(o, "finish_reason", None) == "length":
+            truncated += 1
+        if not got:
+            reason = getattr(o, "finish_reason", "?")
+            print(f"warning: 0 valid items from {spec.id} (finish_reason={reason})")
         for it in got:
             it["generator"] = model_id
         items += got
@@ -78,7 +98,9 @@ def generate(
         if spec.kind == "navtex_en":
             items += [lib.corrupt_stars(it, star_rate, seed=i) for i, it in enumerate(got)]
             items += [lib.garble(it, star_rate, seed=i) for i, it in enumerate(got)]
-    print(f"generated {len(items)} items in {time.time() - t0:.0f}s")
+    print(
+        f"generated {len(items)} items in {time.time() - t0:.0f}s; truncated prompts: {truncated}"
+    )
 
     # deterministic grounding first (cheap, no model), then the LLM judge
     tol = 0.5
@@ -91,7 +113,7 @@ def generate(
     judge_prompts = [lib.judge_prompt(judge_tpl, it) for it in items]
     jouts = llm.chat([[{"role": "user", "content": p}] for p in judge_prompts], judge_params)
     for it, out in zip(items, jouts, strict=True):
-        it["judge"] = {"model": JUDGE_MODEL or model_id, **lib.parse_judge(out.outputs[0].text)}
+        it["judge"] = {"model": model_id, **lib.parse_judge(out.outputs[0].text)}
         if it["grounding_unsupported"]:
             it["judge"]["verdict"] = "reject"
             it["judge"]["issues"].append(f"ungrounded: {', '.join(it['grounding_unsupported'])}")
@@ -107,6 +129,7 @@ def generate(
         "items": len(items),
         "accepted": sum(1 for it in items if it["judge"]["verdict"] == "accept"),
         "by_kind": {k: sum(1 for it in items if it["kind"] == k) for k in lib.KINDS},
+        "truncated_prompts": truncated,
         "timestamp": datetime.now(UTC).isoformat(timespec="seconds"),
     }
     (out_dir / "stats.json").write_text(json.dumps(stats, indent=2), encoding="utf-8")
@@ -120,10 +143,7 @@ def main(full: bool = False, per_type: int = 0, kinds: str = "", star_rate: floa
     model_id = FULL_MODEL if full else DRY_MODEL
     n = per_type or (25 if full else 2)
     kind_list = [k for k in kinds.split(",") if k] or None
-    if full:
-        # H100 for the 72B model; the decorator's L4 is the dry-run default
-        stats = generate.with_options(gpu="H100")(run_id, model_id, n, kind_list, star_rate)
-    else:
-        stats = generate.remote(run_id, model_id, n, kind_list, star_rate)
+    fn = generate.with_options(gpu="H100") if full else generate
+    stats = fn.remote(run_id, model_id, n, kind_list, star_rate)
     print(stats)
     print("mirror: " + mirror_hint(f"datagen/{run_id}", "data/gold/generated/"))

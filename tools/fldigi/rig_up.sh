@@ -44,14 +44,16 @@ fi
 if ! pgrep -f "fldigi --config-dir $CFG" >/dev/null; then
   setsid nohup xvfb-run -a fldigi --config-dir "$CFG" --xmlrpc-server-port "$PORT" -i \
     >"$CFG/fldigi.log" 2>&1 </dev/null &
+  # NB: a plain GET on /RPC2 never returns (fldigi only answers POST), so only probe the port.
   for _ in $(seq 1 30); do
     sleep 1
-    if curl -s -o /dev/null "http://127.0.0.1:$PORT/RPC2"; then break; fi
+    if (exec 3<>"/dev/tcp/127.0.0.1/$PORT") 2>/dev/null; then break; fi
   done
 fi
 
 python3 - "$PORT" <<'EOF'
-import sys, xmlrpc.client
+import socket, sys, xmlrpc.client
+socket.setdefaulttimeout(15)
 rpc = xmlrpc.client.ServerProxy(f"http://127.0.0.1:{sys.argv[1]}")
 print("fldigi", rpc.fldigi.version(), "| modems:", [m for m in rpc.modem.get_names() if m in ("NAVTEX", "SITORB")])
 EOF

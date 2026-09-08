@@ -19,6 +19,12 @@ verbatim. With `--error-rate 0.1` fldigi prints wrong characters and wrong-shift
 `tools/fldigi/fldigi_def.minimal.xml` is the whole configuration (PulseAudio backend,
 XML-RPC on, RSID off); it also suppresses the first-run wizard that otherwise blocks XML-RPC.
 
+`rig_up.sh` talks to PulseAudio through `XDG_RUNTIME_DIR=/tmp/xdg-<uid>` (containers have no
+`/run/user`). A shell that runs `paplay` itself must export the same value, otherwise
+`pa_context_connect() failed: Connection refused`; `make decode` exports it for you. Verified
+after a container restart on 2026-09-08: `rig_up.sh stop && rig_up.sh` in 4 s, demo file
+decoded with `frames=JA21`, 0.0 % `*`.
+
 ## 1. Install
 
 - Linux: `sudo apt install fldigi alsa-utils` (or `pipewire-audio` for `pw-play`/`pw-loopback`)
