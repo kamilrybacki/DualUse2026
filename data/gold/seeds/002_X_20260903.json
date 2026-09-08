@@ -1,0 +1,56 @@
+{
+  "id": "002_X_20260903",
+  "source": "bhmw",
+  "url": "https://www.bhmw.gov.pl/ (Ostrzeżenia nawigacyjne, PDF PL 213/2026, English part)",
+  "station": "X",
+  "received_at": "2026-09-03T00:00Z",
+  "lang": "en",
+  "channel": "TEXT",
+  "navtex_header": null,
+  "text": "NAVIGATIONAL WARNING NO. PL 213/2026 (NAVTEX)\nCATEGORY: SECURITY-RELATED REQUIREMENTS\nAREA: SOUTHERN BALTIC. LOCALISATION: POLISH COAST, POMERANIAN BAY. CHART INT1295.\nDUE TO MILITARY EXERCISES AREA BOUNDED BY POSITIONS 1. 54-03.73N 014-27.88E 2. 54-11.45N 014-36.38E 3. 54-13.51N 014-46.88E 4. 54-10.31N 014-48.78E IS TEMPORARILY DANGEROUS FOR SHIPPING AND FISHERY: ON 2026-09-07 FROM 12:00 TO 13:00 ON 2026-09-10 FROM 19:00 TO 21:00 TIME IN UTC\nTERM OF VALIDITY: FROM 07 SEP 2026, 12:00 (UTC) TO 10 SEP 2026, 21:00 (UTC)\nREMARKS: EXTREME CAUTION ADVISED\nPROMULGATED 03 SEP 2026. HYDROGRAPHIC OFFICE OF THE POLISH NAVY, POLISH COORDINATOR OF RADIO NAVIGATIONAL WARNINGS.\n",
+  "sha256": "35c54ce545c423725e67e659f46e5d142ce3cea614247a6b770db36ed4a51d9e",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:04:17+00:00",
+  "curator": "kamil",
+  "note": "English half of the same PDF; times in UTC. Same polygon as the PL seed.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": {
+    "event_type": "EXERCISE",
+    "warning_id": "PL 213/2026",
+    "issued_at": null,
+    "valid_from": "2026-09-07T12:00:00Z",
+    "valid_to": "2026-09-10T21:00:00Z",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            14.4647,
+            54.0622
+          ],
+          [
+            14.6063,
+            54.1908
+          ],
+          [
+            14.7813,
+            54.2252
+          ],
+          [
+            14.813,
+            54.1718
+          ],
+          [
+            14.4647,
+            54.0622
+          ]
+        ]
+      ]
+    },
+    "location_name": "SOUTHERN BALTIC, POLISH COAST, POMERANIAN BAY",
+    "agency": "BHMW",
+    "entities": []
+  },
+  "label_status": "draft",
+  "label_note": "draft by assistant 2026-09-08; PL times are CEST (14:00 CET in the PDF == 12:00 UTC), label uses UTC from the EN half; two exercise windows collapsed to the overall validity term; corners DD-MM.mmm -> decimal, ring closed"
+}

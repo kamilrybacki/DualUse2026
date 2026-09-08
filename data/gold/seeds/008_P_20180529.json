@@ -1,0 +1,23 @@
+{
+  "id": "008_P_20180529",
+  "source": "other",
+  "url": "github.com/pd0wm/navtex sample websdr_recording_start_2018-05-31T10_30_24Z_518.0kHz.wav (WebSDR 518 kHz, Netherlands Coastguard, station P)",
+  "station": "P",
+  "received_at": "2018-05-29T10:03Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "P",
+    "b2_subject": "A",
+    "b3b4_number": "54"
+  },
+  "text": "ZCZC PA54\nNETHERLANDS COASTGUARD\nNAVIGATIONAL WARNING NR. 54 291003 UTC MAY\nFOLLOWING BUOYS PERMANENTLY DISCONTINUED:\n- MEET W  VQ (9) 10 S  52-16.85N 004-14.45E\n- MEET W 1 Q (9) 15 S  52-14.31N 004-22.14E\n- MEET E  VQ (3)  5 S  52-13.95N 004-23.36E\n\nNNNN\n",
+  "sha256": "c2cd4efb24eac0e03ef9d3ebeb77a051aeac6e4b5af03256391459a86eb530a5",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:05:00+00:00",
+  "curator": "kamil",
+  "note": "Off-air recording decoded during earlier own RF experiments (not proofread against an official archive; day-time group gives the broadcast date). Not Baltic: style/few-shot reference only.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

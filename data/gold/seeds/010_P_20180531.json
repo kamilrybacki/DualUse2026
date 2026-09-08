@@ -1,0 +1,23 @@
+{
+  "id": "010_P_20180531",
+  "source": "other",
+  "url": "github.com/pd0wm/navtex sample websdr_recording_start_2018-05-31T10_30_24Z_518.0kHz.wav (WebSDR 518 kHz, Netherlands Coastguard, station P)",
+  "station": "P",
+  "received_at": "2018-05-31T03:09Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "P",
+    "b2_subject": "A",
+    "b3b4_number": "57"
+  },
+  "text": "ZCZC PA57\nNETHERLANDS COASTGUARD\nNAVIGATIONAL WARNING NR. 57 310309 UTC MAY\nTSS MAAS NORTH\nPIPELINE SURVEY BY FUGRO PIONEER CS C6BH3\nA) 52-19.2N 003-46.6E\nB) 52-19.1N 003-52.3E\nC) 52-07.7N 003-55.8E\nD) 52-07.7N 003-44.6E\nWIDE BERTH REQUESTED\nNNNN\n",
+  "sha256": "8b65cfb719293af1e596626aa6485f569b2c691126e8ed19348a8d3b37e04901",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:05:00+00:00",
+  "curator": "kamil",
+  "note": "Off-air recording decoded during earlier own RF experiments (not proofread against an official archive; day-time group gives the broadcast date). Not Baltic: style/few-shot reference only.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

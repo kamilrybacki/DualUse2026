@@ -1,0 +1,23 @@
+{
+  "id": "005_P_20180524",
+  "source": "other",
+  "url": "github.com/pd0wm/navtex sample websdr_recording_start_2018-05-31T10_30_24Z_518.0kHz.wav (WebSDR 518 kHz, Netherlands Coastguard, station P)",
+  "station": "P",
+  "received_at": "2018-05-24T12:00Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "P",
+    "b2_subject": "A",
+    "b3b4_number": "42"
+  },
+  "text": "ZCZC PA42\nNETHERLANDS COASTGUARD\nNAVIGATIONAL WARNING NR. 42 241200 UTC MAY\nRIFFGAT\nFOLLOWING LIGHTBUOYS ESTABLISHED\nMARKING OYSTER SEABED FARM\nCARDINAL SPAR BUOY WNF-N VQ\n53-42.7N 006-20.9E\nCARDINAL SPAR BUOY WNF-S Q(6) \" LFL15S\n53-41.9N 006-21.0E\n\nNNNN\n",
+  "sha256": "f2f7904b5928b05df3e4287689029204c09a0f36a6d815fc16e375484545aece",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:05:00+00:00",
+  "curator": "kamil",
+  "note": "Off-air recording decoded during earlier own RF experiments (not proofread against an official archive; day-time group gives the broadcast date). Not Baltic: style/few-shot reference only.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

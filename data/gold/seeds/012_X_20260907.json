@@ -1,0 +1,19 @@
+{
+  "id": "012_X_20260907",
+  "source": "bhmw",
+  "url": "https://www.bhmw.gov.pl/ (Ostrzeżenia nawigacyjne, PDF PL 216/2026, pl part)",
+  "station": "X",
+  "received_at": "2026-09-07T00:00Z",
+  "lang": "pl",
+  "channel": "TEXT",
+  "navtex_header": null,
+  "text": "OSTRZEŻENIE NAWIGACYJNE NR PL 216/2026 (BRZEGOWE)\nKATEGORIA: WPROWADZENIE NOWEGO OZNAKOWANIA NAWIGACYJNEGO LUB ZNACZĄCE ZMIANY W ISTNIEJĄCYM OZNAKOWANIU MAJĄCE ZNACZENIE DLA ŻEGLUGI\nOBSZAR: BAŁTYK POŁUDNIOWO-WSCHODNI. LOKALIZACJA: N OD STILO. MAPA INT1292.\nW DNIACH 08-09.09.2026 PLANOWANE JEST WYSTAWIENIE PŁAW AIS NA POZYCJACH: 1. PŁAWA SM2 DB1 AIS: 55-06,23'N 17-56,38'E 2. PŁAWA SM4 DB2 AIS: 55-06,08'N 17-56,89'E JEDNOSTKA ZAANGAŻOWANA W PRACE: FAIRPLAY 37 (MMSI 261002431)\nTERMIN OBOWIĄZYWANIA: OD 08 WRZ 2026, 00:00 (CET) DO 09 WRZ 2026, 23:59 (CET)\nUWAGI: ZACHOWAĆ BEZPIECZNĄ ODLEGŁOŚĆ\nROZPOWSZECHNIONO 07 WRZ 2026. BHMW, KRAJOWY KOORDYNATOR OSTRZEŻEŃ NAWIGACYJNYCH.\n",
+  "sha256": "1843bb632c378121caf381da57fd48e7c1e2e9da1dfe5b54646d2e6774b770d3",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:05:44+00:00",
+  "curator": "kamil",
+  "note": "Typ BHMW: Brzegowe/Coastal. Przepisane z PDF (telefon); układ formularza spłaszczony. PL czasy CET == CEST (UTC+2), EN w UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

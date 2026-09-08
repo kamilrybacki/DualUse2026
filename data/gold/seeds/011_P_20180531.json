@@ -1,0 +1,23 @@
+{
+  "id": "011_P_20180531",
+  "source": "other",
+  "url": "github.com/pd0wm/navtex sample websdr_recording_start_2018-05-31T10_30_24Z_518.0kHz.wav (WebSDR 518 kHz, Netherlands Coastguard, station P)",
+  "station": "P",
+  "received_at": "2018-05-31T08:18Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "P",
+    "b2_subject": "J",
+    "b3b4_number": "77"
+  },
+  "text": "ZCZC PJ77\nNETHERLANDS COASTGUARD\nSATNAV MESSAGE NR. 77 310818 UTC MAY\nDGPS PRE-WARNING MESSAGE:\nTHE TRANSMISSION OF THE DGPS-STATION GILZEN RIJEN  (THE NETHERLANDS),\nWITH BROADCASTING  STATION-ID 426, RADIO BEACON-TRANSMISSION FREQUENCY 302 KHZ CAN BE INTERRUPTED :\nFROM THE 4TH  UNTIL 8TH OF MARCH BETWEEN 6:00 UNTIL 15:00 UTC\nFROM THE 11TH  UNTIL 15TH OF MARCH BETWEEN 6:00 UNTIL 15:00 UTC\n\nNNNN\n",
+  "sha256": "826402a3d46afdf3143a2bfcafae91fe04a0e1f4b8c7190e4a83e3180208c230",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:05:01+00:00",
+  "curator": "kamil",
+  "note": "Off-air recording decoded during earlier own RF experiments (not proofread against an official archive; day-time group gives the broadcast date). Not Baltic: style/few-shot reference only.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

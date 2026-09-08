@@ -1,0 +1,23 @@
+{
+  "id": "004_P_20180523",
+  "source": "other",
+  "url": "github.com/pd0wm/navtex sample websdr_recording_start_2018-05-31T10_30_24Z_518.0kHz.wav (WebSDR 518 kHz, Netherlands Coastguard, station P)",
+  "station": "P",
+  "received_at": "2018-05-23T03:27Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "P",
+    "b2_subject": "A",
+    "b3b4_number": "40"
+  },
+  "text": "ZCZC PA40\nNETHERLANDS COASTGUARD\nNAVIGATIONAL WARNING NR. 40 230327 UTC MAY\nGEOTECHNICAL DRILLING OPERATIONS\nBY MV FUGRO SYNERGY / C6XR3 IN AN AREA\nBOUNDED BY:\nA: 52-50N 004-14E\nB: 52-50N 004-22E\nC: 52-36N 004-22E\nD: 52-36N 004-08E\nWIDE BERTH REQUESTED.\nNNNN\n",
+  "sha256": "a11b40bebb14a92b30ad18b2e91c59520e152324de3bc9d21365d47e6e5432c4",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:05:00+00:00",
+  "curator": "kamil",
+  "note": "Off-air recording decoded during earlier own RF experiments (not proofread against an official archive; day-time group gives the broadcast date). Not Baltic: style/few-shot reference only.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "027_J_20260908",
+  "source": "other",
+  "url": "https://navtex.lv (NAVTEX LIVE 518 KHz, PDF export)",
+  "station": "J",
+  "received_at": "2026-09-08T01:17Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "J",
+    "b2_subject": "A",
+    "b3b4_number": "23"
+  },
+  "text": "ZCZC JA23\n281030 UTC AUG\nLITHUANIAN NAV WARN 059/26\nSOUTH-EASTERN BALTIC\nAPPROACHES TO PORT KLAIPEDA ODAS _IGHTBUOY\nA YELLOW ODAS LIGHTBUOY FL(5) Y 20S HAS BEEN DE_LOYED\nPSN_ARTMTON 020-58*7_:_\nA SAFETY ZONE, RADIUS 0.5 NM, HAS BEEN ESTABLISHED\nCENTRED ON BUOY.\n___6!06*.60.2_!_7589, !._$0.60_NNNN\n",
+  "sha256": "b95b3b1a6c0e32f81c85afb22b08fc61c0af5b01ceec01039cbbad1e3a7c3b10",
+  "star_rate": 0.0069,
+  "curated_at": "2026-09-08T08:12:50+00:00",
+  "curator": "kamil",
+  "note": "Live off-air decode by navtex.lv (Latvia), pasted from the site's PDF export on 2026-09-08; '_' marks characters the site's decoder could not recover, garbage runs are decoder substitutions. Station letter is the B1 as received; on 518 kHz the letter J is used by Gislövshammar (SE) and by Varna (BG), and night skywave makes Black Sea texts appear under J. Timestamp converted from LV (UTC+3) to UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

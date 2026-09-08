@@ -1,0 +1,19 @@
+{
+  "id": "013_X_20260907",
+  "source": "bhmw",
+  "url": "https://www.bhmw.gov.pl/ (Ostrzeżenia nawigacyjne, PDF PL 216/2026, en part)",
+  "station": "X",
+  "received_at": "2026-09-07T00:00Z",
+  "lang": "en",
+  "channel": "TEXT",
+  "navtex_header": null,
+  "text": "NAVIGATIONAL WARNING NO. PL 216/2026 (COASTAL)\nCATEGORY: ESTABLISHMENT OF MAJOR NEW AIDS TO NAVIGATION OR SIGNIFICANT CHANGES TO EXISTING ZONES, WHEN SUCH ESTABLISHMENT OR CHANGE MIGHT BE MISLEADING TO SHIPPING\nAREA: SOUTH-EASTERN BALTIC. LOCALISATION: N OF STILO. CHART INT1292.\nBETWEEN 08TH AND 09TH SEP 2026 AIS BUOYS ARE TO BE ESTABLISHED IN POSITIONS: 1. BUOY SM2 DB1 AIS: 55-06,23'N 17-56,38'E 2. BUOY SM4 DB2 AIS: 55-06,08'N 17-56,89'E UNIT ENGAGED: FAIRPLAY 37 (MMSI 261002431)\nTERM OF VALIDITY: FROM 07 SEP 2026, 22:00 (UTC) TO 09 SEP 2026, 21:59 (UTC)\nREMARKS: SAFE BERTH REQUESTED\nPROMULGATED 07 SEP 2026. HYDROGRAPHIC OFFICE OF THE POLISH NAVY, POLISH COORDINATOR OF RADIO NAVIGATIONAL WARNINGS.\n",
+  "sha256": "200d7418b9bf6ae54b309492d224a6190c6f553456abcb533e10c6cd680d6382",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:05:44+00:00",
+  "curator": "kamil",
+  "note": "Typ BHMW: Brzegowe/Coastal. Przepisane z PDF (telefon); układ formularza spłaszczony. PL czasy CET == CEST (UTC+2), EN w UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

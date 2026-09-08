@@ -1,0 +1,23 @@
+{
+  "id": "017_J_20260908",
+  "source": "other",
+  "url": "https://navtex.lv (NAVTEX LIVE 518 KHz, PDF export)",
+  "station": "J",
+  "received_at": "2026-09-08T01:33Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "J",
+    "b2_subject": "A",
+    "b3b4_number": "74"
+  },
+  "text": "ZCZC JA74\n070736 UTC SEP 26\nVARNA RAWFZMZMLPDS__Z.6_!9,9,.\n   35__'__.*____+_!9,+._FBZBUUEMGLPH_PP_M_FHMGWM_RCH AND RESCUE(_.*0.!._$0.60_ 40E\n44 0_N 028 50E\n©2019\n43 52NNAVTEX.LV\n        028 50E by Konstantin Sedov(3.0.0.7)\n43 52N_028 40E.\nNA\nF_B_\n_ CAUTION IN THISMAR__O_G\nP_(91(_BU_Q_K_B\nR_LBBNQPJ__-70+_(+_8)_8_-_49,:3) 5_8' .'_ 9, 08.09./150___(__9,,888_\n_+:+: *-42\n031_'30 2_\n__6.62!+9,9,7.\n_+_5__,_0.__-_)-.NAVY TRAINING.\nARTILLERY JCY_B_Q_CUB_A_GL_ ON 16 AND 17.09. AND\nFM 0600 TO 153_ UTC ON _QIMPOMWP_WPN 028 51,20E\n4* 38,20NV_AZMHHC_GP_N_,_*__+___4*+:3_0_363_3$!6_*!_3_\n__,(__)__DO_NOLOLON(_93(3_\n43 28,40N 028\n2,(,__\n8_60_0__G_L_TWNYPE\n\n43 34,40N 0_8 _2_$GPMQM_ZJHMSFPONW_PY_HZM\nFA_\nFZ__ONGONNIIIUU_ JA,Y__PP__\nH\n_QHC\n_Y\n  =-\n=-4,- 4-$89\n\n,2 598/26\nE FM SHABLA.NAVY TRAINI__ONTYHFSS_YEM!6__*.2.)-__)_. 0600 _59 2330 UTMVON _6\n-,$ 17.09. AND\nFM 0600 TO 1530 UTC ON__8.09.2026\nIN RP_FZ__INWPN\nN_\n_FWP__\n60.066G_IJKVOO_E\n43 28,40\n, 028 52,10E\n61\n_6_0!__.\n__\n_43 16,0,__)7_'9__-,9_, 0_8 34,70_\n43 _5,00N_028 26,00E\n_7 21,60_, 028 28,00_ AND COAST LIN_\n_ROHOBITED TO NAVIG_TION.\nNNNN\n",
+  "sha256": "595f7e62918f4f52d7abf6757d4acba8f530c0e18bea1f82c226c643a994f350",
+  "star_rate": 0.0077,
+  "curated_at": "2026-09-08T08:12:49+00:00",
+  "curator": "kamil",
+  "note": "Live off-air decode by navtex.lv (Latvia), pasted from the site's PDF export on 2026-09-08; '_' marks characters the site's decoder could not recover, garbage runs are decoder substitutions. Station letter is the B1 as received; on 518 kHz the letter J is used by Gislövshammar (SE) and by Varna (BG), and night skywave makes Black Sea texts appear under J. Timestamp converted from LV (UTC+3) to UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

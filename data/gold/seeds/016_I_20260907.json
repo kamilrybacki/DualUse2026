@@ -1,0 +1,23 @@
+{
+  "id": "016_I_20260907",
+  "source": "other",
+  "url": "https://navtex.lv (NAVTEX LIVE 518 KHz, PDF export)",
+  "station": "I",
+  "received_at": "2026-09-07T21:13Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "J",
+    "b2_subject": "A",
+    "b3b4_number": "14"
+  },
+  "text": "ZCZC IAVW_\n0210_\nUTC JUL\nBA_TC_ SEA_NA\n_A_D NORTHERN _A_F RIGA AND SEA OF AALAND.\nGNSS, AI_,__R AND DGPS _H___Y___UU__U_ZCZC\n\n 2026-09-08 04:37:55(LV) AREA: J\nZCZC JA14\n8 _7_+____5_0GBN_QA\n\nNWC112/BLACK SEA.ROMANIA.23 AUGUST\nON _MARITIME EX_SES TRAINING IN_AKPC\nFE TRNYN 028 37,4E\n43 5_,6N 028 38,6_09,_63___)()9,_GIG_+)_:_!_!!6_/3_HEDULED AUMF_ALOWS:\nON 07.09. FM 0500 TO 2059 UTC,\nON 08 AND 0+.09. FM\n500 __+._ _MGVH_XWON_BM\n EMGHZMT_FHZMGCH_\nPROHIBITED TO NAVIGATION.\nCXPSMHDFJMBJ_M_M_ZBZBT_ HZMGCHX_NNNN\n",
+  "sha256": "ffd0ecb376bde3a45d2a0fdbbf249fc1f923fcbb626e865e2c1052bb5e961c58",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:12:49+00:00",
+  "curator": "kamil",
+  "note": "Live off-air decode by navtex.lv (Latvia), pasted from the site's PDF export on 2026-09-08; '_' marks characters the site's decoder could not recover, garbage runs are decoder substitutions. Station letter is the B1 as received; on 518 kHz the letter J is used by Gislövshammar (SE) and by Varna (BG), and night skywave makes Black Sea texts appear under J. Timestamp converted from LV (UTC+3) to UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

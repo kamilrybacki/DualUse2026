@@ -1,0 +1,23 @@
+{
+  "id": "032_J_20260907",
+  "source": "other",
+  "url": "https://navtex.lv (NAVTEX LIVE 518 KHz, PDF export)",
+  "station": "J",
+  "received_at": "2026-09-07T21:36Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "J",
+    "b2_subject": "A",
+    "b3b4_number": "51"
+  },
+  "text": "ZCZC JA51\n050652 UTC SEP 26\n__- 4-$89\n_*\n_(_\nNE FM MAZ_M 0700 TO (_0___ 5:_\n9, 09_09.2_, 027 47,0A\n42 _=,0_,=_027_59,__589,_ANCHORING,\nFI_HING,DIVING AND AN_ TYPE UNDENNNN\n",
+  "sha256": "d88764c93aa8960a33743aeec4040efc8b5edd9fcc081efab083ac24b43c560d",
+  "star_rate": 0.0061,
+  "curated_at": "2026-09-08T08:12:50+00:00",
+  "curator": "kamil",
+  "note": "Live off-air decode by navtex.lv (Latvia), pasted from the site's PDF export on 2026-09-08; '_' marks characters the site's decoder could not recover, garbage runs are decoder substitutions. Station letter is the B1 as received; on 518 kHz the letter J is used by Gislövshammar (SE) and by Varna (BG), and night skywave makes Black Sea texts appear under J. Timestamp converted from LV (UTC+3) to UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

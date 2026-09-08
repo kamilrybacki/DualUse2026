@@ -1,0 +1,23 @@
+{
+  "id": "006_P_20180525",
+  "source": "other",
+  "url": "github.com/pd0wm/navtex sample websdr_recording_start_2018-05-31T10_30_24Z_518.0kHz.wav (WebSDR 518 kHz, Netherlands Coastguard, station P)",
+  "station": "P",
+  "received_at": "2018-05-25T08:03Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "P",
+    "b2_subject": "A",
+    "b3b4_number": "43"
+  },
+  "text": "ZCZC PA43\nNETHERLANDS COASTGUARD\nNAVIGATIONAL WARNING NR. 43 250803 UTC MAY\nTEXEL\nWESTCARDINAL LIGHTBUOY ZINK-W  VQ (9)10S\nRE-ESTABLISHED IN POSITION 53-4.7N 004-42.1E\nCOVERING A FLOATING PIPELINE\nNNNN\n",
+  "sha256": "93dba9c6b697054d94a909676d5943eb67629c9299b8be0b5007f89321f99d6a",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:05:00+00:00",
+  "curator": "kamil",
+  "note": "Off-air recording decoded during earlier own RF experiments (not proofread against an official archive; day-time group gives the broadcast date). Not Baltic: style/few-shot reference only.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

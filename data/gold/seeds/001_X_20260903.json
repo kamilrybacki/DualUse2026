@@ -1,0 +1,56 @@
+{
+  "id": "001_X_20260903",
+  "source": "bhmw",
+  "url": "https://www.bhmw.gov.pl/ (Ostrzeżenia nawigacyjne, PDF PL 213/2026)",
+  "station": "X",
+  "received_at": "2026-09-03T00:00Z",
+  "lang": "pl",
+  "channel": "TEXT",
+  "navtex_header": null,
+  "text": "OSTRZEŻENIE NAWIGACYJNE NR PL 213/2026 (NAVTEX)\nKATEGORIA: WYMAGANIA W ZAKRESIE BEZPIECZEŃSTWA\nOBSZAR: BAŁTYK POŁUDNIOWY. LOKALIZACJA: WYBRZEŻE POLSKIE, ZATOKA POMORSKA. MAPA INT1295.\nAKWEN O WSPÓŁRZĘDNYCH 1. 54-03.73N 014-27.88E 2. 54-11.45N 014-36.38E 3. 54-13.51N 014-46.88E 4. 54-10.31N 014-48.78E OGŁASZA SIĘ JAKO NIEBEZPIECZNY DLA ŻEGLUGI I RYBOŁÓWSTWA ZE WZGLĘDU NA ĆWICZENIA WOJSKOWE Z UŻYCIEM UZBROJENIA W DNIACH: 2026-09-07 OD GODZINY 14:00 DO GODZINY 15:00 2026-09-10 OD GODZINY 21:00 DO GODZINY 23:00\nTERMIN OBOWIĄZYWANIA: OD 07 WRZ 2026, 14:00 (CET) DO 10 WRZ 2026, 23:00 (CET)\nUWAGI: ZALECANA SZCZEGÓLNA UWAGA\nROZPOWSZECHNIONO 03 WRZ 2026. BHMW, KRAJOWY KOORDYNATOR OSTRZEŻEŃ NAWIGACYJNYCH.\n",
+  "sha256": "17af15e350a008934852177229fef0e02497e537284c1940a7a6e9f2f36e6bb2",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:04:17+00:00",
+  "curator": "kamil",
+  "note": "Typ BHMW: NAVTEX (490 kHz PL). Czasy w wersji PL podane jako CET, faktycznie CEST (UTC+2): 14:00 CET == 12:00 UTC w wersji EN. Przepisane z PDF (telefon), układ formularza spłaszczony do tekstu.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": {
+    "event_type": "EXERCISE",
+    "warning_id": "PL 213/2026",
+    "issued_at": null,
+    "valid_from": "2026-09-07T12:00:00Z",
+    "valid_to": "2026-09-10T21:00:00Z",
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            14.4647,
+            54.0622
+          ],
+          [
+            14.6063,
+            54.1908
+          ],
+          [
+            14.7813,
+            54.2252
+          ],
+          [
+            14.813,
+            54.1718
+          ],
+          [
+            14.4647,
+            54.0622
+          ]
+        ]
+      ]
+    },
+    "location_name": "BAŁTYK POŁUDNIOWY, WYBRZEŻE POLSKIE, ZATOKA POMORSKA",
+    "agency": "BHMW",
+    "entities": []
+  },
+  "label_status": "draft",
+  "label_note": "draft by assistant 2026-09-08; PL times are CEST (14:00 CET in the PDF == 12:00 UTC), label uses UTC from the EN half; two exercise windows collapsed to the overall validity term; corners DD-MM.mmm -> decimal, ring closed"
+}

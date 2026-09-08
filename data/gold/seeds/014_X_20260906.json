@@ -1,0 +1,19 @@
+{
+  "id": "014_X_20260906",
+  "source": "bhmw",
+  "url": "https://www.bhmw.gov.pl/ (Ostrzeżenia nawigacyjne, PDF PL 215/2026, pl part)",
+  "station": "X",
+  "received_at": "2026-09-06T00:00Z",
+  "lang": "pl",
+  "channel": "TEXT",
+  "navtex_header": null,
+  "text": "OSTRZEŻENIE NAWIGACYJNE NR PL 215/2026 (BRZEGOWE)\nKATEGORIA: OBECNOŚĆ DUŻYCH ZESPOŁÓW HOLUJĄCYCH\nOBSZAR: BAŁTYK POŁUDNIOWY. LOKALIZACJA: WYBRZEŻE POLSKIE. MAPA INT1021.\nW DNIACH OD 2026-09-07 DO 2026-09-08 PROWADZONA BĘDZIE OPERACJA HOLOWANIA RUROCIĄGU O DŁUGOŚCI 750 M PRZEZ HOLOWNIK HENRYK (MMSI: 261059000) W ASYŚCIE SM-PRC-101 LUB SM-PRC-107 NA TRASIE: Z REJONU JASTARNIA POZYCJA: 54-43.10N 018-38.10E DO REJONU PUSTKOWO POZYCJA: 54-04.50N 014-58.50E. UPRASZA SIĘ RYBAKÓW O ZDJĘCIE NARZĘDZI POŁOWOWYCH Z TRASY HOLOWANIA.\nTERMIN OBOWIĄZYWANIA: OD 07 WRZ 2026, 04:00 (CET)\nUWAGI: ZACHOWAĆ OSTROŻNOŚĆ.\nROZPOWSZECHNIONO 06 WRZ 2026. BHMW, KRAJOWY KOORDYNATOR OSTRZEŻEŃ NAWIGACYJNYCH.\n",
+  "sha256": "cffd8f035773bcf22983604111d916fcb092f2235d2feb71d43660bfc882623a",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:05:44+00:00",
+  "curator": "kamil",
+  "note": "Typ BHMW: Brzegowe/Coastal. Przepisane z PDF (telefon); układ formularza spłaszczony. PL czasy CET == CEST (UTC+2), EN w UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

@@ -1,0 +1,19 @@
+{
+  "id": "015_X_20260906",
+  "source": "bhmw",
+  "url": "https://www.bhmw.gov.pl/ (Ostrzeżenia nawigacyjne, PDF PL 215/2026, en part)",
+  "station": "X",
+  "received_at": "2026-09-06T00:00Z",
+  "lang": "en",
+  "channel": "TEXT",
+  "navtex_header": null,
+  "text": "NAVIGATIONAL WARNING NO. PL 215/2026 (COASTAL)\nCATEGORY: THE PRESENCE OF LONG TOWS\nAREA: SOUTHERN BALTIC. LOCALISATION: POLISH COAST. CHART INT1021.\nON 2026-09-07 AND 2026-09-08 THE TOWING OPERATION OF 750M LONG SILTING PIPE WILL BE CONDUCTED BY VESSELS HENRYK (MMSI: 261059000) AND SM-PRC-101 OR SM-PRC-107 FROM JASTARNIA POSITION: 54-43.10N 018-38.10E TO PUSTKOWO POSITION: 54-04.50N 014-58.50E. FISHERMEN ARE ASKED TO REMOVE FISHING GEARS FROM THE TOWING ROUTE.\nTERM OF VALIDITY: FROM 07 SEP 2026, 02:00 (UTC)\nREMARKS: CAUTION ADVISED.\nPROMULGATED 06 SEP 2026. HYDROGRAPHIC OFFICE OF THE POLISH NAVY, POLISH COORDINATOR OF RADIO NAVIGATIONAL WARNINGS.\n",
+  "sha256": "ed1c0ea96550b00beb58e6c3335786d96265a18acd4e8d27f8b9af5127889f98",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:05:44+00:00",
+  "curator": "kamil",
+  "note": "Typ BHMW: Brzegowe/Coastal. Przepisane z PDF (telefon); układ formularza spłaszczony. PL czasy CET == CEST (UTC+2), EN w UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

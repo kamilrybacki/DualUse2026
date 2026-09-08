@@ -1,0 +1,23 @@
+{
+  "id": "026_J_20260908",
+  "source": "other",
+  "url": "https://navtex.lv (NAVTEX LIVE 518 KHz, PDF export)",
+  "station": "J",
+  "received_at": "2026-09-08T01:18Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "J",
+    "b2_subject": "A",
+    "b3b4_number": "17"
+  },
+  "text": "ZCZC JA17\n271332 UTC AUG\n_Y_OKKBKOBKCELBEGRK_ZHV___GP_L__PW\n _FU_W_F MECKLENBURG.\nRESEARCH WORK IN PROGRESS BY MV 'OLYMPIC ZEUS', CS 'LAUR'\nIN THE A_EA_POSITION 54-17,5N 012-01,5E.\nSHIPP IS REQUESTED TO _\nF_AT_ WITH CAUTION.\n\nSAFE BERTH OF 50_M REQUESTED.\nNNNN\n",
+  "sha256": "0419af46b3ce0b6689915883e204cf2a29c28f660b14d84bded3922eeb7ed960",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:12:50+00:00",
+  "curator": "kamil",
+  "note": "Live off-air decode by navtex.lv (Latvia), pasted from the site's PDF export on 2026-09-08; '_' marks characters the site's decoder could not recover, garbage runs are decoder substitutions. Station letter is the B1 as received; on 518 kHz the letter J is used by Gislövshammar (SE) and by Varna (BG), and night skywave makes Black Sea texts appear under J. Timestamp converted from LV (UTC+3) to UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

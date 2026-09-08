@@ -42,8 +42,8 @@ fi
 
 # 3. fldigi headless
 if ! pgrep -f "fldigi --config-dir $CFG" >/dev/null; then
-  nohup xvfb-run -a fldigi --config-dir "$CFG" --xmlrpc-server-port "$PORT" -i \
-    >"$CFG/fldigi.log" 2>&1 &
+  setsid nohup xvfb-run -a fldigi --config-dir "$CFG" --xmlrpc-server-port "$PORT" -i \
+    >"$CFG/fldigi.log" 2>&1 </dev/null &
   for _ in $(seq 1 30); do
     sleep 1
     if curl -s -o /dev/null "http://127.0.0.1:$PORT/RPC2"; then break; fi

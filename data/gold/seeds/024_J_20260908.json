@@ -1,0 +1,23 @@
+{
+  "id": "024_J_20260908",
+  "source": "other",
+  "url": "https://navtex.lv (NAVTEX LIVE 518 KHz, PDF export)",
+  "station": "J",
+  "received_at": "2026-09-08T01:21Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "J",
+    "b2_subject": "A",
+    "b3b4_number": "10"
+  },
+  "text": "ZCZC JA10\n261316 UTC AUG\n\nKALINGRAD NAV WARN 201/26\nSOCHDPJHPYMLSHF_ONGJDF_JMP_PYXFJPJM_ICQWQPP UTC AUG THR_PWQPP UTC SEP\nAREA TEMPORARILY DANGEROUS TO SHIPPIN_\nN\nHH_PUB_G_QOAPQ_YPE\n55-32.00_,_\n_50.00E\n55-03.00N 019-35.00E\n546__6G_N_TMPPE\n54-50.30M_OAWPMEPE\n55-11.50N _Y_BAPOMWPE\n55-20.00N ___Y__HDFJ___RBNNGCCG9_._\n\n_-/-/.1__ZO\n_EPI UTC AUG\nKALINGRAD NAV WARN 200/26\nSOUTHEASTERN BALTIC\nSHIPS EXERC 31_100__AUG THRU 302100=U_C SEP\nGYPMHP__ZYYFS__W_ROUS TO__DING BR-42\n55-20.0NVWPAPIMPE\n55-20.0N _20-25.0E\n_TTAPUMYN 020-25.0E\n55-07.6N 020-08.0E\nCAN_PSMHDFJM_302200 UTC SEP\nNNNN\n",
+  "sha256": "00cfe62642461afe3895dc095862decb6acb78e246d994fb0022fcc32cb3560f",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:12:50+00:00",
+  "curator": "kamil",
+  "note": "Live off-air decode by navtex.lv (Latvia), pasted from the site's PDF export on 2026-09-08; '_' marks characters the site's decoder could not recover, garbage runs are decoder substitutions. Station letter is the B1 as received; on 518 kHz the letter J is used by Gislövshammar (SE) and by Varna (BG), and night skywave makes Black Sea texts appear under J. Timestamp converted from LV (UTC+3) to UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

@@ -1,0 +1,23 @@
+{
+  "id": "028_J_20260908",
+  "source": "other",
+  "url": "https://navtex.lv (NAVTEX LIVE 518 KHz, PDF export)",
+  "station": "J",
+  "received_at": "2026-09-08T01:15Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "J",
+    "b2_subject": "A",
+    "b3b4_number": "29"
+  },
+  "text": "ZCZC JA29\n031128 UTC SEP\n\nPOLISH NAV WARN 213/26\n\nSOUTHERN BALTIFL_VGZSFJDM_ZK_POMERANIAN\nB_ONGWCPMHZM_FSFHY_MPTPYXFJPJMYPMLZCWPWMLEM_ZJ_H_A_QZ_ TRA\n_014-27.!!_09,\n_54-11.45N 014-36.38E\n3. 54-13.51N 014-46.88E\n_Y_MH_ _BP G_\n_RIMUIE\nIS TEMPORARILY DANGEROUS FOR SHIPPING ANW FISHERY:\nON 2026-09-07 FROM 12:00 TO 13:00\nON 2026-09-10 FROM 19:00 TO 21:00\nEXTREME CAUT_ON ADVISED\n_MNCEL THIS MSG 102100 UTC SEP\nNNNN\n",
+  "sha256": "740a66865b69907417e9958a7eebadd9271b7f083893409e5374aee4d7699015",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:12:50+00:00",
+  "curator": "kamil",
+  "note": "Live off-air decode by navtex.lv (Latvia), pasted from the site's PDF export on 2026-09-08; '_' marks characters the site's decoder could not recover, garbage runs are decoder substitutions. Station letter is the B1 as received; on 518 kHz the letter J is used by Gislövshammar (SE) and by Varna (BG), and night skywave makes Black Sea texts appear under J. Timestamp converted from LV (UTC+3) to UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

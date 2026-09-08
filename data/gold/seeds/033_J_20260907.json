@@ -1,0 +1,23 @@
+{
+  "id": "033_J_20260907",
+  "source": "other",
+  "url": "https://navtex.lv (NAVTEX LIVE 518 KHz, PDF export)",
+  "station": "J",
+  "received_at": "2026-09-07T21:14Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "J",
+    "b2_subject": "A",
+    "b3b4_number": "35"
+  },
+  "text": "ZCZC JA35\n042159 UTC SEP\nPOLISH NAV WARN 2 _57_9,9,_*+:_$06.)'_!_POLISH COAST\nIN AREA BOUNDED BY PSN:\n1. 54-41.5N 016-23.6E\n2. 54-42.0N 016-28.8E\n3_._66 016-31.1E\n4. 5__+__*_5_\n_X_ SEP 26\nVAR_A R_DIN\n\nNW _)5_89__'7+:+: -_5*\n05052 UTC_EP *6\nVAANA_RAD_O\n\nN_ T_P_XWY\n_S J_V_A_E GALA_A.7,-=_ 54-8,89,,AOANCH_OK_G_FJ_F!*!___(2.(____9.1BKUNEZK_TIVITY.\nNNNN\n",
+  "sha256": "cc8a8ff4a34d4c1516f9527df047921b87a465b361a5efe1071f54f3c8bacce8",
+  "star_rate": 0.015,
+  "curated_at": "2026-09-08T08:12:50+00:00",
+  "curator": "kamil",
+  "note": "Live off-air decode by navtex.lv (Latvia), pasted from the site's PDF export on 2026-09-08; '_' marks characters the site's decoder could not recover, garbage runs are decoder substitutions. Station letter is the B1 as received; on 518 kHz the letter J is used by Gislövshammar (SE) and by Varna (BG), and night skywave makes Black Sea texts appear under J. Timestamp converted from LV (UTC+3) to UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

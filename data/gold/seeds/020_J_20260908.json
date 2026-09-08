@@ -1,0 +1,23 @@
+{
+  "id": "020_J_20260908",
+  "source": "other",
+  "url": "https://navtex.lv (NAVTEX LIVE 518 KHz, PDF export)",
+  "station": "J",
+  "received_at": "2026-09-08T01:25Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "J",
+    "b2_subject": "A",
+    "b3b4_number": "83"
+  },
+  "text": "ZCZC JA83\n120930 UTC AUG\nGERMAN NAV WARN 446/26\nSOUTHERN BALTIC. NORTHEAST\nO_MY_P_PMONIIIUPLOSIVES FOUND ALONG THE JOININ_LINES:\n1.54-49.5N 013_4E\n54-54.6N 013_0_\n54-52.8N 013-45.6E\n_5.3N 013-49.2E\n54-28.3N 013-50.9E\n54-21.7N 013-51.0E\nANCHORING AND FISHING PROHIBITED WITHIN O\nGMYWFCJMZ.\n _OL_R__B___NIIIZCZC\n",
+  "sha256": "7bbe06de800b7cf005089e73dd642eb479d78ee89b73e2387e3aa06483fa9418",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:12:49+00:00",
+  "curator": "kamil",
+  "note": "Live off-air decode by navtex.lv (Latvia), pasted from the site's PDF export on 2026-09-08; '_' marks characters the site's decoder could not recover, garbage runs are decoder substitutions. Station letter is the B1 as received; on 518 kHz the letter J is used by Gislövshammar (SE) and by Varna (BG), and night skywave makes Black Sea texts appear under J. Timestamp converted from LV (UTC+3) to UTC.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}

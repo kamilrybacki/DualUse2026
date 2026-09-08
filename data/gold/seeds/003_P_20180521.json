@@ -1,0 +1,23 @@
+{
+  "id": "003_P_20180521",
+  "source": "other",
+  "url": "github.com/pd0wm/navtex sample websdr_recording_start_2018-05-31T10_30_24Z_518.0kHz.wav (WebSDR 518 kHz, Netherlands Coastguard, station P)",
+  "station": "P",
+  "received_at": "2018-05-21T20:40Z",
+  "lang": "en",
+  "channel": "SDR",
+  "navtex_header": {
+    "b1_station": "P",
+    "b2_subject": "A",
+    "b3b4_number": "19"
+  },
+  "text": "ZCZC PA19\nNETHERLANDS COASTGUARD\nNAVIGATIONAL WARNING NR. 19 212040 UTC MAY\nWINDFARM BORSSELE\nGEOPHYSICAL SURVEY BY BIBBY TETHRA 2EGF8\nA. 51-41N 003-08E\nB. 51-41N 002-58E\nC. 51-49N 003-08E\nD. 51-49N 002-58E\nWIDE BERTH REQUESTED\nNNNN\n",
+  "sha256": "397ea74120e41387f4a8049dc3ff095639540439a5618ae32f88467a598e5c3c",
+  "star_rate": 0.0,
+  "curated_at": "2026-09-08T08:05:00+00:00",
+  "curator": "kamil",
+  "note": "Off-air recording decoded during earlier own RF experiments (not proofread against an official archive; day-time group gives the broadcast date). Not Baltic: style/few-shot reference only.",
+  "license_note": "NAVTEX/MSI is public maritime safety information; kept with station and date attribution. Not for redistribution as a dataset outside this project.",
+  "label": null,
+  "label_status": "unlabeled"
+}
