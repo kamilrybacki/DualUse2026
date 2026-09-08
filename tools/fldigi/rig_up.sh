@@ -24,15 +24,15 @@ if [[ "${1:-}" == "stop" ]]; then
 fi
 
 # 1. PulseAudio with a virtual cable (no hardware needed)
-if ! pactl info >/dev/null 2>&1; then
+if ! timeout 10 pactl info >/dev/null 2>&1; then
   pulseaudio -D --exit-idle-time=-1 --disallow-exit >/dev/null 2>&1 || true
   sleep 1
 fi
-if ! pactl list short sinks | grep -q '^[0-9]*\s*cable\s'; then
-  pactl load-module module-null-sink sink_name=cable sink_properties=device.description=cable >/dev/null
+if ! timeout 10 pactl list short sinks | grep -q '^[0-9]*\s*cable\s'; then
+  timeout 10 pactl load-module module-null-sink sink_name=cable sink_properties=device.description=cable >/dev/null
 fi
-pactl set-default-sink cable
-pactl set-default-source cable.monitor
+timeout 10 pactl set-default-sink cable
+timeout 10 pactl set-default-source cable.monitor
 
 # 2. Minimal fldigi config: PulseAudio backend, XML-RPC on, RSID off, no first-run wizard.
 #    Only written if absent so GUI-made changes survive.

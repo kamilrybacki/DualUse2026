@@ -1,0 +1,10 @@
+# Script to record in your own voice (PL, SMCP style). Speak numbers as words, no rush,
+# ~25 s. Record in a quiet room; the channel augmentation adds the noise.
+
+Gdynia Radio, Gdynia Radio, tu jednostka Bałtyk, Bałtyk, odbiór.
+Bałtyk, tu Gdynia Radio, odbiór.
+Gdynia Radio, tu Bałtyk. Securite, securite. Moja pozycja: pięćdziesiąt cztery stopnie, trzydzieści dziewięć minut, dwie dziesiąte północ; zero osiemnaście stopni, pięćdziesiąt osiem minut, zero dziesiątych wschód. Obserwuję jednostkę bez świateł, dryfującą w rejonie prac przy kablu. Nie odpowiada na wywołanie na kanale szesnastym. Odbiór.
+
+# Expected extraction (for the correlation check, not shown to the audience):
+# event_type VOICE_REPORT, geometry Point [18.9667, 54.6533], agency VHF,
+# entities VESSEL "BAŁTYK", OTHER "GDYNIA RADIO"; needs_human_review = true (ASR source).

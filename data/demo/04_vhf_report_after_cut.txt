@@ -1,0 +1,6 @@
+# Second own-voice recording, played after the WAN cable is pulled (PL, ~20 s).
+
+Gdynia Radio, tu Bałtyk. Jednostka bez świateł nadal dryfuje, kurs około dwieście dziesięć, prędkość około jeden węzeł. Pozycja: pięćdziesiąt cztery stopnie, trzydzieści osiem minut, osiem dziesiątych północ; zero osiemnaście stopni, pięćdziesiąt siedem minut, pięć dziesiątych wschód. Proszę o potwierdzenie odbioru. Odbiór.
+
+# Expected: VOICE_REPORT, Point [18.9583, 54.6467], VESSEL "BAŁTYK"; second correlation
+# candidate to the cable-works card; processed with WAN down; queued for sync.

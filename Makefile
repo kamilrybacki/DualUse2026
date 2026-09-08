@@ -17,7 +17,7 @@ ASR_MODELS ?= tiny,small,turbo
 .DEFAULT_GOAL := help
 
 .PHONY: help setup test lint status cache gbnf gbnf-check record decode gen-sitorb bench \
-        bench-fake asr-bench rig-up rig-down synth-vhf-local gazetteer kiwis \
+        bench-fake asr-bench demo-assets rig-up rig-down synth-vhf-local gazetteer kiwis \
         modal-datagen modal-tts modal-bench modal-finetune-dry modal-record fetch-martts gold-merge
 
 help: ## list targets
@@ -46,6 +46,12 @@ gbnf: ## regenerate schemas/extraction.gbnf from extraction.schema.json
 
 asr-bench: ## Whisper via sherpa-onnx on data/audio/vhf_synth/local: make asr-bench ASR_MODELS=tiny,small,turbo
 	$(PY) bench/asr_bench.py --models $(ASR_MODELS)
+
+demo-assets: ## synthesize the demo SITOR-B wavs from data/demo/*.txt into data/audio/sitorb/
+	$(PY) tools/gen_sitorb.py --file data/demo/01_navtex_cable_works.txt --out data/audio/sitorb/demo_01_navtex_cable_works.wav
+	$(PY) tools/gen_sitorb.py --file data/demo/01_navtex_cable_works.txt --error-rate 0.05 --seed 1 --out data/audio/sitorb/demo_01_navtex_cable_works_err0.05.wav
+	$(PY) tools/gen_sitorb.py --file data/demo/01b_navtex_gale.txt --out data/audio/sitorb/demo_01b_navtex_gale.wav
+	$(PY) tools/gen_sitorb.py --file data/demo/01_navtex_cable_works.txt --iq --out data/audio/sitorb/demo_01_navtex_cable_works.iq.wav
 
 gbnf-check: ## validate the grammar with llama.cpp's test-gbnf-validator (LLAMA_CPP_DIR=...)
 	tools/check_gbnf.sh
