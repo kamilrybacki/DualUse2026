@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+# FROM SCRATCH guard (Terms and Conditions D5.2): refuse to commit anything under src/
+# before the hackathon opens on Friday 2026-09-11 18:00 CEST (16:00 UTC).
+# Override only at the event: FALOCHRON_EVENT=1 git commit ...
+# Installed by `make setup` via `git config core.hooksPath tools/hooks`.
+set -euo pipefail
+EVENT_START_UTC=1789142400   # 2026-09-11T16:00:00Z
+now=$(date -u +%s)
+if git diff --cached --name-only | grep -E '^src/' | grep -vqE '^src/\.gitkeep$'; then
+  if [[ "${FALOCHRON_EVENT:-}" != "1" && "$now" -lt "$EVENT_START_UTC" ]]; then
+    echo "pre-commit: src/ is frozen until 2026-09-11 18:00 CEST (FROM SCRATCH, D5.2)." >&2
+    echo "            Staged src/ files:" >&2
+    git diff --cached --name-only | grep -E '^src/' | sed 's/^/              /' >&2
+    echo "            At the event: FALOCHRON_EVENT=1 git commit ... (then tag event-start)." >&2
+    exit 1
+  fi
+fi
+exit 0

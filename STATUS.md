@@ -55,6 +55,12 @@ Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 póź
   - [ ] skrypt resetu — po `event-start`
 - [ ] `tools/fetch_martts.py` uruchomiony (`make fetch-martts`), notatka licencyjna w `data/martts/README.md`.
 
+## Regulamin (2026-09-08)
+
+- [x] Terms and Conditions przeczytane; mapowanie pre-worku na D5.2 w `docs/regulations_check.md`; start hackathonu **pt 11.09 18:00**, koniec nd 18:00; pitch maks. 3 min; solo OK; zmiana kategorii do niedzieli.
+- [x] Hook `tools/hooks/pre-commit` blokuje commity w `src/` przed 11.09 18:00 (`make setup` go instaluje); procedura tagów w `docs/event_start.md`.
+- [x] README: jawna deklaracja użycia asystenta AI (D4.3).
+
 ## Decyzje podjęte 2026-09-07
 
 - Nagrania i audio poza gitem (bez LFS): `data/recordings/`, `data/audio/` w `.gitignore`, mirror na pendrive. PRD Aneks B dopuszcza.

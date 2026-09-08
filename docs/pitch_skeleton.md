@@ -1,6 +1,6 @@
 # FALOCHRON — 3-minute pitch skeleton (EN)
 
-Timing per PRD §15. Two screens: map/event list + input panel. No chat UI.
+Timing per PRD §15; the Terms and Conditions cap the final presentation at **3 minutes** (a condition of being evaluated). Keep 15 s slack. Two screens: map/event list + input panel. No chat UI.
 
 ## 0:00–0:25 — Problem
 

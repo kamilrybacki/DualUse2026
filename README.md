@@ -15,11 +15,18 @@ w ustrukturyzowane, zweryfikowane zdarzenia zgodne z modelem S-124. Pełny opis:
 
 ## Kategoria: FROM SCRATCH
 
-Projekt startuje w kategorii FROM SCRATCH. Regulamin (§D5.80) dopuszcza przed
-hackathonem research, przygotowanie środowiska, założenie repozytorium, konfigurację
-narzędzi, zakup i testowanie pojedynczych komponentów. **Implementacja pipeline'u
-zaczyna się 11.09.2026** — katalog `src/` pozostaje pusty do tego momentu, a pierwszy
-commit implementacji dostaje tag `event-start`.
+Projekt startuje w kategorii FROM SCRATCH. Regulamin (Terms and Conditions, D5.2) dopuszcza
+przed hackathonem research, przygotowanie środowiska, założenie repozytorium, konfigurację
+narzędzi, zakup i testowanie pojedynczych technologii, bibliotek, urządzeń i komponentów.
+**Implementacja pipeline'u zaczyna się w piątek 11.09.2026 o 18:00** (start hackathonu wg
+regulaminu) — katalog `src/` pozostaje pusty do tego momentu (pilnuje tego hook
+`tools/hooks/pre-commit`), a pierwszy commit implementacji następuje po tagu `event-start`.
+Mapowanie każdego elementu pre-worku na zapisy regulaminu: [`docs/regulations_check.md`](docs/regulations_check.md).
+
+**Jawność wkładu (D4.3):** pre-work w tym repozytorium powstał z użyciem asystenta AI do
+programowania (Claude Code), pod kierunkiem i z decyzjami autora; etykiety gold oznaczone
+jako `draft` zostały zaproponowane przez asystenta i są akceptowane ręcznie. Regulamin
+(D4.1–2) dopuszcza narzędzia AI i treści przez nie generowane.
 
 ## Co powstało przed wydarzeniem (jawna lista pre-worku)
 

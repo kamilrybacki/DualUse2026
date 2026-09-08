@@ -23,9 +23,10 @@ ASR_MODELS ?= tiny,small,turbo
 help: ## list targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN{FS=":.*?## "}{printf "  %-20s %s\n", $$1, $$2}'
 
-setup: ## create venv and install tool deps (uv)
+setup: ## create venv, install tool deps (uv), submodules, FROM SCRATCH git hook
 	$(UV) sync
 	git submodule update --init --recursive
+	git config core.hooksPath tools/hooks
 
 test: ## pytest for tools/ bench/ schemas/ (offline)
 	$(UV) run pytest -q
