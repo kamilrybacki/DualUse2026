@@ -75,7 +75,9 @@ and prints length, `*` rate and whether `ZCZC … NNNN` frames were seen.
 |---|---|---|
 | Kiwi USB at 516.8 kHz (Annex A) | 518.0 − 516.8 = 1.2 kHz | `1200` |
 | Kiwi IQ at 518.0 kHz → `iq_to_audio.py` (default `--audio-center 1000`) | 1.0 kHz | `1000` |
-| Wikipedia sample / synthetic generator | whatever the file uses (`gen_sitorb.py` default 1000 Hz) | `1000` |
+| synthetic generator | `gen_sitorb.py` default 1000 Hz | `1000` |
+| Wikipedia sample (`Navtex transmission example.ogg`) | tones at ~1615/1785 Hz, **inverted polarity** | `1700 --reverse` |
+| WebSDR 518 kHz recording (pd0wm/navtex, 2018) | 915/1085 Hz | `1000` |
 
 Kiwi IQ files carry `kiwi` GPS-timestamp chunks between data chunks; `iq_to_audio.py`
 understands them, standard wav readers do not. Without a real recording the whole path can
@@ -92,3 +94,9 @@ ffmpeg -i "Navtex transmission example.ogg" -ar 8000 -ac 1 tools/fldigi/samples/
 ```
 
 Acceptance (CLAUDE.md P0.6): the decoded text is readable NAVTEX (station header, message body).
+
+**Done 2026-09-08 in the container** (`docs/evidence/`): the Wikipedia sample decodes to
+"WIKIPEDIA, THE FREE ENCYCLOPEDIA THAT ANYONE CAN EDIT." with `--carrier 1700 --reverse`
+(a copy ships in github.com/pd0wm/navtex `audio/navtex_wiki.wav`), and the 8.5-minute
+off-air WebSDR recording from the same repo decodes all 9 Netherlands Coastguard messages
+with **0.0 % character error rate** against the reference transcripts (`--carrier 1000`).

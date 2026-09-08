@@ -65,9 +65,10 @@ class Fldigi:
     def version(self) -> str:
         return str(self.rpc.fldigi.version())
 
-    def setup(self, modem: str, carrier: int) -> None:
+    def setup(self, modem: str, carrier: int, reverse: bool = False) -> None:
         self.rpc.modem.set_by_name(modem)
         self.rpc.modem.set_carrier(carrier)
+        self.rpc.main.set_reverse(reverse)
         self.rpc.main.set_afc(True)
         self.rpc.main.set_squelch(False)
         self.rpc.main.set_rsid(False)
@@ -97,8 +98,8 @@ def run(args: argparse.Namespace) -> int:
             f"error: cannot reach fldigi XML-RPC at {args.host}:{args.port}: {exc}", file=sys.stderr
         )
         return 2
-    print(f"fldigi {ver}; modem={args.modem} carrier={args.carrier} Hz")
-    fl.setup(args.modem, args.carrier)
+    print(f"fldigi {ver}; modem={args.modem} carrier={args.carrier} Hz reverse={args.reverse}")
+    fl.setup(args.modem, args.carrier, args.reverse)
 
     cmd = shlex.split(args.player) + [str(wav)]
     print("player: " + " ".join(cmd))
@@ -145,6 +146,11 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--carrier", type=int, default=1000, help="audio centre of the FSK pair, Hz")
     ap.add_argument(
         "--player", default=DEFAULT_PLAYER, help="command that plays a wav to the cable"
+    )
+    ap.add_argument(
+        "--reverse",
+        action="store_true",
+        help="swap mark/space (LSB-style recordings; the Wikipedia sample needs it)",
     )
     ap.add_argument("--out", type=Path, default=None, help="output text file")
     ap.add_argument(

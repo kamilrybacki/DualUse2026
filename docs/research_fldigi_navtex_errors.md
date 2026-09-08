@@ -63,3 +63,12 @@ tools/fldigi/rig_up.sh
 uv run python tools/gen_sitorb.py --fixture 02_navtex_en_exercise_polygon --error-rate 0.1 --seed 2 --out /tmp/e.wav
 uv run python tools/fldigi/decode_test.py /tmp/e.wav --player "paplay --device=cable" --echo
 ```
+
+## Addendum 2026-09-08 — real air
+
+Same rig, real 518 kHz audio (WebSDR recording 2018-05-31, Netherlands Coastguard station P,
+from github.com/pd0wm/navtex): all 9 messages decoded with 0.0 % CER, frames intact
+(`docs/evidence/fldigi_offair_2018-05-31_518khz.txt`). So on a good signal fldigi is
+flawless; the substitution behaviour above only matters on weak signals — which is exactly
+what the navtex.lv live decodes in `data/gold/seeds/016–033` look like (5–18 % lost
+characters, garbage runs). Those seeds are the realistic "noisy" split.

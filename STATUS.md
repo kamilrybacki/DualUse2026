@@ -12,7 +12,7 @@ Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 póź
   - [x] gramatyka zweryfikowana w prawdziwym llama.cpp (zbudowany ze źródeł w sesji): 9 fixture'ów przyjętych, 3 negatywy odrzucone, kolejność kluczy wymuszona (`make gbnf-check`)
 - [~] Gold set 200+ przykładów z etykietami.
   - [x] format seedów + helper kuracji (`tools/curate_seed.py`), scalanie i przegląd CSV (`tools/gold_merge.py`)
-  - [ ] ~50 realnych seedów NAVTEX/BHMW wklejonych (frisnit.com/navtex, BHMW, własne dekody) — praca ręczna
+  - [~] realne seedy: **33** (BHMW 213/215/216 PL+EN z PDF, 9 własnych dekodów NL Coastguard 2018, 18 dekodów live navtex.lv I/J z 2026-09-08) — cel ~50, brakuje H/U i typu B; `data/gold/review/pending.csv` czeka na Twój przegląd
   - [ ] W1 (`make modal-datagen`) uruchomiony, wynik zmirrorowany do `data/gold/generated/`
   - [ ] przegląd ludzki (`--export-review` / `--import-review`) i `make gold-merge`
 - [~] Harness benchmarku (model × prompt × gold → metryki).
@@ -41,7 +41,7 @@ Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 póź
   - [x] `gen_sitorb.py --iq` → plik w układzie Kiwi (bloki `kiwi`+`data`) → `iq_to_audio.py` → fldigi: pełna ramka `HB13`; ścieżka odtwarzania nagrań IQ sprawdzona bez prawdziwego nagrania
   - [ ] **pierwsze nagranie** — z tej sesji niemożliwe (KiwiSDR nieosiągalny). Opcje: `make record` na dowolnej maszynie z siecią, albo `make modal-record STATION=HIJ` z chmury (`modal_jobs/record.py`, auto-dobór Kiwi przez `tools/fetch_kiwis.py`)
   - [ ] ≥6 czystych transmisji z ≥2 stacji + wpisy w `data/recordings/518khz/README.md`
-  - [x] wygenerowany sygnał zdekodowany przez rig fldigi (odbiór P0.6 / P1.7); próbka z Wikipedii — host zablokowany w sesji, do sprawdzenia przy okazji
+  - [x] odbiór P0.6 domknięty: próbka z Wikipedii zdekodowana (`--carrier 1700 --reverse`), nagranie z eteru 2018 (9 komunikatów NL Coastguard) zdekodowane z **0,0 % CER** względem referencji — `docs/evidence/`
 - [~] Cache offline: modele GGUF, obrazy, kafle, dokumentacja; pendrive.
   - [x] `tools/download_models.py` + `cache/models.yaml` — identyfikatory repo potwierdzone wyszukiwarką (oficjalne GGUF: Granite 350M/1B, LFM2.5 350M/1.2B, Ministral 3 3B, Qwen3 1.7B/4B; Qwen3.5-0.8B i Phi-4-mini tylko jako kwantyzacje bartowski)
   - [ ] `--all` z maszyny z dostępem do HF → `cache/MANIFEST.md` z hashami (HF zablokowane w sesji)
