@@ -1,0 +1,207 @@
+<title>FALOCHRON Karta Bałtyku</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --sea:#0a1c26; --sea2:#0c222e; --land:#2c4152; --coast:#6786a0; --grat:#163241;
+    --ink:#dfe8ea; --muted:#8aa3ae; --dim:#5c7783; --panel:#0f2532; --panel2:#132d3b; --line:#1e3d4c;
+    --sdr:#e8a33d; --text:#2fb3a8; --voice:#e0523c; --incident:#f2c76b; --station:#cfe3ea;
+    --f-display:"Oswald","Arial Narrow",Arial,sans-serif;
+    --f-body:"IBM Plex Sans","Segoe UI",Helvetica,Arial,sans-serif;
+    --f-mono:"IBM Plex Mono","Consolas","Menlo",monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--sea);color:var(--ink);font-family:var(--f-body);font-size:14px;line-height:1.45}
+  body{min-height:100vh}
+  .wrap{display:grid;grid-template-columns:minmax(0,1fr) 380px;min-height:100vh}
+  @media (max-width:900px){.wrap{grid-template-columns:1fr}}
+
+  /* ---- chart ---- */
+  .chart{position:relative;padding:16px;display:flex;align-items:stretch;justify-content:center}
+  .chart svg{width:100%;height:auto;max-height:calc(100vh - 32px);display:block}
+  .hud{position:absolute;left:24px;top:24px;pointer-events:none}
+  .hud .kicker{font-family:var(--f-display);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--sdr);font-weight:600}
+  .hud h1{font-family:var(--f-display);font-weight:600;font-size:34px;line-height:1;margin:2px 0 4px;letter-spacing:.02em;text-wrap:balance}
+  .hud p{margin:0;font-size:12.5px;color:var(--muted);max-width:44ch}
+  .legend{position:absolute;left:24px;bottom:24px;background:var(--panel);border:1px solid var(--line);padding:10px 12px;border-radius:4px;font-size:12px;backdrop-filter:blur(2px)}
+  .legend .row{display:flex;align-items:center;gap:8px;padding:2px 0;color:var(--ink)}
+  .legend .sw{width:14px;height:14px;flex:0 0 14px}
+  .legend .lbl{font-family:var(--f-display);letter-spacing:.06em;font-size:11.5px;text-transform:uppercase}
+  .legend .sub{color:var(--dim);font-size:11px;margin-left:22px}
+
+  /* svg symbols */
+  .grat{stroke:var(--grat);stroke-width:.6;fill:none}
+  .grat-lbl{font-family:var(--f-mono);font-size:8px;fill:var(--dim)}
+  .land{fill:var(--land);stroke:var(--coast);stroke-width:1.1;stroke-linejoin:round}
+  .ring{fill:none;stroke:var(--station);stroke-opacity:.16;stroke-width:.8;stroke-dasharray:2 3}
+  .ring2{fill:var(--station);fill-opacity:.035;stroke:none}
+  .stn{fill:var(--sea);stroke:var(--station);stroke-width:1.4}
+  .stn-lbl{font-family:var(--f-display);font-size:11px;fill:var(--station);letter-spacing:.08em}
+  .stn-sub{font-family:var(--f-mono);font-size:7.5px;fill:var(--muted)}
+  .ev{cursor:pointer;transition:transform .15s}
+  .ev:hover .mk,.ev.active .mk{stroke-width:2.2}
+  .ev .halo{fill:none;stroke-width:1;opacity:0}
+  .ev:hover .halo,.ev.active .halo{opacity:.55}
+  .ev-lbl{font-family:var(--f-mono);font-size:7.5px;fill:var(--muted);pointer-events:none}
+  .poly{fill-opacity:.14;stroke-width:1.2;stroke-dasharray:3 2}
+  .corr{fill:none;stroke:var(--incident);stroke-width:1.4;stroke-dasharray:4 3}
+  .corr-ring{fill:none;stroke:var(--incident);stroke-width:1;opacity:.7}
+  @keyframes pulse{0%{r:9;opacity:.8}100%{r:22;opacity:0}}
+  .pulse{fill:none;stroke:var(--incident);stroke-width:1.2;animation:pulse 2.4s ease-out infinite}
+  @media (prefers-reduced-motion:reduce){.pulse{animation:none;r:12;opacity:.5}}
+
+  /* ---- panel ---- */
+  .panel{background:var(--panel);border-left:1px solid var(--line);padding:22px 22px 18px;display:flex;flex-direction:column;gap:14px;min-height:100vh}
+  @media (max-width:900px){.panel{border-left:none;border-top:1px solid var(--line);min-height:0}}
+  .panel .eyebrow{font-family:var(--f-display);font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted);font-weight:500}
+  .card{background:var(--panel2);border:1px solid var(--line);border-radius:4px;padding:14px 14px 12px}
+  .card.incident{border-color:var(--incident);box-shadow:0 0 0 1px rgba(242,199,107,.15) inset}
+  .badge{display:inline-block;font-family:var(--f-display);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding:2px 7px;border-radius:2px;color:var(--sea);font-weight:600}
+  .badge.SDR{background:var(--sdr)} .badge.TEXT{background:var(--text)} .badge.VOICE{background:var(--voice)} .badge.INC{background:var(--incident)}
+  .card h3{font-family:var(--f-display);font-weight:500;font-size:19px;margin:8px 0 2px;letter-spacing:.01em;line-height:1.15}
+  .meta{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);display:grid;grid-template-columns:auto 1fr;gap:2px 10px;margin:8px 0 0}
+  .meta b{color:var(--ink);font-weight:500}
+  .raw{margin-top:10px}
+  .raw .lbl{font-family:var(--f-display);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+  pre{font-family:var(--f-mono);font-size:11px;line-height:1.45;background:var(--sea);border:1px solid var(--line);border-radius:3px;padding:9px 10px;margin:0;white-space:pre-wrap;word-break:break-word;max-height:150px;overflow:auto;color:#cfdde2}
+  .fields{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;font-family:var(--f-mono);font-size:11px;margin-top:6px}
+  .fields .k{color:var(--dim)} .fields .v{color:var(--ink)}
+  .fields .v.enum{color:var(--incident)}
+  .arrow{color:var(--incident);font-family:var(--f-display);font-size:12px;letter-spacing:.1em;text-transform:uppercase;text-align:center;padding:2px 0}
+  .flow{border-top:1px solid var(--line);padding-top:12px;margin-top:auto}
+  .flow .steps{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-family:var(--f-display);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .flow .steps span{background:var(--panel2);border:1px solid var(--line);padding:3px 7px;border-radius:2px}
+  .flow .steps i{color:var(--dim);font-style:normal}
+  .flow p{font-size:12px;color:var(--muted);margin:8px 0 0}
+  .hint{font-size:12px;color:var(--dim)}
+  .hint kbd{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+  a:focus-visible,.ev:focus-visible{outline:2px solid var(--incident);outline-offset:2px}
+</style>
+
+<div class="wrap">
+  <section class="chart">
+    <div class="hud">
+      <div class="kicker">Baltic Dual Use · koncept</div>
+      <h1>FALOCHRON</h1>
+      <p>Cztery nadajniki NAVTEX nadają w eter. Zdarzenia — z radia, z tekstu, z głosu — lądują na tej samej mapie. Najedź lub kliknij znak.</p>
+    </div>
+    <svg id="map" role="img" aria-label="Mapa Bałtyku ze stacjami NAVTEX i zdarzeniami FALOCHRON"></svg>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <aside class="panel" id="panel">
+    <div class="eyebrow">Karta zdarzenia</div>
+    <div id="cardhost"></div>
+    <div class="hint">Klik na znaku przypina kartę · <kbd>Esc</kbd> wraca do incydentu</div>
+    <div class="flow">
+      <div class="steps"><span>eter</span><i>→</i><span>dekod / ASR</span><i>→</i><span>SLM</span><i>→</i><span>walidator</span><i>→</i><span>korelator</span><i>→</i><span>mapa</span></div>
+      <p>Model tylko proponuje strukturę. Forma z gramatyki, prawda z walidatora i człowieka. Wszystko lokalnie — bez chmury, bez GNSS.</p>
+    </div>
+  </aside>
+</div>
+
+<script>
+/*__DATA__*/
+(function(){
+  const NS="http://www.w3.org/2000/svg";
+  const BB={lon0:9,lon1:31,lat0:53.5,lat1:66};
+  const H=760, kx=Math.cos((BB.lat0+BB.lat1)/2*Math.PI/180);
+  const W=H*(BB.lon1-BB.lon0)*kx/(BB.lat1-BB.lat0);
+  const px=lat=>H/(BB.lat1-BB.lat0); // px per degree lat
+  const P=(lon,lat)=>[(lon-BB.lon0)/(BB.lon1-BB.lon0)*W,(BB.lat1-lat)/(BB.lat1-BB.lat0)*H];
+  const svg=document.getElementById("map");
+  svg.setAttribute("viewBox",`0 0 ${W.toFixed(1)} ${H}`);
+  const el=(t,a,parent)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(parent||svg).appendChild(e);return e;};
+  const CHN={SDR:"NAVTEX 518 kHz · radio",TEXT:"NAVTEX / BHMW · tekst",VOICE:"VHF · głos"};
+  const COL={SDR:"var(--sdr)",TEXT:"var(--text)",VOICE:"var(--voice)"};
+  const TYPE={NAV_WARNING:"ostrzeżenie nawigacyjne",EXERCISE:"ćwiczenia / strzelanie",WRECK:"wrak",OBSTRUCTION:"przeszkoda",VOICE_REPORT:"meldunek głosowy",MET_WARNING:"ostrzeżenie sztormowe"};
+
+  // sea + graticule
+  el("rect",{x:0,y:0,width:W,height:H,fill:"var(--sea2)"});
+  for(let lon=10;lon<=30;lon+=2){const [x]=P(lon,60);el("line",{x1:x,y1:0,x2:x,y2:H,class:"grat"});
+    const t=el("text",{x:x+2,y:H-6,class:"grat-lbl"});t.textContent=lon+"°E";}
+  for(let lat=54;lat<=66;lat+=2){const [,y]=P(20,lat);el("line",{x1:0,y1:y,x2:W,y2:y,class:"grat"});
+    const t=el("text",{x:3,y:y-2,class:"grat-lbl"});t.textContent=lat+"°N";}
+
+  // land
+  const gl=el("g",{});
+  for(const feat of DATA.land){for(const poly of feat){for(const ring of poly){
+    let d="";ring.forEach((c,i)=>{const [x,y]=P(c[0],c[1]);d+=(i?"L":"M")+x.toFixed(1)+","+y.toFixed(1);});
+    el("path",{d:d+"Z",class:"land"},gl);}}}
+
+  // station range rings (~250 km ground-wave, illustrative)
+  const R=250/111*px();
+  const gs=el("g",{});
+  DATA.stations.forEach(s=>{const [x,y]=P(s.lon,s.lat);el("circle",{cx:x,cy:y,r:R,class:"ring2"},gs);el("circle",{cx:x,cy:y,r:R,class:"ring"},gs);});
+
+  // correlation link
+  const byN=Object.fromEntries(DATA.events.map(e=>[e.n,e]));
+  const [a,b]=DATA.corr.map(n=>byN[n]);
+  if(a&&b){const [x1,y1]=P(a.lon,a.lat),[x2,y2]=P(b.lon,b.lat);
+    el("line",{x1,y1,x2,y2,class:"corr"});
+    const cx=(x1+x2)/2,cy=(y1+y2)/2;el("circle",{cx,cy,r:9,class:"pulse"});el("circle",{cx,cy,r:9,class:"corr-ring"});}
+
+  // events
+  const ge=el("g",{});
+  const shape=(g,ch,x,y)=>{
+    if(ch==="SDR")return el("path",{d:`M${x},${y-6}L${x+6},${y}L${x},${y+6}L${x-6},${y}Z`,class:"mk",fill:"var(--sea)",stroke:COL[ch],"stroke-width":1.6},g);
+    if(ch==="TEXT")return el("rect",{x:x-5,y:y-5,width:10,height:10,class:"mk",fill:"var(--sea)",stroke:COL[ch],"stroke-width":1.6},g);
+    return el("circle",{cx:x,cy:y,r:5.5,class:"mk",fill:"var(--sea)",stroke:COL[ch],"stroke-width":1.6},g);
+  };
+  DATA.events.forEach(e=>{
+    const g=el("g",{class:"ev",tabindex:0,role:"button","aria-label":e.type+" "+e.loc},ge);
+    if(e.poly){let d="";e.poly.forEach((c,i)=>{const [x,y]=P(c[0],c[1]);d+=(i?"L":"M")+x.toFixed(1)+","+y.toFixed(1);});
+      el("path",{d:d+"Z",class:"poly",fill:COL[e.ch],stroke:COL[e.ch]},g);}
+    const [x,y]=P(e.lon,e.lat);
+    el("circle",{cx:x,cy:y,r:11,class:"halo",stroke:COL[e.ch]},g);
+    shape(g,e.ch,x,y);
+    const t=el("text",{x:x+9,y:y+3,class:"ev-lbl"},g);t.textContent=(e.wid||e.type).toString().slice(0,10);
+    g.addEventListener("mouseenter",()=>show(e,false));g.addEventListener("focus",()=>show(e,false));
+    g.addEventListener("click",()=>{pin=e;show(e,true);});
+    g.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();pin=e;show(e,true);}});
+    g.addEventListener("mouseleave",()=>{if(!pin)showIncident();else show(pin,true);});
+    e._g=g;
+  });
+
+  // stations on top
+  DATA.stations.forEach(s=>{const [x,y]=P(s.lon,s.lat);const g=el("g",{});
+    el("circle",{cx:x,cy:y,r:6,class:"stn"},g);el("circle",{cx:x,cy:y,r:1.8,fill:"var(--station)"},g);
+    const t=el("text",{x:x+9,y:y-3,class:"stn-lbl"},g);t.textContent="NAVTEX "+s.id;
+    const u=el("text",{x:x+9,y:y+7,class:"stn-sub"},g);u.textContent=s.name+" · "+s.cc;});
+
+  // legend
+  document.getElementById("legend").innerHTML=`
+    <div class="row"><svg class="sw" viewBox="0 0 14 14"><path d="M7,1L13,7L7,13L1,7Z" fill="none" stroke="var(--sdr)" stroke-width="1.6"/></svg><span class="lbl">NAVTEX 518 kHz · radio</span></div>
+    <div class="row"><svg class="sw" viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" fill="none" stroke="var(--text)" stroke-width="1.6"/></svg><span class="lbl">NAVTEX / BHMW · tekst</span></div>
+    <div class="row"><svg class="sw" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5" fill="none" stroke="var(--voice)" stroke-width="1.6"/></svg><span class="lbl">VHF · głos</span></div>
+    <div class="row"><svg class="sw" viewBox="0 0 14 14"><circle cx="7" cy="7" r="5" fill="var(--sea)" stroke="var(--station)" stroke-width="1.4"/></svg><span class="lbl">nadajnik NAVTEX</span></div>
+    <div class="sub">pierścień ≈ 250 km zasięgu falą przyziemną</div>
+    <div class="row"><svg class="sw" viewBox="0 0 14 14"><line x1="1" y1="7" x2="13" y2="7" stroke="var(--incident)" stroke-width="1.4" stroke-dasharray="3 2"/></svg><span class="lbl" style="color:var(--incident)">skorelowany incydent</span></div>`;
+
+  // panel
+  const host=document.getElementById("cardhost");
+  let pin=null;
+  const esc=s=>String(s).replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+  const dms=(lon,lat)=>{const f=(v,pn,nn)=>{const d=Math.floor(Math.abs(v)),m=((Math.abs(v)-d)*60).toFixed(1);return `${String(d).padStart(2,"0")}-${String(m).padStart(4,"0")}${v>=0?pn:nn}`;};return f(lat,"N","S")+" "+f(lon,"E","W").replace(/^(\d{2})-/,"0$1-");};
+  const card=(e,extra)=>`
+    <div class="card ${extra||""}">
+      <span class="badge ${e.ch}">${CHN[e.ch]}</span>
+      <h3>${esc(TYPE[e.type]||e.type)}</h3>
+      <div class="meta"><span>id</span><b>${esc(e.wid||"—")}</b><span>źródło</span><b>${esc(e.agency||"—")}</b><span>gdzie</span><b>${esc(e.loc)}</b><span>pozycja</span><b>${dms(e.lon,e.lat)}</b>${e.valid_to?`<span>do</span><b>${esc(e.valid_to)}</b>`:""}</div>
+      <div class="raw"><div class="lbl">surowy komunikat (jak nadano)</div><pre>${esc(e.src)}</pre></div>
+      <div class="raw"><div class="lbl">wyciągnięte przez model → schemat</div>
+        <div class="fields"><span class="k">event_type</span><span class="v enum">${esc(e.type)}</span><span class="k">geometry</span><span class="v">[${e.lon.toFixed(4)}, ${e.lat.toFixed(4)}]${e.poly?" · Polygon":""}</span><span class="k">warning_id</span><span class="v">${esc(e.wid||"null")}</span><span class="k">entities</span><span class="v">${e.entities.length?e.entities.map(x=>esc(x.text)).join(", "):"[]"}</span></div></div>
+    </div>`;
+  function show(e,pinned){DATA.events.forEach(x=>x._g.classList.toggle("active",x===e));host.innerHTML=card(e);}
+  function showIncident(){
+    if(!(a&&b))return;DATA.events.forEach(x=>x._g.classList.toggle("active",x===a||x===b));
+    host.innerHTML=`<div class="card incident"><span class="badge INC">skorelowany incydent</span>
+      <h3>Prace kablowe + dryfująca jednostka — Zatoka Gdańska</h3>
+      <div class="meta"><span>podstawa</span><b>odległość ${(dist(a,b)).toFixed(1)} Nm · okna czasowe nachodzą · wspólne encje</b><span>status</span><b>kandydat — do przeglądu, nie auto-merge</b></div>
+      <p style="font-size:12.5px;color:var(--muted);margin:10px 0 0">Dwa niezależne kanały, jedno miejsce: ostrzeżenie <b style="color:var(--text)">tekstowe</b> BHMW o pracach kablowych i <b style="color:var(--voice)">głosowy</b> meldunek VHF o jednostce bez świateł w tym rejonie. Korelator je zestawia — człowiek potwierdza.</p></div>
+      <div class="arrow">↓ składniki ↓</div>${card(a)}${card(b)}`;
+  }
+  function dist(p,q){const R=3440.07,r=x=>x*Math.PI/180,dl=r(q.lat-p.lat),dn=r(q.lon-p.lon),s=Math.sin(dl/2)**2+Math.cos(r(p.lat))*Math.cos(r(q.lat))*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(s));}
+  document.addEventListener("keydown",ev=>{if(ev.key==="Escape"){pin=null;showIncident();}});
+  showIncident();
+})();
+</script>
