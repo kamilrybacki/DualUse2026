@@ -94,7 +94,8 @@ def collect() -> list[dict]:
         item_from_seed(json.loads(p.read_text(encoding="utf-8")))
         for p in sorted(SEEDS.glob("*.json"))
     ]
-    for f in sorted(GENERATED.glob("*.jsonl")):
+    # W1 runs are mirrored as data/gold/generated/<run>/generated.jsonl (modal_jobs/README)
+    for f in sorted(GENERATED.rglob("*.jsonl")):
         items += [item_from_generated(r, f) for r in read_jsonl(f)]
     verdicts = {v["id"]: v for v in read_jsonl(VERDICTS)}
     for it in items:

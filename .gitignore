@@ -3,6 +3,7 @@ cache/*
 !cache/.gitkeep
 !cache/MANIFEST.md
 !cache/models.yaml
+!cache/gazetteer_overpass.json
 *.gguf
 *.ggml
 *.bin
@@ -64,3 +65,6 @@ tools/fldigi/config/*.log
 
 # raw per-item bench output (verbose, regenerable)
 bench/reports/*/items.jsonl
+
+# transient grammar file written by the llama-cli bench backend
+.bench_grammar.gbnf

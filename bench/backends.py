@@ -101,7 +101,13 @@ class LlamaCliBackend:
             "-c",
             str(self.ctx),
             "--no-display-prompt",
-            "-no-cnv",
+            # llama.cpp master dropped -no-cnv; -st runs a single non-interactive turn and
+            # exits. -rea off keeps thinking models (Qwen3.x) from spending the budget on a
+            # reasoning trace. The grammar already forces the output to the JSON object, and
+            # parse_json() strips the conversation banner llama-cli still prints to stdout.
+            "-st",
+            "-rea",
+            "off",
             "--simple-io",
         ]
         if self.threads:
