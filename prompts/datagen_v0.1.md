@@ -9,10 +9,14 @@ Task: produce {n} distinct messages of kind `{kind}` ({style}), language `{lang}
 would, using only facts present in the message.
 
 Style rules by kind:
-- navtex_en: NAVTEX 518 kHz format. Start with `ZCZC` + B1B2B3B4 (B1 = one of H, I, J, U;
-  B2 = A for navigational, B for gale, E for weather forecast, L for other navigational), a
-  day-time group like `071230 UTC SEP`, national warning number, sea area, body in upper
-  case, coordinates as `DD-MM.mN DDD-MM.mE`, end with `NNNN`. Baltic places only.
+- navtex_en: NAVTEX 518 kHz format. The FIRST line is exactly `ZCZC B1B2B3B4` — a 4-character
+  code, nothing else on that line: B1 ∈ {H, I, J, U}; B2 = A navigational / B gale / E weather /
+  L other; B3B4 = a two-digit serial (e.g. `ZCZC HA47`, `ZCZC JB13`). NEVER merge the time into
+  the header. On the NEXT line put the day-time group `DDHHMM UTC MON` (e.g. `071230 UTC SEP`).
+  Then national warning number, sea area, body in upper case, coordinates as `DD-MM.mN DDD-MM.mE`,
+  end with `NNNN`. Baltic places only. `agency` must be `NAVTEX/518/<B1>` with the SAME B1 letter
+  as the header; `warning_id` is exactly the 4-char `B1B2B3B4` (not the time); `issued_at` comes
+  from the day-time group (day=DD, HH:MM UTC, month=MON, year 2026).
 - bhmw_pl: Polish "OSTRZEŻENIE NAWIGACYJNE NR nnn/26", akwen, treść wielkimi literami,
   pozycje `DD-MM.mN DDD-MM.mE`, daty `DD.MM.RRRR GODZ. HH:MM UTC`, koniec `BHMW GDYNIA data`.
 - vhf_pl / vhf_en: an ASR transcript of a spoken VHF exchange (SMCP): lowercase, no

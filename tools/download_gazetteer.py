@@ -54,17 +54,20 @@ SEAMARK_KINDS = (
     "cable_submarine",
 )
 
-QUERY = """
-[out:json][timeout:300];
-(
-  nwr["seamark:type"~"^({kinds})$"]["seamark:name"]({bbox});
-  nwr["seamark:type"~"^({kinds})$"]["name"]({bbox});
-  node["place"~"^(city|town|village)$"]["name"]({bbox})(if: t["population"] > 2000);
-  nwr["natural"~"^(bay|strait|cape|shoal|reef)$"]["name"]({bbox});
-  nwr["harbour"="yes"]["name"]({bbox});
-);
-out center tags;
-"""
+# A single combined regex query over the whole Baltic times out on Overpass
+# (300 s server budget). Split into small, exact-match sub-queries instead — each
+# completes well under the budget and one slow kind can't sink the whole run.
+SUBQUERIES = [
+    *(
+        f'nwr["seamark:type"="{k}"]["seamark:name"]({{bbox}});'
+        f'nwr["seamark:type"="{k}"]["name"]({{bbox}});'
+        for k in SEAMARK_KINDS
+    ),
+    'node["place"~"^(city|town|village)$"]["name"]({bbox})(if: t["population"] > 2000);',
+    'nwr["natural"~"^(bay|strait|cape|shoal|reef)$"]["name"]({bbox});',
+    'nwr["harbour"="yes"]["name"]({bbox});',
+]
+QUERY_TMPL = "[out:json][timeout:180];({body});out center tags;"
 
 
 def strip_diacritics(s: str) -> str:
@@ -209,11 +212,10 @@ def lookup(db_path: Path, name: str, limit: int = 5) -> list[tuple]:
     return rows
 
 
-def fetch_overpass() -> dict:
-    q = QUERY.format(kinds="|".join(SEAMARK_KINDS), bbox=",".join(str(x) for x in BBOX))
+def _post_overpass(oql: str, timeout_s: int = 240) -> dict:
     # Overpass rejects urllib's default User-Agent with HTTP 406; send a descriptive one and
     # post the OQL as a form field (overpass-api.de expects application/x-www-form-urlencoded).
-    body = urllib.parse.urlencode({"data": q}).encode("utf-8")
+    body = urllib.parse.urlencode({"data": oql}).encode("utf-8")
     req = urllib.request.Request(
         OVERPASS_URL,
         data=body,
@@ -224,8 +226,33 @@ def fetch_overpass() -> dict:
             "Accept": "application/json",
         },
     )
-    with urllib.request.urlopen(req, timeout=600) as resp:  # noqa: S310
+    with urllib.request.urlopen(req, timeout=timeout_s) as resp:  # noqa: S310
         return json.load(resp)
+
+
+def fetch_overpass() -> dict:
+    """Run the sub-queries serially and merge deduped elements. One combined query
+    times out on Overpass for the whole Baltic; small per-kind queries do not."""
+    bbox = ",".join(str(x) for x in BBOX)
+    seen: set[tuple] = set()
+    elements: list[dict] = []
+    for i, frag in enumerate(SUBQUERIES, 1):
+        oql = QUERY_TMPL.format(body=frag.format(bbox=bbox))
+        try:
+            data = _post_overpass(oql)
+        except Exception as exc:  # noqa: BLE001 — one slow kind must not sink the run
+            print(f"  overpass sub-query {i}/{len(SUBQUERIES)} failed: {exc}", file=sys.stderr)
+            continue
+        got = data.get("elements", [])
+        if data.get("remark"):
+            print(f"  overpass sub-query {i}: {data['remark']}", file=sys.stderr)
+        for el in got:
+            key = (el.get("type"), el.get("id"))
+            if key in seen:
+                continue
+            seen.add(key)
+            elements.append(el)
+    return {"elements": elements}
 
 
 def main(argv: list[str] | None = None) -> int:
