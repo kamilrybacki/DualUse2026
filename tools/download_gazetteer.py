@@ -20,6 +20,7 @@ import json
 import sqlite3
 import sys
 import unicodedata
+import urllib.parse
 import urllib.request
 from pathlib import Path
 
@@ -207,7 +208,19 @@ def lookup(db_path: Path, name: str, limit: int = 5) -> list[tuple]:
 
 def fetch_overpass() -> dict:
     q = QUERY.format(kinds="|".join(SEAMARK_KINDS), bbox=",".join(str(x) for x in BBOX))
-    req = urllib.request.Request(OVERPASS_URL, data=q.encode("utf-8"), method="POST")
+    # Overpass rejects urllib's default User-Agent with HTTP 406; send a descriptive one and
+    # post the OQL as a form field (overpass-api.de expects application/x-www-form-urlencoded).
+    body = urllib.parse.urlencode({"data": q}).encode("utf-8")
+    req = urllib.request.Request(
+        OVERPASS_URL,
+        data=body,
+        method="POST",
+        headers={
+            "User-Agent": "falochron-gazetteer/0.1 (Baltic Dual Use Hackathon prep)",
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json",
+        },
+    )
     with urllib.request.urlopen(req, timeout=600) as resp:  # noqa: S310
         return json.load(resp)
 
