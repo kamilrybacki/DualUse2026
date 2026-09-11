@@ -17,6 +17,7 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import os
 import sqlite3
 import sys
 import unicodedata
@@ -25,7 +26,9 @@ import urllib.request
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-OVERPASS_URL = "https://overpass-api.de/api/interpreter"
+# overpass-api.de is often overloaded; allow a faster mirror via OVERPASS_URL, e.g.
+# OVERPASS_URL=https://overpass.kumi.systems/api/interpreter
+OVERPASS_URL = os.environ.get("OVERPASS_URL", "https://overpass-api.de/api/interpreter")
 CACHE_JSON = REPO_ROOT / "cache" / "gazetteer_overpass.json"
 SEED_CSV = REPO_ROOT / "data" / "gazetteer_seed.csv"
 DB_PATH = REPO_ROOT / "data" / "gazetteer.sqlite"
