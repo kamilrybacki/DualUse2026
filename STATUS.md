@@ -1,7 +1,25 @@
 # STATUS — gotowość na 11.09.2026
 
 Lustro PRD §14.1. Legenda: `[ ]` do zrobienia · `[~]` w toku · `[x]` zrobione · `[!]` zablokowane.
-Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-07 późny wieczór (sesja 1, zdalna, kontynuacja)**.
+Aktualizowane na koniec każdej sesji. Ostatnia aktualizacja: **2026-09-11 ~15:00 UTC (sesja 2, lw-main z siecią)**.
+
+## Sesja 2 (2026-09-11, maszyna z otwartą siecią) — domknięte blokery sieciowe
+
+Repo sklonowane z `github.com/kamilrybacki/DualUse2026` (nazwa repo ≠ `falochron/` z docs — do wiedzy).
+`make setup` + `uv sync --all-extras`, hook FROM SCRATCH aktywny, `make lint`/`make test` **zielone (93 testy)**.
+
+- [x] **Modele (P0.4)** — `--verify` (11/12; poprawiono `qwen3-1.7b` → bartowski Q4_K_M bo oficjalne repo ma tylko Q8_0), `--all` + `--manifest`: **12 artefaktów, 14 GB, sha256 w `cache/MANIFEST.md`** (9 SLM + whisper small/medium/large-v3-turbo). llama.cpp zbudowany (Release), `make gbnf-check` OK, `make decode` demo → **frames=JA21, 0.0 % `*`** na lw-main.
+- [x] **Benchmark na prawdziwych modelach (P0.3)** — bieg v0.1 na **9 modelach** (fixtures), `--tag lw-main-cpu`; wynik + tabela Pareto + 3 przykłady błędów w **`docs/bench_results.md`**. Wniosek: żaden model nie przechodzi progów zero-shot; tier 3-4B prowadzi (F1 ~40 %, unsupported ~20 %). ⚠️ latencja/RSS = lw-main CPU, pomiar na docelowym HW zaległy (konflikt PRD §12.5 oznaczony). v0.2 w toku. **Poprawka: llama.cpp master usunął `-no-cnv` → backend używa `-st -rea off`** (`bench/backends.py`).
+- [~] **Modal (P1.8)** — creds znalezione w `~/.modal.toml` (auth OK, workspace kamilrybacki), **zapisane do Vault `secret/homelab/modal/api`**; sekret `huggingface` utworzony z Vault `homelab/huggingface#token`.
+  - [x] **W1 datagen dry-run** — pipeline end-to-end (naprawiony drift: flashinfer sampler bez nvcc → `VLLM_USE_FLASHINFER_SAMPLER=0`; prompt nagłówka NAVTEX). **38 items, 5 zaakceptowanych przez sędziego, truncated_prompts=0**; zmirrorowane do `data/gold/generated/20260911-140837-dry/`.
+  - [ ] W2/W3/W4 dry-runy — niezrobione (okno czasowe; W1 udowodnił obraz+sekret+GPU).
+- [x] **W1 → przegląd** — `gold_merge.py --export-review`: **84 pozycje** (46 seedów + 38 kandydatów W1) w `data/gold/review/pending.csv`; `train.jsonl`=50. Gold nadal 0 (czeka na przegląd ludzki — nie akceptuję sam).
+- [x] **Gazeter (P2.11)** — `data/gazetteer.sqlite` **4333 nazwy** (Overpass per-kind + seed, ODbL, raw JSON w `cache/`); `--lookup "Hel"` → 54.60N 18.81E. (Poprawka: pojedyncze zapytanie timeout'owało → per-kind + override `OVERPASS_URL`.)
+- [x] **MARTTS (P1.9)** — `data/martts/` (cc-by-4.0, rev 3aa9455), 480 wav (ignore) + 1.3 MB jsonl + nota; do ewaluacji ASR EN.
+- [x] **Dekoder — 3. źródło** — realny sampel SITOR-B z sigidwiki zdekodowany rigiem fldigi (treść dosłownie, `docs/evidence/fldigi_sigidwiki_sitorb_sample.txt`).
+- [~] **Nagrania 518 kHz (P0.5)** — kiwisdr.com/public było chwilowo down + gate anty-bot (nie da się zeskrapować listy). **Nagranie U (Tallinn) 15:20 UTC uzbrojone** z `sk5sm.proxy.kiwisdr.com` (SE) + `oh3aa.dy.fi:18073` (FI) — hosty podane ręcznie przez autora. Cel ≥6/≥2-stacje fizycznie nieosiągalny dziś (2 sloty).
+- [x] **Dokumentacja** — `docs/datasets.md` (inwentarz danych z proweniencją/licencją), `docs/recruit/` (pitch rekrutacyjny PDF).
+- [ ] **Kafle mapy (P2.12)** — niezrobione (okno czasowe).
 
 ## PRD §14.1 — przed 11.09
 

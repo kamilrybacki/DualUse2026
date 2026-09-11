@@ -44,7 +44,10 @@ nic z tego nie jest częścią ścieżki krytycznej demo.
 | Cache modeli | skrypt pobierania GGUF/ggml z manifestem sha256 | `tools/download_models.py`, `cache/` |
 | Gold set | kuracja realnych tekstów NAVTEX/BHMW z atrybucją, scalanie z danymi syntetycznymi | `tools/curate_seed.py`, `tools/gold_merge.py`, `data/gold/` |
 | Dane syntetyczne | joby Modal: generacja tekstów, TTS+augmentacja, sweep benchmarku, dry-run QLoRA; lokalny korpus VHF z espeak-ng | `modal_jobs/`, `tools/synth_vhf_local.py` |
-| Gazeter | skrypt budujący `data/gazetteer.sqlite` z OSM (Overpass) + kuratorowane akweny | `tools/download_gazetteer.py`, `data/gazetteer_seed.csv` |
+| Gazeter | `data/gazetteer.sqlite` (4333 nazwy → współrzędne) z OSM (Overpass) + kuratorowane akweny | `tools/download_gazetteer.py`, `data/gazetteer_seed.csv` |
+| Ewaluacja ASR EN | zbiór MARTTS (syntetyczne dialogi VHF EN, cc-by-4.0) z notą licencyjną | `data/martts/` |
+| Wyniki benchmarku | tabela kaskady 9 modeli SLM (v0.1) + przykłady błędów + front Pareto | `docs/bench_results.md`, `bench/reports/` |
+| Inwentarz danych | opis wszystkich zbiorów: proweniencja, licencja, status, rozmiary | `docs/datasets.md` |
 | Demo | checklista resetu i fault-injection (procedura, bez skryptu) | `docs/demo_checklist.md` |
 | Prompty | wersjonowane prompty ekstrakcji i LLM-as-judge | `prompts/` |
 
