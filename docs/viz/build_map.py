@@ -49,6 +49,18 @@ DATA = {"land": land, "stations": stations, "events": events, "corr": corr}
 payload = json.dumps(DATA, ensure_ascii=False, separators=(",", ":"))
 
 TEMPLATE = (HERE / "template.html").read_text(encoding="utf-8")
-html = TEMPLATE.replace("/*__DATA__*/", "const DATA = " + payload + ";")
+body_html = TEMPLATE.replace("/*__DATA__*/", "const DATA = " + payload + ";")
+# Wrap as a full standalone document (opens from a local file, no artifact host needed).
+cut = body_html.index("</style>") + len("</style>")
+head_part, rest = body_html[:cut], body_html[cut:]
+html = (
+    "<!doctype html>\n<html lang=\"pl\">\n<head>\n"
+    "<meta charset=\"utf-8\">\n"
+    "<meta name=\"viewport\" content=\"width=device-width,initial-scale=1\">\n"
+    + head_part
+    + "\n</head>\n<body>\n"
+    + rest
+    + "\n</body>\n</html>\n"
+)
 (HERE / "falochron_baltic.html").write_text(html, encoding="utf-8")
 print("wrote falochron_baltic.html", len(html) // 1024, "KB;", len(events), "events")
