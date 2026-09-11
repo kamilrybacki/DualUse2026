@@ -1,0 +1,11 @@
+id,valid,field_f1,event_type,warning_id,issued_at,valid_from,valid_to,geometry,location_name,agency,entities,unsupported,omitted,geo_resolved,triggers,latency_s,error
+01_navtex_en_nav_warning,1,0.444,1.00,1.00,0.00,1.00,1.00,0.00,0.00,0.00,0.00,issued_at;geometry;location_name;agency;entities,,0,geometry_outside_baltic;unsupported_fact,37.535,
+02_navtex_en_exercise_polygon,1,0.167,0.00,1.00,0.00,0.00,0.00,0.00,0.50,0.00,0.00,issued_at;valid_from;valid_to;geometry,,0,geometry_outside_baltic;unsupported_fact,40.465,
+03_navtex_en_corrupted_stars,1,0.333,1.00,0.00,0.00,1.00,1.00,0.00,0.00,0.00,0.00,issued_at;geometry;location_name;agency;entities,,0,geometry_outside_baltic;unsupported_fact,36.313,
+04_bhmw_pl_cable_works,1,0.333,1.00,1.00,0.00,0.00,0.00,0.00,0.00,1.00,0.00,issued_at;geometry;location_name;entities,valid_from;valid_to,0,geometry_outside_baltic;unsupported_fact,36.606,
+05_bhmw_pl_wreck,1,0.222,0.00,1.00,0.00,0.00,0.00,0.00,0.00,1.00,0.00,issued_at;valid_from;valid_to;geometry;location_name,,0,unsupported_fact,39.178,
+06_vhf_pl_voice_report,1,0.222,0.00,0.00,0.00,1.00,1.00,0.00,0.00,0.00,0.00,warning_id;issued_at;geometry;location_name;agency;entities,,0,geometry_outside_baltic;unsupported_fact,32.440,
+07_vhf_en_voice_report,1,0.254,0.00,0.00,0.00,1.00,1.00,0.00,0.00,0.00,0.29,warning_id;issued_at;geometry;location_name;agency;entities,,0,geometry_outside_baltic;unsupported_fact,35.863,
+08_navtex_en_gale_warning,1,0.222,0.00,1.00,0.00,1.00,0.00,0.00,0.00,0.00,0.00,issued_at;valid_to;geometry;agency,,0,geometry_outside_baltic;unsupported_fact,41.375,
+09_navtex_en_fldigi_garbled,1,0.222,0.00,1.00,0.00,0.00,0.00,0.00,1.00,0.00,0.00,issued_at;valid_from;valid_to;geometry,,1,geometry_outside_baltic;unsupported_fact,43.428,
+10_bhmw_pl_prompt_injection,1,0.311,0.00,1.00,0.00,0.00,0.00,0.00,0.80,1.00,0.00,issued_at;valid_from;valid_to;geometry,,0,geometry_outside_baltic;unsupported_fact,37.058,

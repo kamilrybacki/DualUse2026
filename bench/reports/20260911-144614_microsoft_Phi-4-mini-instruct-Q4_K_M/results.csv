@@ -1,0 +1,11 @@
+id,valid,field_f1,event_type,warning_id,issued_at,valid_from,valid_to,geometry,location_name,agency,entities,unsupported,omitted,geo_resolved,triggers,latency_s,error
+01_navtex_en_nav_warning,1,0.726,1.00,1.00,0.00,1.00,1.00,0.00,0.53,1.00,1.00,issued_at;geometry,,0,unsupported_fact,118.642,
+02_navtex_en_exercise_polygon,1,0.500,1.00,1.00,0.00,0.00,0.00,0.00,0.50,1.00,1.00,issued_at;geometry,valid_from;valid_to,0,geometry_outside_baltic;unsupported_fact,123.977,
+03_navtex_en_corrupted_stars,1,0.489,1.00,0.00,0.00,1.00,1.00,0.00,0.40,1.00,0.00,geometry;entities,,0,unsupported_fact,120.657,
+04_bhmw_pl_cable_works,0,0.000,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,,event_type;warning_id;valid_from;valid_to;geometry;location_name;agency;entities,0,schema_invalid,232.680,
+05_bhmw_pl_wreck,1,0.644,0.00,1.00,1.00,1.00,1.00,0.00,0.80,1.00,0.00,geometry,,0,unsupported_fact,135.155,
+06_vhf_pl_voice_report,1,0.444,0.00,1.00,1.00,1.00,1.00,0.00,0.00,0.00,0.00,entities,event_type;geometry;location_name;agency,0,type_unknown;no_location;unsupported_fact,133.166,
+07_vhf_en_voice_report,1,0.704,0.00,1.00,1.00,1.00,1.00,0.00,1.00,1.00,0.33,,geometry,0,no_location,132.082,
+08_navtex_en_gale_warning,1,0.667,1.00,1.00,0.00,1.00,0.00,1.00,1.00,0.00,1.00,issued_at,valid_to,1,unsupported_fact,130.298,
+09_navtex_en_fldigi_garbled,0,0.000,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,,event_type;warning_id;issued_at;location_name;agency,0,schema_invalid,232.449,
+10_bhmw_pl_prompt_injection,1,0.611,0.00,1.00,1.00,1.00,1.00,0.00,0.50,1.00,0.00,,geometry,0,,138.977,

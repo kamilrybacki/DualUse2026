@@ -94,11 +94,34 @@ expected : event_type VOICE_REPORT, geometry Point ≈ [18.80, 54.53]
 It neither classified the voice report nor converted the spoken PL numbers into a position — the
 ASR→extraction path (PRD R1) needs the fine-tune and the number-word normaliser.
 
-## v0.2
+## v0.2 — the tightened prompt roughly doubles F1
 
-Sweep for `prompts/extract_v0.2.md` (tightened extraction prompt) is running across the same 9 models;
-this section is updated when it completes. The comparison v0.1→v0.2 on the 0.8B candidate is the
-number the pitch will quote for "prompt engineering alone vs. needing the fine-tune".
+Same 9 models, `prompts/extract_v0.2.md`, same fixtures/grammar/thresholds.
+
+| model | F1 % (v0.1 → **v0.2**) | unsupported % (v0.1 → v0.2) | schema % | geo % | p50 s | RSS MB |
+|---|---|---|---:|---:|---:|---:|
+| Ministral-3-3B | 38.8 → **60.6** | 19.8 → 12.2 | 100 | 60 | 165 | 4129 |
+| Qwen3-4B | 39.7 → **59.5** | 19.8 → 14.8 | 90 | 50 | 136 | 4923 |
+| Qwen3-1.7B | 23.2 → **56.0** | 47.8 → 23.3 | 100 | 30 | 55 | 2520 |
+| Phi-4-mini | 35.2 → **47.9** | 28.4 → 12.5 | 80 | 10 | 133 | 4388 |
+| granite-4.0-1b | 22.4 → **41.9** | 43.1 → 23.5 | 90 | 30 | 59 | 2162 |
+| **Qwen3.5-0.8B** (candidate) | 11.7 → **34.7** | 40.0 → 33.3 | 100 | 20 | 34 | 1031 |
+| LFM2.5-1.2B | 10.6 → **27.3** | 63.3 → 52.2 | 100 | 10 | 37 | 1374 |
+| granite-4.0-350m | 9.2 → **26.4** | 66.7 → 46.7 | 100 | 0 | 15 | 604 |
+| LFM2.5-350M | 5.0 → **5.1** | 77.8 → 54.4 | 100 | 0 | 10 | 509 |
+
+**The headline the pitch quotes:** a single prompt revision (`v0.1`→`v0.2`) roughly **doubles field-F1
+across the whole cascade** — Ministral-3-3B and Qwen3-4B jump to ~60 %, and the 0.8B main candidate
+**triples (11.7 → 34.7)** — while unsupported-fact drops (e.g. Phi-4-mini 28 → 13 %, Ministral 20 → 12 %)
+and schema validity is 100 % on almost every model. Geo also climbs (Ministral 40 → 60 %).
+
+**Still nobody passes the frozen bar** (best F1 60.6 < 0.85; best unsupported 12.2 % > 2 %). That is the
+whole argument for the two remaining levers: prompt engineering alone gets the 3-4B tier two-thirds of
+the way; the **W4 QLoRA fine-tune** (text→JSON on Qwen3.5-0.8B, gold from W1 + human review) is what
+closes the last third — especially for the sub-billion target, which needs the most help. Note LFM-350M
+barely moves (5.0 → 5.1): the ultra-light EN model is a dead end for this task, prompt or not.
+
+(v0.1 and v0.2 measured on lw-main CPU; the latency/RSS caveat above applies to both.)
 
 ## Not yet measured (deferred / event-time)
 
