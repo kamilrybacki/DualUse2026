@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<style>
+  @page { size: 254mm 143mm; margin:0; }   /* 16:9 landscape */
+  :root{
+    --navy:#0b1f2d; --navy2:#0f2b3d; --paper:#f4f1e9; --teal:#1f8a8a;
+    --amber:#e8a33d; --signal:#e0523c; --line:#cfc8b8; --muted:#5b6b74; --ink:#0b1f2d;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;font-family:"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .slide{width:254mm;height:143mm;overflow:hidden;position:relative;background:var(--paper);
+    page-break-after:always;padding:16mm 18mm;}
+  .slide:last-child{page-break-after:auto;}
+  .dark{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#eef3f4;}
+  .stripe{position:absolute;left:0;right:0;bottom:0;height:3mm;
+    background:repeating-linear-gradient(90deg,var(--teal) 0 14mm,var(--amber) 14mm 28mm,var(--signal) 28mm 42mm);}
+  .kicker{font-size:9.5pt;letter-spacing:.3em;text-transform:uppercase;font-weight:700;color:var(--teal);}
+  .dark .kicker{color:var(--amber);}
+  .num{position:absolute;right:10mm;bottom:7mm;font-size:9pt;color:var(--muted);}
+  .dark .num{color:#7fa6a6;}
+  h1{font-size:44pt;line-height:1.02;margin:0;letter-spacing:-.5pt;}
+  h2{font-size:26pt;line-height:1.08;margin:2mm 0 6mm;color:var(--navy);letter-spacing:-.3pt;}
+  .dark h2{color:#fff;}
+  p{font-size:13pt;line-height:1.5;}
+  b{color:var(--navy);} .dark b{color:#fff;}
+  .lead{font-size:15pt;line-height:1.5;max-width:210mm;}
+
+  /* title slide */
+  .title-wrap{height:100%;display:flex;flex-direction:column;justify-content:center;}
+  .title-wrap h1 small{display:block;font-size:16pt;font-weight:500;color:#9fc7c7;margin-top:6mm;letter-spacing:.3pt;line-height:1.35;}
+  .title-tag{margin-top:9mm;font-size:12pt;color:#dfe8ea;}
+  .title-tag b{color:var(--amber);}
+
+  /* big stat */
+  .split{display:flex;gap:12mm;align-items:flex-start;}
+  .split .l{flex:0 0 70mm;}
+  .bignum{font-size:52pt;font-weight:800;color:var(--signal);line-height:.95;}
+  .bigcap{font-size:11pt;color:var(--muted);line-height:1.35;margin-top:3mm;}
+  .split .r p{margin:0;}
+
+  /* flow */
+  .flow{display:flex;gap:0;margin-top:4mm;border:1px solid var(--line);border-radius:2mm;overflow:hidden;}
+  .flow .c{flex:1;padding:6mm 5mm;font-size:11pt;line-height:1.4;}
+  .flow .c+.c{border-left:1px solid var(--line);}
+  .flow .c h4{margin:0 0 3mm;font-size:9pt;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);}
+  .flow .c.mid{background:#eae4d6;} .flow .c.mid h4{color:var(--signal);}
+  .note{font-size:10pt;color:var(--muted);margin-top:5mm;}
+
+  /* two cards */
+  .two{display:flex;gap:10mm;margin-top:4mm;}
+  .two .c{flex:1;border-top:4px solid var(--teal);padding-top:5mm;}
+  .two .c.crisis{border-top-color:var(--signal);}
+  .two .c h3{margin:0 0 3mm;font-size:16pt;color:var(--navy);}
+  .two .c p{margin:0;font-size:12pt;line-height:1.5;color:#33454e;}
+
+  /* grid of done */
+  .grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5mm 8mm;margin-top:2mm;}
+  .card h5{margin:0 0 2mm;font-size:12pt;color:var(--navy);}
+  .card h5 .t{color:var(--teal);font-weight:800;}
+  .card p{margin:0;font-size:10.5pt;line-height:1.4;color:#43535b;}
+  .card .m{color:var(--signal);font-weight:700;}
+
+  /* plan */
+  .rows{margin-top:2mm;}
+  .rows .r{display:flex;gap:6mm;font-size:12.5pt;line-height:1.7;padding:1mm 0;border-bottom:1px solid var(--line);}
+  .rows .r .w{flex:0 0 26mm;color:var(--teal);font-weight:700;}
+  .rows .r .d b{color:var(--navy);}
+
+  /* roles */
+  .roles{display:grid;grid-template-columns:1fr 1fr;gap:6mm;margin-top:4mm;}
+  .role{background:#12384c;color:#dfe8ea;border:1px solid #245066;border-radius:2mm;padding:5mm 6mm;font-size:11.5pt;line-height:1.4;}
+  .role b{color:var(--amber);font-size:13pt;display:block;margin-bottom:2mm;}
+  .dark .foot{margin-top:8mm;font-size:11pt;color:#9fc7c7;}
+</style>
+</head>
+<body>
+
+<!-- 1 TYTUŁ -->
+<section class="slide dark">
+  <div class="title-wrap">
+    <div class="kicker">Baltic Dual Use Hackathon · Gdańsk · 11–13 września · kategoria FROM SCRATCH</div>
+    <h1>FALOCHRON
+      <small>Morski Węzeł Fuzji Rozgłoszeń — morze nadal nadaje, gdy padnie chmura i GNSS</small>
+    </h1>
+    <div class="title-tag"><b>Szukam zespołu (2–4 osoby) na 48 godzin.</b> &nbsp;Pomysł wstępny w środku.</div>
+  </div>
+  <div class="stripe"></div>
+  <div class="num">FALOCHRON · 1</div>
+</section>
+
+<!-- 2 PROBLEM -->
+<section class="slide">
+  <div class="kicker">Problem</div>
+  <h2>Bałtyk widzi przez AIS i GNSS — a oba są celowo zagłuszane</h2>
+  <div class="split">
+    <div class="l">
+      <div class="bignum">~450 km</div>
+      <div class="bigcap">zasięg jammingu/spoofingu GPS znad Kaliningradu — wody siedmiu państw regionu. AIS i GNSS padają pierwsze.</div>
+    </div>
+    <div class="r">
+      <p>Równolegle działają kanały <b>niezależne od GNSS i Internetu</b>, nadawane „w eter" dla
+        wszystkich: <b>NAVTEX</b> (518 kHz + tekst), ostrzeżenia nawigacyjne BHMW, <b>głos VHF</b>.</p>
+      <p style="margin-top:5mm">Dziś czyta je <b>człowiek</b>. Nikt nie oferuje małego, lokalnego
+        urządzenia, które sprowadza je do wspólnego, audytowalnego obrazu zdarzeń i działa dalej,
+        gdy padnie łączność — i satelity.</p>
+    </div>
+  </div>
+  <div class="num">FALOCHRON · 2</div>
+</section>
+
+<!-- 3 POMYSŁ -->
+<section class="slide">
+  <div class="kicker">Pomysł</div>
+  <h2>Warstwa o krok wcześniej: ingest &amp; normalizacja kanałów rozgłoszeniowych</h2>
+  <div class="flow">
+    <div class="c"><h4>Wejścia</h4>NAVTEX tekst (BHMW / NAVAREA)<br>SDR 518 kHz → SITOR-B<br>głos VHF → ASR</div>
+    <div class="c mid"><h4>Rdzeń — wszystko lokalnie</h4><b>SLM ekstrahuje</b> do sztywnego schematu (gramatyka wymusza formę)<br>→ <b>walidator deterministyczny</b><br>→ <b>korelator</b> geo + czas</div>
+    <div class="c"><h4>Wyjścia</h4>mapa offline (MapLibre)<br>eksport GeoJSON / CAP<br>store-and-forward do 2. węzła</div>
+  </div>
+  <p class="note"><b>Offline. Bez GNSS. Modele sub-1B na urządzeniu.</b> SLM tylko proponuje strukturę —
+    nie decyduje, nie publikuje, nie klasyfikuje intencji. Forma z gramatyki, prawda z walidatorów,
+    dowodów i człowieka. Zasilamy istniejące systemy (GIS/TAK/tracker), nie konkurujemy z nimi.</p>
+  <div class="num">FALOCHRON · 3</div>
+</section>
+
+<!-- 4 DUAL-USE -->
+<section class="slide">
+  <div class="kicker">Dual-use</div>
+  <h2>Ten sam węzeł — dzień powszedni i kryzys</h2>
+  <div class="two">
+    <div class="c">
+      <h3>Cywilnie, na co dzień</h3>
+      <p>Operator mariny / kapitanatu dostaje automatyczną tablicę aktualnych ostrzeżeń i zamknięć
+        akwenów na mapie — bez ręcznego czytania NAVTEX-u.</p>
+    </div>
+    <div class="c crisis">
+      <h3>Dual-use, w kryzysie</h3>
+      <p>Węzeł świadomości sytuacyjnej odporny na jamming GNSS i utratę WAN — na demo
+        <b>fizycznie wyciągamy kabel sieciowy</b>, a kolejny meldunek nadal jest przetworzony.</p>
+    </div>
+  </div>
+  <div class="num">FALOCHRON · 4</div>
+</section>
+
+<!-- 5 CO GOTOWE -->
+<section class="slide">
+  <div class="kicker">Dlaczego akurat ten projekt — praca domowa już odrobiona</div>
+  <h2>Gotowe przed startem (legalny pre-work FROM SCRATCH)</h2>
+  <div class="grid">
+    <div class="card"><h5><span class="t">✓</span> Schemat + gramatyka</h5><p>JSON Schema v0.1 zgodny z S-124 + <b>GBNF</b> (100 % poprawnej składni); 10 fixture'ów.</p></div>
+    <div class="card"><h5><span class="t">✓</span> Benchmark SLM</h5><p><span class="m">9 modeli</span> na CPU × 2 prompty: F1, <b>unsupported-fact</b>, latencja, RSS, Pareto.</p></div>
+    <div class="card"><h5><span class="t">✓</span> Cache modeli</h5><p><span class="m">12 modeli / 14 GB</span> (Granite, LFM2.5, Qwen3.5, Ministral, Phi-4, whisper) z sha256.</p></div>
+    <div class="card"><h5><span class="t">✓</span> Dekoder SITOR-B</h5><p>headless fldigi na realnym eterze (<span class="m">0 % CER</span>) + generator CCIR 476 na demo.</p></div>
+    <div class="card"><h5><span class="t">✓</span> Fabryka danych</h5><p>joby Modal (L4/A100): synteza + sędzia LLM, TTS, QLoRA — <b>train anywhere, run everywhere</b>.</p></div>
+    <div class="card"><h5><span class="t">✓</span> Dane bałtyckie</h5><p><span class="m">gazeter 4333 nazw</span> (→ współrzędne), 46 realnych seedów, zbiór ASR EN.</p></div>
+  </div>
+  <p class="note">Zespół zaczyna od budowy pipeline'u, nie od rusztowania. Pitch cytuje <b>zmierzone liczby</b>, nie nadzieje.</p>
+  <div class="num">FALOCHRON · 5</div>
+</section>
+
+<!-- 6 PLAN 48H -->
+<section class="slide">
+  <div class="kicker">Plan 48 godzin</div>
+  <h2>Kolejność cięcia zakresu: tekst → mapa → VHF → SDR-live</h2>
+  <div class="rows">
+    <div class="r"><div class="w">0–6 h</div><div class="d"><b>Kontrakt i szkielet</b> — schema v1, event store, serwer llama.cpp, testy kontraktu.</div></div>
+    <div class="r"><div class="w">6–14 h</div><div class="d"><b>Kanał tekstowy</b> — parser nagłówka + ekstrakcja + walidator; w tle rusza QLoRA na Modalu.</div></div>
+    <div class="r"><div class="w">14–20 h</div><div class="d"><b>Mapa + eksport</b> — zdarzenia na mapie offline; GeoJSON REST; karta z surowym źródłem.</div></div>
+    <div class="r"><div class="w">20–36 h</div><div class="d"><b>SDR + VHF</b> — IQ→fldigi→event; VAD→ASR→event; korelator geo/czas.</div></div>
+    <div class="r"><div class="w">36–48 h</div><div class="d"><b>Benchmark, kill-WAN, freeze</b> — tabela „najmniejszy model, który przechodzi"; sync 2 węzłów; pitch ×3.</div></div>
+  </div>
+  <div class="num">FALOCHRON · 6</div>
+</section>
+
+<!-- 7 ROLE -->
+<section class="slide dark">
+  <div class="kicker">Kogo szukam</div>
+  <h2>Solo dziś — chcę załogi 2–4 osób</h2>
+  <div class="roles">
+    <div class="role"><b>Frontend / geo</b>mapa offline MapLibre, karty zdarzeń, dwuekranowe UI operatora (zero chat-UI).</div>
+    <div class="role"><b>Backend</b>Go / Rust / Python, event store SQLite, REST GeoJSON/CAP, store-and-forward.</div>
+    <div class="role"><b>ML / SLM</b>prompt + constrained decoding, kaskada modeli, fine-tune QLoRA na Modalu.</div>
+    <div class="role"><b>RF / SDR &amp; ASR</b>fldigi/SITOR-B, whisper.cpp na VHF, domena morska / GIS.</div>
+  </div>
+  <div class="foot">Wystarczy jedna mocna działka — reszta jest przygotowana. Przyjdź jak stoisz.</div>
+  <div class="stripe"></div>
+  <div class="num">FALOCHRON · 7</div>
+</section>
+
+<!-- 8 ZAMKNIĘCIE -->
+<section class="slide dark">
+  <div class="title-wrap">
+    <div class="kicker">Zamknięcie</div>
+    <h1 style="font-size:30pt;line-height:1.15;">„Nie budujemy detektora zagrożeń.<br>Relacjonujemy, co nadano — z proweniencją."</h1>
+    <p class="lead" style="color:#dfe8ea;margin-top:8mm;">Realna luka rynkowa (fuzja NAVTEX-RF + tekst + VHF nie istnieje ani komercyjnie, ani w OSS),
+      odporność brzegowa, którą pokazujemy wyciągając kabel, otwarte standardy (S-124 / CAP)
+      i benchmark jako artefakt badawczy.</p>
+    <div class="title-tag" style="margin-top:9mm;font-size:14pt;"><b>Znajdź mnie na miejscu — zróbmy fuzję eteru.</b></div>
+  </div>
+  <div class="stripe"></div>
+  <div class="num">FALOCHRON · 8</div>
+</section>
+
+</body>
+</html>
