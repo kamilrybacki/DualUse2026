@@ -84,6 +84,7 @@ frisnit.com, bhmw.gov.pl, build.protomaps.com, CDN wag Whispera. Dlatego:
 - [ ] **Odblokowanie z telefonu (claude.ai → Code → środowisko tej sesji → Network access):** ustaw „Full access” albo dodaj do allowlisty
   `huggingface.co`, `cdn-lfs.huggingface.co`, `cas-bridge.xethub.hf.co`, `api.modal.com`, `modal.com`, `overpass-api.de`, `kiwisdr.com`, `frisnit.com`, `bhmw.gov.pl`.
   Do Modala dodaj w tym samym miejscu zmienne środowiskowe `MODAL_TOKEN_ID` i `MODAL_TOKEN_SECRET` (z modal.com → Settings → API tokens).
+  Alternatywa bez zmiany ustawień sesji: uruchom Claude Code na własnej maszynie z siecią z promptem `docs/cluster_prompt.md` (kolejność: modele → bench → nagrania → Modal → reszta).
   Potem napisz w sesji „odblokowane” — dalej pójdzie: `--verify` i pobranie modeli, bench na prawdziwym modelu (llama.cpp jest już zbudowany), `modal-record` na najbliższy slot, W1/W2/W3, gazeter.
 - [ ] Nagrania Kiwi używają WebSocket na porcie 8073 — jeśli proxy sesji nie przepuszcza portów innych niż 443, zostaje wyłącznie wariant chmurowy `make modal-record`.
 - [ ] Po sklonowaniu: `make setup` (uv sync + `git submodule update --init`).

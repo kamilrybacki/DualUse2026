@@ -87,8 +87,10 @@ decode: ## decode a wav through the fldigi rig: make decode FILE=path.wav [PLAYE
 gen-sitorb: ## synthesize SITOR-B audio: make gen-sitorb TEXT="..." ERROR_RATE=0.02
 	$(PY) tools/gen_sitorb.py --text "$(TEXT)" --error-rate $(ERROR_RATE)
 
-bench: ## run benchmark: make bench MODEL=cache/models/x.gguf [PROMPT= GOLD=]
-	$(PY) bench/run_bench.py --model $(MODEL) --prompt $(PROMPT) --gold $(GOLD)
+BENCH_ARGS ?=
+
+bench: ## run benchmark: make bench MODEL=cache/models/x.gguf [PROMPT= GOLD= BENCH_ARGS="--tag host-cpu"]
+	$(PY) bench/run_bench.py --model $(MODEL) --prompt $(PROMPT) --gold $(GOLD) $(BENCH_ARGS)
 
 bench-fake: ## smoke-run the benchmark harness with the fake backend (no model)
 	$(PY) bench/run_bench.py --backend fake --prompt $(PROMPT) --gold $(GOLD)
