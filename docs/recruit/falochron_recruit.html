@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+  @page { size: A4; margin: 0; }
+  :root{
+    --navy:#0b1f2d; --navy2:#0f2b3d; --ink:#0b1f2d; --paper:#f4f1e9;
+    --teal:#1f8a8a; --amber:#e8a33d; --signal:#e0523c; --line:#cfc8b8; --muted:#5b6b74;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;font-family:"Segoe UI",Helvetica,Arial,sans-serif;color:var(--ink);
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;}
+  .page{width:210mm;height:297mm;overflow:hidden;position:relative;page-break-after:always;background:var(--paper);}
+  .page:last-child{page-break-after:auto;}
+
+  /* ---------- PAGE 1 : poster ---------- */
+  .hero{background:linear-gradient(160deg,var(--navy),var(--navy2));color:#eef3f4;padding:15mm 16mm 12mm;position:relative;}
+  .hero::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3mm;
+    background:repeating-linear-gradient(90deg,var(--teal) 0 12mm,var(--amber) 12mm 24mm,var(--signal) 24mm 36mm);}
+  .kicker{font-size:10pt;letter-spacing:.32em;text-transform:uppercase;color:var(--amber);font-weight:700;}
+  h1{font-size:40pt;line-height:1.02;margin:6pt 0 4pt;letter-spacing:-.5pt;}
+  h1 small{display:block;font-size:14pt;font-weight:500;color:#9fc7c7;letter-spacing:.5pt;margin-top:6pt;}
+  .oneliner{font-size:13.5pt;line-height:1.45;max-width:165mm;margin:10pt 0 0;color:#dfe8ea;}
+  .oneliner b{color:#fff;}
+
+  .body{padding:9mm 16mm 0;}
+  .why{display:flex;gap:8mm;margin-bottom:5mm;}
+  .why .big{flex:0 0 52mm;}
+  .why .big .num{font-size:30pt;font-weight:800;color:var(--signal);line-height:1;}
+  .why .big .cap{font-size:9.5pt;color:var(--muted);line-height:1.3;margin-top:3pt;}
+  .why p{margin:0;font-size:11pt;line-height:1.5;}
+  .why p b{color:var(--navy);}
+
+  .flow{display:flex;align-items:stretch;gap:0;margin:4mm 0 7mm;border:1px solid var(--line);border-radius:2mm;overflow:hidden;}
+  .flow .col{flex:1;padding:5mm 4mm;font-size:9.5pt;line-height:1.35;}
+  .flow .col+.col{border-left:1px solid var(--line);}
+  .flow .col h4{margin:0 0 3pt;font-size:8pt;letter-spacing:.16em;text-transform:uppercase;color:var(--teal);}
+  .flow .col.mid{background:#eae4d6;}
+  .flow .col.mid h4{color:var(--signal);}
+  .flow .col b{color:var(--navy);}
+
+  .dual{display:flex;gap:6mm;margin-bottom:4mm;}
+  .dual .c{flex:1;border-top:3px solid var(--teal);padding-top:4pt;}
+  .dual .c.crisis{border-top-color:var(--signal);}
+  .dual .c h4{margin:0 0 2pt;font-size:10.5pt;}
+  .dual .c p{margin:0;font-size:9.8pt;line-height:1.45;color:#33454e;}
+
+  .join{background:var(--navy);color:#eef3f4;border-radius:2mm;padding:5.5mm 7mm;margin:1mm 16mm 0;}
+  .join h3{margin:0 0 2mm;font-size:14pt;color:var(--amber);}
+  .roles{display:flex;flex-wrap:wrap;gap:2.5mm;margin-top:3mm;}
+  .role{background:#12384c;border:1px solid #245066;border-radius:1.5mm;padding:2.5mm 3.5mm;font-size:9pt;line-height:1.25;flex:1 1 40mm;}
+  .role b{color:#fff;font-size:9.5pt;}
+  .join .foot{margin-top:4mm;font-size:9pt;color:#9fc7c7;}
+
+  /* ---------- PAGE 2 : credibility ---------- */
+  .p2{padding:16mm 16mm 14mm;}
+  .p2 .top{border-bottom:2px solid var(--navy);padding-bottom:4mm;margin-bottom:6mm;}
+  .p2 .top .kicker{color:var(--teal);}
+  .p2 h2{font-size:20pt;margin:3pt 0 0;color:var(--navy);}
+  .p2 h2 span{color:var(--signal);}
+  .lead{font-size:10.5pt;color:#33454e;margin:3mm 0 6mm;line-height:1.5;max-width:170mm;}
+
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:3mm 6mm;margin-bottom:6mm;}
+  .card{border:1px solid var(--line);border-radius:1.5mm;padding:3.5mm 4mm;background:#fbf9f3;}
+  .card h5{margin:0 0 1.5mm;font-size:10pt;color:var(--navy);}
+  .card h5 .tick{color:var(--teal);font-weight:800;}
+  .card p{margin:0;font-size:9pt;line-height:1.4;color:#43535b;}
+  .card .m{color:var(--signal);font-weight:700;}
+
+  .plan{border-left:3px solid var(--teal);padding-left:5mm;margin:0 0 6mm;}
+  .plan h3{font-size:11pt;color:var(--navy);margin:0 0 2mm;}
+  .plan .row{display:flex;gap:4mm;font-size:9pt;line-height:1.5;padding:0.6mm 0;}
+  .plan .row .w{flex:0 0 20mm;color:var(--teal);font-weight:700;}
+  .plan .row .d{color:#43535b;}
+  .plan .row .d b{color:var(--navy);}
+
+  .stance{display:flex;gap:6mm;font-size:9pt;color:#43535b;line-height:1.45;}
+  .stance div{flex:1;}
+  .stance b{color:var(--navy);}
+
+  .footer{position:absolute;left:16mm;right:16mm;bottom:9mm;border-top:1px solid var(--line);padding-top:3mm;
+    display:flex;justify-content:space-between;font-size:8.5pt;color:var(--muted);}
+</style>
+</head>
+<body>
+
+<!-- ============== PAGE 1 ============== -->
+<section class="page">
+  <div class="hero">
+    <div class="kicker">Baltic Dual Use Hackathon · Gdańsk · 11–13 Sep · FROM SCRATCH · looking for a crew</div>
+    <h1>FALOCHRON
+      <small>Maritime Broadcast Fusion Node — the sea still broadcasts when the cloud and GNSS go dark</small>
+    </h1>
+    <p class="oneliner">A portable, fully <b>offline</b> box that turns what the sea broadcasts —
+      <b>NAVTEX</b> (text & 518&nbsp;kHz radio) and <b>VHF voice</b> — into verified, structured,
+      geo-referenced events (IMO S-124), correlates them in time and space, and puts them on a local
+      map. <b>No cloud. No GNSS. Sub-billion models on-premise.</b></p>
+  </div>
+
+  <div class="body">
+    <div class="why">
+      <div class="big">
+        <div class="num">~450 km</div>
+        <div class="cap">reach of GPS jamming/spoofing from Kaliningrad — waters of seven Baltic states. AIS &amp; GNSS are the first casualties.</div>
+      </div>
+      <p>Situational awareness on the Baltic leans on AIS and GNSS — both actively degraded.
+        Meanwhile <b>independent channels keep transmitting in the clear</b>: NAVTEX warnings,
+        navigational-warning text, VHF reports. Today a <b>human</b> reads them. Nobody offers a
+        small local device that fuses them into one auditable event picture and keeps working when
+        the link — and the satellites — disappear. <b>We build the layer one step before every
+        existing system:</b> ingestion &amp; normalization that can feed GIS / TAK / trackers
+        instead of competing with them.</p>
+    </div>
+
+    <div class="flow">
+      <div class="col"><h4>Broadcast in</h4>NAVTEX text (BHMW / NAVAREA)<br>SDR 518&nbsp;kHz → SITOR-B<br>VHF voice → ASR</div>
+      <div class="col mid"><h4>Local core</h4><b>SLM extracts</b> to a strict schema (grammar-constrained)<br>→ <b>deterministic validator</b><br>→ geo + time <b>correlator</b></div>
+      <div class="col"><h4>Out</h4>Offline map (MapLibre)<br>GeoJSON / CAP export<br>store-and-forward to a 2nd node</div>
+    </div>
+    <p style="font-size:8.5pt;color:var(--muted);margin:-4mm 0 6mm;">The SLM only proposes structure — it never
+      decides, publishes or classifies intent. Form comes from the grammar; truth from validators, evidence and a human flag.</p>
+
+    <div class="dual">
+      <div class="c"><h4>Civilian, every day</h4>
+        <p>A marina / port operator gets an automatic board of live warnings &amp; area closures on a
+          map — no more reading NAVTEX by hand.</p></div>
+      <div class="c crisis"><h4>Dual-use, in a crisis</h4>
+        <p>A coastal-resilience node that keeps a local event picture alive under GNSS jamming and a
+          severed WAN — the demo literally unplugs the network mid-run.</p></div>
+    </div>
+  </div>
+
+  <div class="join">
+    <h3>Solo today — I want a crew of 2–4 for the 48 h.</h3>
+    <div class="roles">
+      <div class="role"><b>Frontend / geo</b><br>MapLibre offline map, event cards, two-screen ops UI (no chat UI).</div>
+      <div class="role"><b>Backend</b><br>Go/Rust/Python service, SQLite event store, GeoJSON/CAP REST, store-and-forward.</div>
+      <div class="role"><b>ML / SLM</b><br>prompt + constrained decoding, the model cascade, QLoRA fine-tune on Modal.</div>
+      <div class="role"><b>RF / SDR &amp; ASR</b><br>fldigi/SITOR-B, whisper.cpp on VHF, maritime domain / GIS know-how.</div>
+    </div>
+    <div class="foot">Come as you are — one strong dimension is enough. The prep (schema, benchmark, decoder, data, cache) is already done, so day one is building the pipeline, not the scaffolding.</div>
+  </div>
+</section>
+
+<!-- ============== PAGE 2 ============== -->
+<section class="page">
+  <div class="p2">
+    <div class="top">
+      <div class="kicker">Why join this one — the homework is already done</div>
+      <h2>Ready before the gun: <span>a real pre-work base, not a slide idea</span></h2>
+    </div>
+    <p class="lead">Everything below was built as FROM-SCRATCH-legal preparation (research, data,
+      component tests — no pipeline code). It means the team spends the 48&nbsp;h on the product, not
+      on plumbing, and the pitch quotes measured numbers, not hopes.</p>
+
+    <div class="grid">
+      <div class="card"><h5><span class="tick">✓</span> Event schema, frozen</h5>
+        <p>S-124-aligned JSON Schema v0.1 + <b>GBNF grammar</b> for 100&nbsp;%-valid constrained output;
+          10 labelled fixtures; grammar verified in real llama.cpp.</p></div>
+      <div class="card"><h5><span class="tick">✓</span> SLM benchmark harness</h5>
+        <p><span class="m">9 models</span> swept on CPU (0.35B→4B) × 2 prompts: schema validity,
+          field F1, <b>unsupported-fact rate</b> (safety), latency, RSS, Pareto — thresholds frozen before results.</p></div>
+      <div class="card"><h5><span class="tick">✓</span> Model cache, offline</h5>
+        <p><span class="m">12 models / 14 GB</span> (Granite, LFM2.5, Qwen3.5, Ministral, Phi-4-mini,
+          Qwen3 + whisper small/med/large-v3-turbo) — sha256-manifested, USB-mirrored.</p></div>
+      <div class="card"><h5><span class="tick">✓</span> SITOR-B / NAVTEX decoder</h5>
+        <p>Headless fldigi rig proven on real off-air audio (<span class="m">0&nbsp;% CER</span> on a 2018
+          capture) + a bit-exact CCIR-476 signal generator for the demo's RF-in-a-box.</p></div>
+      <div class="card"><h5><span class="tick">✓</span> Cloud data factory</h5>
+        <p>Modal jobs (L4/A100): synthetic NAVTEX/VHF generation + LLM-judge, TTS augmentation,
+          parallel bench, QLoRA — <b>train anywhere, run everywhere</b>; zero cloud in the demo.</p></div>
+      <div class="card"><h5><span class="tick">✓</span> Baltic data</h5>
+        <p><span class="m">4 333-name gazetteer</span> (names→coords, ODbL), 46 attributed real
+          seeds + an MARTTS EN eval set, off-air 518 kHz recordings.</p></div>
+    </div>
+
+    <div class="plan">
+      <h3>The 48-hour cut (scope shrinks text → map → VHF → SDR-live)</h3>
+      <div class="row"><div class="w">0–6 h</div><div class="d"><b>Contract &amp; skeleton</b> — schema v1, event store, llama.cpp server, contract tests.</div></div>
+      <div class="row"><div class="w">6–14 h</div><div class="d"><b>Text channel</b> — header parser + constrained extraction + validator; QLoRA starts on Modal in the background.</div></div>
+      <div class="row"><div class="w">14–20 h</div><div class="d"><b>Map + export</b> — events on the offline map; GeoJSON REST; event card with raw source.</div></div>
+      <div class="row"><div class="w">20–36 h</div><div class="d"><b>SDR &amp; VHF</b> — IQ→fldigi→event; VAD→ASR→event; the geo/time correlator.</div></div>
+      <div class="row"><div class="w">36–48 h</div><div class="d"><b>Benchmark, kill-WAN, freeze</b> — the "smallest model that passes" table; two-node sync; pitch ×3.</div></div>
+    </div>
+
+    <div class="stance">
+      <div><b>What we are NOT building:</b> a threat detector, a C2 platform, or another AIS tracker.
+        We relay what was broadcast, with provenance — no intent classification, no autonomous action.</div>
+      <div><b>Why it wins with a jury:</b> a real gap (broadcast-channel fusion exists nowhere), edge
+        resilience you can demo by pulling the plug, open standards (S-124 / CAP), and a benchmark as
+        the research artifact.</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>FALOCHRON · Maritime Broadcast Fusion Node · preliminary concept for team-building</span>
+    <span>Find me at the venue — let's fuse the broadcast.</span>
+  </div>
+</section>
+
+</body>
+</html>
