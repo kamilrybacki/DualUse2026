@@ -36,8 +36,15 @@ DRY_MODEL = "Qwen/Qwen2.5-7B-Instruct"
 FULL_MODEL = "Qwen/Qwen2.5-72B-Instruct-AWQ"
 ITEMS_PER_PROMPT = 5  # keep each generation well under max_tokens (see review 2026-09-08)
 
-# pin after the first successful dry run (vllm brings its own torch — do not add torch here)
-gpu_image = with_repo(base_image.pip_install("vllm>=0.6.3"))
+# pin after the first successful dry run (vllm brings its own torch — do not add torch here).
+# VLLM_USE_FLASHINFER_SAMPLER=0: the base image has no CUDA toolkit (nvcc), so flashinfer's
+# runtime JIT build of the sampler fails ("Could not find nvcc"); force vLLM's native sampler.
+# .env must precede with_repo, which has to stay the last image layer (see common.py).
+gpu_image = with_repo(
+    base_image.pip_install("vllm>=0.6.3").env(
+        {"VLLM_USE_FLASHINFER_SAMPLER": "0", "VLLM_USE_FLASHINFER_SAMPLING": "0"}
+    )
+)
 
 
 @app.function(
