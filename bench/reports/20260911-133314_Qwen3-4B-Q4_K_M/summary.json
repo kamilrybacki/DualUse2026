@@ -1,0 +1,56 @@
+{
+  "items": 10,
+  "schema_validity": 0.9,
+  "field_f1": 0.39705788039121376,
+  "per_field_f1": {
+    "event_type": 0.4,
+    "warning_id": 0.8,
+    "issued_at": 0.2,
+    "valid_from": 0.3,
+    "valid_to": 0.5,
+    "geometry": 0.0,
+    "location_name": 0.4727272727272728,
+    "agency": 0.7,
+    "entities": 0.2007936507936508
+  },
+  "unsupported_fact_rate": 0.19753086419753085,
+  "omission_rate": 0.15555555555555556,
+  "geo_resolution": 0.2,
+  "latency_p50_s": 103.36853344099654,
+  "latency_p95_s": 174.0716759110131,
+  "peak_rss_mb": 4976.292,
+  "escalation_rate": 1.0,
+  "trigger_counts": {
+    "schema_invalid": 1,
+    "type_unknown": 3,
+    "no_location": 1,
+    "geometry_outside_baltic": 6,
+    "time_inconsistent": 0,
+    "unsupported_fact": 7
+  },
+  "checks": {
+    "schema_validity": false,
+    "field_f1": false,
+    "unsupported_fact_rate": false,
+    "geo_resolution": false,
+    "latency_p95_s": false
+  },
+  "pass": false,
+  "run_id": "20260911-133314_Qwen3-4B-Q4_K_M",
+  "model": "cache/models/qwen3-4b-q4/Qwen3-4B-Q4_K_M.gguf",
+  "backend": "llama-cli",
+  "prompt": "prompts/extract_v0.1.md",
+  "prompt_version": "0.1",
+  "gold": "schemas/fixtures",
+  "host": "lw-main",
+  "platform": "Linux-6.17.0-41-generic-x86_64-with-glibc2.42",
+  "tag": "lw-main-cpu",
+  "timestamp": "2026-09-11T13:52:31+00:00",
+  "thresholds": {
+    "schema_validity": 1.0,
+    "field_f1": 0.85,
+    "unsupported_fact_rate": 0.02,
+    "geo_resolution": 0.9,
+    "latency_p95_s": 2.0
+  }
+}

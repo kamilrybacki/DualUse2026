@@ -61,3 +61,6 @@ tools/fldigi/config/*
 !tools/fldigi/config/NOTES.md
 tools/fldigi/samples/
 tools/fldigi/config/*.log
+
+# raw per-item bench output (verbose, regenerable)
+bench/reports/*/items.jsonl

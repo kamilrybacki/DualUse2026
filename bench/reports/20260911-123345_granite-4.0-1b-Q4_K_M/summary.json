@@ -1,0 +1,56 @@
+{
+  "items": 10,
+  "schema_validity": 0.8,
+  "field_f1": 0.22367003367003369,
+  "per_field_f1": {
+    "event_type": 0.4,
+    "warning_id": 0.5,
+    "issued_at": 0.0,
+    "valid_from": 0.1,
+    "valid_to": 0.4,
+    "geometry": 0.1,
+    "location_name": 0.27303030303030307,
+    "agency": 0.1,
+    "entities": 0.13999999999999999
+  },
+  "unsupported_fact_rate": 0.4305555555555556,
+  "omission_rate": 0.13333333333333333,
+  "geo_resolution": 0.1,
+  "latency_p50_s": 44.2271549099969,
+  "latency_p95_s": 105.87672187859565,
+  "peak_rss_mb": 2171.696,
+  "escalation_rate": 1.0,
+  "trigger_counts": {
+    "schema_invalid": 2,
+    "type_unknown": 2,
+    "no_location": 0,
+    "geometry_outside_baltic": 3,
+    "time_inconsistent": 0,
+    "unsupported_fact": 8
+  },
+  "checks": {
+    "schema_validity": false,
+    "field_f1": false,
+    "unsupported_fact_rate": false,
+    "geo_resolution": false,
+    "latency_p95_s": false
+  },
+  "pass": false,
+  "run_id": "20260911-123345_granite-4.0-1b-Q4_K_M",
+  "model": "cache/models/granite-4.0-1b-q4/granite-4.0-1b-Q4_K_M.gguf",
+  "backend": "llama-cli",
+  "prompt": "prompts/extract_v0.1.md",
+  "prompt_version": "0.1",
+  "gold": "schemas/fixtures",
+  "host": "lw-main",
+  "platform": "Linux-6.17.0-41-generic-x86_64-with-glibc2.42",
+  "tag": "lw-main-cpu",
+  "timestamp": "2026-09-11T12:42:42+00:00",
+  "thresholds": {
+    "schema_validity": 1.0,
+    "field_f1": 0.85,
+    "unsupported_fact_rate": 0.02,
+    "geo_resolution": 0.9,
+    "latency_p95_s": 2.0
+  }
+}

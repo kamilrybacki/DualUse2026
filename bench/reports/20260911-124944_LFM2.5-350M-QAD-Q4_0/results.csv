@@ -1,0 +1,11 @@
+id,valid,field_f1,event_type,warning_id,issued_at,valid_from,valid_to,geometry,location_name,agency,entities,unsupported,omitted,geo_resolved,triggers,latency_s,error
+01_navtex_en_nav_warning,1,0.222,1.00,1.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,issued_at;valid_from;valid_to;geometry;location_name;agency;entities,,0,geometry_outside_baltic;unsupported_fact,9.514,
+02_navtex_en_exercise_polygon,1,0.032,0.00,0.00,0.00,0.00,0.00,0.00,0.29,0.00,0.00,warning_id;issued_at;valid_from;geometry;agency;entities,,0,geometry_outside_baltic;time_inconsistent;unsupported_fact,11.144,
+03_navtex_en_corrupted_stars,1,0.111,1.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,warning_id;issued_at;valid_from;valid_to;agency;entities,,0,geometry_outside_baltic;unsupported_fact,9.383,
+04_bhmw_pl_cable_works,1,0.111,1.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,warning_id;issued_at;valid_from;valid_to;geometry;location_name;agency;entities,,0,geometry_outside_baltic;unsupported_fact,8.600,
+05_bhmw_pl_wreck,1,0.000,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,warning_id;issued_at;valid_from;valid_to;geometry;agency;entities,,0,geometry_outside_baltic;time_inconsistent;unsupported_fact,11.257,
+06_vhf_pl_voice_report,1,0.000,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,warning_id;issued_at;valid_from;valid_to;location_name;agency;entities,geometry,0,unsupported_fact,7.814,
+07_vhf_en_voice_report,1,0.025,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.22,warning_id;issued_at;valid_from;valid_to;location_name;agency;entities,,0,geometry_outside_baltic;unsupported_fact,10.198,
+08_navtex_en_gale_warning,1,0.000,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,warning_id;issued_at;valid_from;valid_to;geometry;agency;entities,,0,geometry_outside_baltic;time_inconsistent;unsupported_fact,9.083,
+09_navtex_en_fldigi_garbled,0,0.000,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,,event_type;warning_id;issued_at;location_name;agency,0,schema_invalid,9.888,
+10_bhmw_pl_prompt_injection,1,0.000,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,warning_id;issued_at;valid_from;valid_to;geometry;location_name;agency;entities,,0,geometry_outside_baltic;unsupported_fact,9.254,

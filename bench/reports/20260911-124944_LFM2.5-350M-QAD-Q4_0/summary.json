@@ -1,0 +1,56 @@
+{
+  "items": 10,
+  "schema_validity": 0.9,
+  "field_f1": 0.05008818342151675,
+  "per_field_f1": {
+    "event_type": 0.3,
+    "warning_id": 0.1,
+    "issued_at": 0.0,
+    "valid_from": 0.0,
+    "valid_to": 0.0,
+    "geometry": 0.0,
+    "location_name": 0.02857142857142857,
+    "agency": 0.0,
+    "entities": 0.02222222222222222
+  },
+  "unsupported_fact_rate": 0.7777777777777778,
+  "omission_rate": 0.06666666666666667,
+  "geo_resolution": 0.0,
+  "latency_p50_s": 9.448567130995798,
+  "latency_p95_s": 11.206511975296598,
+  "peak_rss_mb": 537.816,
+  "escalation_rate": 1.0,
+  "trigger_counts": {
+    "schema_invalid": 1,
+    "type_unknown": 0,
+    "no_location": 0,
+    "geometry_outside_baltic": 8,
+    "time_inconsistent": 3,
+    "unsupported_fact": 9
+  },
+  "checks": {
+    "schema_validity": false,
+    "field_f1": false,
+    "unsupported_fact_rate": false,
+    "geo_resolution": false,
+    "latency_p95_s": false
+  },
+  "pass": false,
+  "run_id": "20260911-124944_LFM2.5-350M-QAD-Q4_0",
+  "model": "cache/models/lfm2.5-350m-q4/LFM2.5-350M-QAD-Q4_0.gguf",
+  "backend": "llama-cli",
+  "prompt": "prompts/extract_v0.1.md",
+  "prompt_version": "0.1",
+  "gold": "schemas/fixtures",
+  "host": "lw-main",
+  "platform": "Linux-6.17.0-41-generic-x86_64-with-glibc2.42",
+  "tag": "lw-main-cpu",
+  "timestamp": "2026-09-11T12:51:20+00:00",
+  "thresholds": {
+    "schema_validity": 1.0,
+    "field_f1": 0.85,
+    "unsupported_fact_rate": 0.02,
+    "geo_resolution": 0.9,
+    "latency_p95_s": 2.0
+  }
+}

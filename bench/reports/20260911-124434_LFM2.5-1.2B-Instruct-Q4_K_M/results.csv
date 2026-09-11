@@ -1,0 +1,11 @@
+id,valid,field_f1,event_type,warning_id,issued_at,valid_from,valid_to,geometry,location_name,agency,entities,unsupported,omitted,geo_resolved,triggers,latency_s,error
+01_navtex_en_nav_warning,1,0.111,1.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,warning_id;issued_at;valid_from;valid_to;geometry;agency;entities,,0,geometry_outside_baltic;time_inconsistent;unsupported_fact,27.881,
+02_navtex_en_exercise_polygon,1,0.000,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,warning_id;issued_at;valid_from;valid_to;geometry;entities,,0,geometry_outside_baltic;time_inconsistent;unsupported_fact,33.441,
+03_navtex_en_corrupted_stars,1,0.111,1.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,warning_id;issued_at;valid_from;valid_to;geometry,,0,geometry_outside_baltic;time_inconsistent;unsupported_fact,29.463,
+04_bhmw_pl_cable_works,1,0.417,1.00,1.00,0.00,0.00,0.00,0.00,0.75,1.00,0.00,geometry;entities,,0,geometry_outside_baltic;unsupported_fact,31.545,
+05_bhmw_pl_wreck,1,0.200,0.00,0.00,0.00,0.00,0.00,0.00,0.80,1.00,0.00,issued_at;valid_from;valid_to;geometry;entities,,0,geometry_outside_baltic;unsupported_fact,37.268,
+06_vhf_pl_voice_report,1,0.000,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,warning_id;issued_at;valid_from;valid_to;geometry;location_name;entities,,0,geometry_outside_baltic;unsupported_fact,29.302,
+07_vhf_en_voice_report,1,0.017,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.15,warning_id;issued_at;valid_from;valid_to;geometry;location_name;entities,,0,geometry_outside_baltic;unsupported_fact,33.743,
+08_navtex_en_gale_warning,1,0.000,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,warning_id;issued_at;valid_from;valid_to;geometry;entities,,0,geometry_outside_baltic;unsupported_fact,29.257,
+09_navtex_en_fldigi_garbled,1,0.000,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,warning_id;issued_at;valid_from;valid_to;location_name;entities,,0,geometry_outside_baltic;unsupported_fact,28.678,
+10_bhmw_pl_prompt_injection,1,0.200,0.00,0.00,0.00,0.00,0.00,0.00,0.80,1.00,0.00,warning_id;issued_at;valid_from;valid_to;geometry;entities,,0,geometry_outside_baltic;unsupported_fact,28.076,
