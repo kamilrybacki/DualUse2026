@@ -28,6 +28,17 @@
   .legend .lbl{font-family:var(--f-display);letter-spacing:.06em;font-size:11.5px;text-transform:uppercase}
   .legend .sub{color:var(--dim);font-size:11px;margin-left:22px}
 
+  /* ---- zoom controls ---- */
+  .ctl{position:absolute;right:24px;bottom:24px;display:flex;flex-direction:column;gap:6px;align-items:flex-end;z-index:2}
+  .ctl .grp{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
+  .ctl button{font-family:var(--f-display);font-size:11px;letter-spacing:.1em;text-transform:uppercase;background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:3px;padding:6px 9px;cursor:pointer}
+  .ctl button:hover,.ctl button.on{border-color:var(--incident);color:var(--incident)}
+  .ctl button:focus-visible{outline:2px solid var(--incident);outline-offset:2px}
+  .ctl .zoom button{width:34px;font-size:16px;line-height:1;padding:4px 0;font-family:var(--f-mono)}
+  .chart svg{cursor:grab} .chart svg.dragging{cursor:grabbing}
+  .off-lbl{font-family:var(--f-display);fill:var(--station);letter-spacing:.08em}
+  .off-arrow{fill:var(--station);opacity:.9}
+
   /* svg symbols */
   .grat{stroke:var(--grat);stroke-width:.6;fill:none}
   .grat-lbl{font-family:var(--f-mono);font-size:8px;fill:var(--dim)}
@@ -82,10 +93,14 @@
     <div class="hud">
       <div class="kicker">Baltic Dual Use · koncept</div>
       <h1>FALOCHRON</h1>
-      <p>Cztery nadajniki NAVTEX nadają w eter. Zdarzenia — z radia, z tekstu, z głosu — lądują na tej samej mapie. Najedź lub kliknij znak.</p>
+      <p>Cztery nadajniki NAVTEX nadają w eter. Zdarzenia — z radia, z tekstu, z głosu — lądują na tej samej mapie. Kółko = zoom, przeciągnij = przesuń, kliknij znak = karta.</p>
     </div>
     <svg id="map" role="img" aria-label="Mapa Bałtyku ze stacjami NAVTEX i zdarzeniami FALOCHRON"></svg>
     <div class="legend" id="legend"></div>
+    <div class="ctl" aria-label="Widok mapy">
+      <div class="grp zoom"><button id="zin" aria-label="Przybliż" title="Przybliż">+</button><button id="zout" aria-label="Oddal" title="Oddal">−</button></div>
+      <div class="grp"><button data-view="all">Cały Bałtyk</button><button data-view="core" class="on">Basen główny</button><button data-view="south">Południe</button><button data-view="inc">Incydent</button></div>
+    </div>
   </section>
 
   <aside class="panel" id="panel">
@@ -110,6 +125,36 @@
   const P=(lon,lat)=>[(lon-BB.lon0)/(BB.lon1-BB.lon0)*W,(BB.lat1-lat)/(BB.lat1-BB.lat0)*H];
   const svg=document.getElementById("map");
   svg.setAttribute("viewBox",`0 0 ${W.toFixed(1)} ${H}`);
+  // ---- view state: zoom / pan / presets (lon0, lon1, lat0, lat1) ----
+  const VIEWS={all:[9.8,30.6,53.6,65.3],core:[9.8,30.6,53.6,61.2],south:[9.8,22.8,53.6,58.7],inc:[17.6,20.2,54.0,55.1]};
+  let view={x:0,y:0,w:W,h:H}, drag=null, dragged=false, gOff=null;
+  const boxFrom=(a,b,c,d)=>{const [x0,y0]=P(a,d),[x1,y1]=P(b,c);return {x:x0,y:y0,w:x1-x0,h:y1-y0};};
+  function apply(){svg.setAttribute("viewBox",`${view.x.toFixed(2)} ${view.y.toFixed(2)} ${view.w.toFixed(2)} ${view.h.toFixed(2)}`);if(gOff)drawOffscreen();}
+  function clearOn(){document.querySelectorAll(".ctl [data-view]").forEach(b=>b.classList.remove("on"));}
+  function setView(k){const [a,b,c,d]=VIEWS[k];view=boxFrom(a,b,c,d);apply();clearOn();const btn=document.querySelector(`.ctl [data-view="${k}"]`);if(btn)btn.classList.add("on");}
+  const svgPt=(cx,cy)=>{const q=svg.createSVGPoint();q.x=cx;q.y=cy;return q.matrixTransform(svg.getScreenCTM().inverse());};
+  function zoomAt(f,cx,cy){const q=svgPt(cx,cy);const nw=Math.min(Math.max(view.w*f,W/16),W*1.4);const r=nw/view.w;
+    view.x=q.x-(q.x-view.x)*r;view.y=q.y-(q.y-view.y)*r;view.w=nw;view.h*=r;apply();clearOn();}
+  svg.addEventListener("wheel",e=>{e.preventDefault();zoomAt(e.deltaY>0?1.18:1/1.18,e.clientX,e.clientY);},{passive:false});
+  const centerZoom=f=>{const rc=svg.getBoundingClientRect();zoomAt(f,rc.left+rc.width/2,rc.top+rc.height/2);};
+  document.getElementById("zin").addEventListener("click",()=>centerZoom(1/1.35));
+  document.getElementById("zout").addEventListener("click",()=>centerZoom(1.35));
+  document.querySelectorAll(".ctl [data-view]").forEach(b=>b.addEventListener("click",()=>setView(b.dataset.view)));
+  svg.addEventListener("pointerdown",e=>{if(e.button!==0)return;drag={x:e.clientX,y:e.clientY,vx:view.x,vy:view.y};dragged=false;svg.setPointerCapture(e.pointerId);svg.classList.add("dragging");});
+  svg.addEventListener("pointermove",e=>{if(!drag)return;const m=svg.getScreenCTM();const sc=1/m.a;const dx=(e.clientX-drag.x)*sc,dy=(e.clientY-drag.y)*sc;
+    if(Math.abs(e.clientX-drag.x)>3||Math.abs(e.clientY-drag.y)>3)dragged=true;view.x=drag.vx-dx;view.y=drag.vy-dy;apply();});
+  const endDrag=()=>{if(!drag)return;drag=null;svg.classList.remove("dragging");if(dragged)clearOn();};
+  svg.addEventListener("pointerup",endDrag);svg.addEventListener("pointercancel",endDrag);svg.addEventListener("pointerleave",endDrag);
+  function drawOffscreen(){while(gOff.firstChild)gOff.removeChild(gOff.firstChild);const k=view.w/W,m=10*k,sz=6*k;
+    DATA.stations.forEach(s=>{const [x,y]=P(s.lon,s.lat);
+      if(x>=view.x&&x<=view.x+view.w&&y>=view.y&&y<=view.y+view.h)return;
+      const cx=Math.min(Math.max(x,view.x+m),view.x+view.w-m),cy=Math.min(Math.max(y,view.y+m),view.y+view.h-m);
+      const ang=Math.atan2(y-cy,x-cx);
+      const d=`M${cx+Math.cos(ang)*sz*1.7},${cy+Math.sin(ang)*sz*1.7}L${cx+Math.cos(ang+2.4)*sz},${cy+Math.sin(ang+2.4)*sz}L${cx+Math.cos(ang-2.4)*sz},${cy+Math.sin(ang-2.4)*sz}Z`;
+      el("path",{d,class:"off-arrow"},gOff);
+      const left=Math.cos(ang)>0.3, up=Math.sin(ang)<-0.3;
+      const t=el("text",{x:left?cx-sz*2.2:cx+sz*2.2,y:up?cy+sz*3.2:cy-sz*1.6,class:"off-lbl","font-size":(9*k).toFixed(2),"text-anchor":left?"end":"start"},gOff);
+      t.textContent=`NAVTEX ${s.id} · ${s.name} (${s.lat.toFixed(1)}°N)`;});}
   const el=(t,a,parent)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);(parent||svg).appendChild(e);return e;};
   const CHN={SDR:"NAVTEX 518 kHz · radio",TEXT:"NAVTEX / BHMW · tekst",VOICE:"VHF · głos"};
   const COL={SDR:"var(--sdr)",TEXT:"var(--text)",VOICE:"var(--voice)"};
@@ -156,7 +201,7 @@
     shape(g,e.ch,x,y);
     const t=el("text",{x:x+9,y:y+3,class:"ev-lbl"},g);t.textContent=(e.wid||e.type).toString().slice(0,10);
     g.addEventListener("mouseenter",()=>show(e,false));g.addEventListener("focus",()=>show(e,false));
-    g.addEventListener("click",()=>{pin=e;show(e,true);});
+    g.addEventListener("click",()=>{if(dragged)return;pin=e;show(e,true);});
     g.addEventListener("keydown",ev=>{if(ev.key==="Enter"||ev.key===" "){ev.preventDefault();pin=e;show(e,true);}});
     g.addEventListener("mouseleave",()=>{if(!pin)showIncident();else show(pin,true);});
     e._g=g;
@@ -167,6 +212,8 @@
     el("circle",{cx:x,cy:y,r:6,class:"stn"},g);el("circle",{cx:x,cy:y,r:1.8,fill:"var(--station)"},g);
     const t=el("text",{x:x+9,y:y-3,class:"stn-lbl"},g);t.textContent="NAVTEX "+s.id;
     const u=el("text",{x:x+9,y:y+7,class:"stn-sub"},g);u.textContent=s.name+" · "+s.cc;});
+
+  gOff=el("g",{id:"off"});
 
   // legend
   document.getElementById("legend").innerHTML=`
@@ -202,6 +249,7 @@
   }
   function dist(p,q){const R=3440.07,r=x=>x*Math.PI/180,dl=r(q.lat-p.lat),dn=r(q.lon-p.lon),s=Math.sin(dl/2)**2+Math.cos(r(p.lat))*Math.cos(r(q.lat))*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(s));}
   document.addEventListener("keydown",ev=>{if(ev.key==="Escape"){pin=null;showIncident();}});
+  setView("core");
   showIncident();
 })();
 </script>
