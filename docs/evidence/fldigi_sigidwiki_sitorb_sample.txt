@@ -1,0 +1,27 @@
+# fldigi decode of a third-party real SITOR-B sample (decoder validation)
+
+Source : https://sigidwiki.com/wiki/SITOR-B  (Signal Identification Wiki, audio sample
+         "SITOR-B.mp3": https://www.sigidwiki.com/images/9/96/SITOR-B.mp3)
+Content: Mondolfo Radio (NAVAREA III) coastal warning UA69, 13 Jan 2012 — firing exercise,
+         southern Adriatic, 7-point polygon. Real off-air recording (not synthetic, not repo-made).
+Rig    : headless fldigi 4.2.06, NAVTEX modem, carrier 1000 Hz (default), 12 kHz mono
+         (ffmpeg mp3 -> wav). `make decode FILE=data/audio/sitorb/samples/SITOR-B.wav`.
+Result : chars=146, star_rate 0.0 %, frames=none (recording starts mid-transmission, so the
+         ZCZC header/phasing was not captured; the message body decoded verbatim).
+
+Decoded (verbatim, tail of the transmission):
+---
+QI WP TIE
+E) 40 25 55N - 18 22 28E
+F) 40 23 05N - 18 23 18E
+G) 40 23 54N - 18 17 30E.
+SAILING, ANCHORAGE AND FISHING ARE PROHIBITED.
+NNNN
+
+RYRYRYRYRYRYRYRYRYRYRYRYRYRYRYRYRYRYRYRYRY
+---
+
+This is a third independent confirmation that the headless fldigi rig decodes real SITOR-B
+audio (alongside the 2018 NL Coastguard off-air decode @0 % CER and the gen_sitorb round-trip).
+The garbled "QI WP TIE" prefix is the pre-phasing lead-in; a full off-air capture (KiwiSDR U-slot)
+includes the ZCZC header.
