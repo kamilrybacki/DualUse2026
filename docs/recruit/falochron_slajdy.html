@@ -74,6 +74,14 @@
   .role{background:#12384c;color:#dfe8ea;border:1px solid #245066;border-radius:2mm;padding:5mm 6mm;font-size:11.5pt;line-height:1.4;}
   .role b{color:var(--amber);font-size:13pt;display:block;margin-bottom:2mm;}
   .dark .foot{margin-top:8mm;font-size:11pt;color:#9fc7c7;}
+  /* source table */
+  table.src{width:100%;border-collapse:collapse;margin-top:3mm;font-size:10.5pt;}
+  table.src th{text-align:left;font-size:8.5pt;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);
+    border-bottom:2px solid var(--navy);padding:0 4mm 2mm 0;vertical-align:bottom;}
+  table.src td{border-bottom:1px solid var(--line);padding:3.5mm 4mm 3.5mm 0;vertical-align:top;line-height:1.4;color:#33454e;}
+  table.src td.src-name{font-weight:700;color:var(--navy);font-size:11.5pt;width:36mm;}
+  table.src td b{color:var(--navy);}
+  table.src td .tag{display:inline-block;font-size:8pt;color:var(--signal);font-weight:700;text-transform:uppercase;letter-spacing:.08em;}
 </style>
 </head>
 <body>
@@ -177,7 +185,34 @@
   <div class="num">FALOCHRON · 5</div>
 </section>
 
-<!-- 6 CO GOTOWE -->
+<!-- 6 CO TO ZA DANE (łopatologicznie) -->
+<section class="slide">
+  <div class="kicker">Trzy źródła — łopatologicznie</div>
+  <h2>Co to za dane i jak je w ogóle odczytujemy</h2>
+  <table class="src">
+    <tr><th style="width:36mm">Źródło</th><th>Jaka to forma danych</th><th>Jak zamieniamy to na tekst</th></tr>
+    <tr>
+      <td class="src-name">NAVTEX 518 kHz<br><span class="tag">radio</span></td>
+      <td><b>Piszczący sygnał radiowy</b> — nie głos, nie tekst. Cyfrowa modulacja FSK (dwa tony ~170 Hz od siebie), kod SITOR-B/CCIR 476, każdy znak nadany <b>dwa razy</b> (korekcja błędów).</td>
+      <td>Antena / odbiornik SDR łapie sygnał → <b>dekoder (fldigi)</b> zamienia tony na litery → czysty tekst <code>ZCZC … NNNN</code>. Znaki zgubione w eterze = <b>`*`</b>.</td>
+    </tr>
+    <tr>
+      <td class="src-name">NAVTEX / BHMW tekst<br><span class="tag">tekst</span></td>
+      <td><b>Zwykły tekst</b> — urzędowy komunikat (ostrzeżenie BHMW, NAVAREA) jako plik, strona lub wklejka. Nic nie piszczy, nic nie trzeba słuchać.</td>
+      <td><b>Nic nie dekodujemy</b> — to już tekst. Prosty parser wyłuskuje nagłówek (stacja/numer), a treść idzie prosto do modelu.</td>
+    </tr>
+    <tr style="border-bottom:none">
+      <td class="src-name">VHF głos<br><span class="tag">dźwięk</span></td>
+      <td><b>Nagranie dźwięku</b> — ludzka mowa (rozmowa statek–brzeg, pasmo 156–162 MHz). Analogowy głos, nie tekst.</td>
+      <td>Audio → <b>VAD</b> (wykrycie, gdzie ktoś mówi) → <b>ASR / whisper</b> zamienia mowę na tekst → model.</td>
+    </tr>
+  </table>
+  <p class="note" style="margin-top:5mm;font-size:11pt;color:#33454e;"><b>Wspólny mianownik:</b> każde źródło — piszczące, tekstowe czy głosowe —
+    kończy jako <b>zwykły tekst</b>. Dopiero wtedy ten sam mały model zamienia je w jedno ustrukturyzowane zdarzenie na mapie.</p>
+  <div class="num">FALOCHRON · 6</div>
+</section>
+
+<!-- 7 CO GOTOWE -->
 <section class="slide">
   <div class="kicker">Dlaczego akurat ten projekt — praca domowa już odrobiona</div>
   <h2>Gotowe przed startem (legalny pre-work FROM SCRATCH)</h2>
@@ -190,7 +225,7 @@
     <div class="card"><h5><span class="t">✓</span> Dane bałtyckie</h5><p><span class="m">gazeter 4333 nazw</span> (→ współrzędne), 46 realnych seedów, zbiór ASR EN.</p></div>
   </div>
   <p class="note">Zespół zaczyna od budowy pipeline'u, nie od rusztowania. Pitch cytuje <b>zmierzone liczby</b>, nie nadzieje.</p>
-  <div class="num">FALOCHRON · 6</div>
+  <div class="num">FALOCHRON · 7</div>
 </section>
 
 <!-- 6 PLAN 48H -->
@@ -204,7 +239,7 @@
     <div class="r"><div class="w">20–36 h</div><div class="d"><b>SDR + VHF</b> — IQ→fldigi→event; VAD→ASR→event; korelator geo/czas.</div></div>
     <div class="r"><div class="w">36–48 h</div><div class="d"><b>Benchmark, kill-WAN, freeze</b> — tabela „najmniejszy model, który przechodzi"; sync 2 węzłów; pitch ×3.</div></div>
   </div>
-  <div class="num">FALOCHRON · 7</div>
+  <div class="num">FALOCHRON · 8</div>
 </section>
 
 <!-- 7 ROLE -->
@@ -219,7 +254,7 @@
   </div>
   <div class="foot">Wystarczy jedna mocna działka — reszta jest przygotowana. Przyjdź jak stoisz.</div>
   <div class="stripe"></div>
-  <div class="num">FALOCHRON · 8</div>
+  <div class="num">FALOCHRON · 9</div>
 </section>
 
 <!-- 8 ZAMKNIĘCIE -->
@@ -233,7 +268,7 @@
     <div class="title-tag" style="margin-top:9mm;font-size:14pt;"><b>Znajdź mnie na miejscu — zróbmy fuzję eteru.</b></div>
   </div>
   <div class="stripe"></div>
-  <div class="num">FALOCHRON · 9</div>
+  <div class="num">FALOCHRON · 10</div>
 </section>
 
 </body>
