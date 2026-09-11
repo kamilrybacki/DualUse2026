@@ -95,13 +95,13 @@ models:
   - name: qwen3-1.7b-q4
     tier: 3
     role: plan B (known, tested)
-    repo: Qwen/Qwen3-1.7B-GGUF
-    file: "*Q4_K_M.gguf"
+    repo: bartowski/Qwen_Qwen3-1.7B-GGUF
+    file: "Qwen_Qwen3-1.7B-Q4_K_M.gguf"
     revision: main
     license: Apache-2.0
     lang_pl: true
     verified: true
-    notes: "Official Qwen GGUF repo. Repo id confirmed via web search 2026-09-07 (huggingface.co blocked from the prep session, so the file list was not inspected; --verify still prints the real files before --all)."
+    notes: "Official Qwen/Qwen3-1.7B-GGUF ships only Q8_0 (verified 2026-09-11), so use bartowski's Q4_K_M quant to keep the cascade at Q4 (alternative unsloth/Qwen3-1.7B-GGUF also has Q4_K_M). Repo/file confirmed by listing repo files 2026-09-11."
 
   - name: qwen3-4b-q4
     tier: 3
