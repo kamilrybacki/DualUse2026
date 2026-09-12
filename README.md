@@ -72,14 +72,34 @@ Pełna lista celów: `make help`. Narzędzia w `tools/` i `bench/` działają of
 czytając modele z `cache/` i dane z `data/`. Sieci używają wyłącznie skrypty
 `tools/download_*.py`, `tools/fetch_*.py`, `tools/record_*.py` oraz `modal_jobs/`.
 
+## Nagrania audio
+
+Korpusy audio są w repo (na `main`, do wglądu zespołu) — domyślnie duże binaria trzymamy
+poza gitem, ale te wrzucono świadomie:
+
+| Zbiór | Ścieżka | Opis |
+|---|---|---|
+| NAVTEX 518 kHz | [`data/recordings/518khz/`](data/recordings/518khz/) | realne nagrania z eteru (IQ + audio), publiczne MSI, z atrybucją stacji/daty |
+| SITOR-B syntetyczny | [`data/audio/sitorb/`](data/audio/sitorb/) | wygenerowane sygnały CCIR 476/SITOR-B + próbki testowe |
+| MARTTS (VHF EN) | [`data/martts/`](data/martts/) | syntetyczny dataset dialogów VHF (clean + noisy) |
+
+MARTTS pochodzi z HuggingFace i jest publiczny — źródło:
+[`bonalor/synthetic_maritime_radio_communication`](https://huggingface.co/datasets/bonalor/synthetic_maritime_radio_communication)
+(CC-BY-4.0). Można go pobrać stamtąd zamiast klonować z repo:
+
+```sh
+huggingface-cli download bonalor/synthetic_maritime_radio_communication --repo-type dataset --local-dir data/martts
+```
+
 ## Dane i prawo
 
 - NAVTEX to publiczna informacja bezpieczeństwa morskiego (MSI); nagrania i teksty
   są przechowywane z atrybucją stacji i daty.
 - Audio VHF w repo jest wyłącznie syntetyczne lub nagrane własnym głosem. Żadnych
   nagrań cudzej korespondencji radiowej.
-- Nagrania IQ/audio i modele nie trafiają do gita (patrz `.gitignore`); są w `cache/`
-  i `data/recordings/`, mirrorowane na pendrive.
+- Modele i nagrania IQ domyślnie poza gitem (patrz `.gitignore`), w `cache/`, mirrorowane
+  na pendrive. Korpusy audio powyżej wrzucono do `main` na potrzeby zespołu (~1.4 GB, bez
+  git-lfs); MARTTS można odchudzić, pobierając go z HF zamiast trzymać w gicie.
 
 ## Licencje komponentów zewnętrznych
 
