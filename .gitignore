@@ -68,3 +68,6 @@ bench/reports/*/items.jsonl
 
 # transient grammar file written by the llama-cli bench backend
 .bench_grammar.gbnf
+
+# VHF synth: keep the committed local recordings (referenced by transcripts.jsonl)
+!data/audio/vhf_synth/local/*.wav
