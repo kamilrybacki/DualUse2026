@@ -1,0 +1,1 @@
+d.kiwi_noname = struct('coord', [60.950613,24.483177], 'host', 'oh3aa.dy.fi', 'port', 18073);
